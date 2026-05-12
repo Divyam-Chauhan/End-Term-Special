@@ -68,3 +68,23 @@
         <p class="empty-state" id="emptyState" hidden>No matching question found. Try another keyword.</p>
       </main>
     </div>
+
+    <template id="questionTemplate">
+      <article class="question-card">
+        <button class="question-head" type="button">
+          <span class="question-number"></span>
+          <span class="question-title"></span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </button>
+        <div class="question-body">
+          <div class="meta-row"></div>
+          <div class="answer-content"></div>
+        </div>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -323,3 +323,83 @@ h1 {
 }
 
 .dsa-group-title {
+  font-size: 1.05rem;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+.dsa-group-count {
+  min-height: 34px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.dsa-group-head svg {
+  width: 24px;
+  height: 24px;
+  justify-self: end;
+  color: var(--muted);
+  transition: transform 180ms ease;
+}
+
+.dsa-question-group.is-open .dsa-group-head svg {
+  transform: rotate(180deg);
+}
+
+.dsa-group-body {
+  display: grid;
+  gap: 14px;
+}
+
+.dsa-group-body:empty {
+  display: none;
+}
+
+.question-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.question-card[data-subject="web-dev"] {
+  border-left: 7px solid var(--teal);
+}
+
+.question-card[data-subject="dbms"] {
+  border-left: 7px solid var(--blue);
+}
+
+.question-card[data-subject="dsa-cpp"] {
+  border-left: 7px solid var(--coral);
+}
+
+.question-head {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 28px;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  min-height: 78px;
+  padding: 16px 18px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+.question-number {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  background: var(--surface-strong);
+  font-weight: 850;

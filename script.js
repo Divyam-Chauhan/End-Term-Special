@@ -878,3 +878,86 @@ function ProductSearch() {
     &lt;div&gt;
       &lt;input
         value={search}
+        onChange={event =&gt; setSearch(event.target.value)}
+        placeholder="Search products"
+      /&gt;
+
+      &lt;ul&gt;
+        {filteredProducts.map(product =&gt; (
+          &lt;li key={product}&gt;{product}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      <p>The input is a controlled component because its value comes from React state. The <code>filter()</code> method checks each item and keeps only those that include the typed text. Converting both strings to lowercase makes the search case-insensitive.</p>
+      <p>For large lists, performance can be improved using debouncing or backend search. For normal lists, this state and filter pattern is simple, clear, and exam-ready.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Given the two methods for storing client-side data - cookies and local storage - analyze their differences in terms of data expiration, storage size, and security. Provide one scenario where cookies are preferred over local storage.",
+    tags: ["Storage", "Cookies", "Security"],
+    answer: `
+      <p>Cookies and local storage are both used to store data in the browser, but they behave differently. The correct choice depends on lifetime, size, and security needs.</p>
+      <p>Cookies can have an expiry time. They may expire when the browser closes or at a specific date set by the server. Local storage has no automatic expiry. It stays in the browser until the app or user clears it.</p>
+      <p>Cookies are small, usually around a few kilobytes. Local storage can store more data, usually several megabytes depending on the browser. So local storage is better for larger non-sensitive data like UI preferences or cached settings.</p>
+      <p>Security is a major difference. Cookies can be given flags such as <code>HttpOnly</code>, <code>Secure</code>, and <code>SameSite</code>. <code>HttpOnly</code> prevents JavaScript from reading the cookie, which helps protect tokens from script-based attacks. Local storage is accessible through JavaScript, so sensitive tokens stored there can be stolen if malicious script runs on the page.</p>
+      <p>Cookies are preferred for login sessions where the server needs to receive the session identifier automatically with each request. For example, an authentication session cookie is better than storing a sensitive login token in local storage.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "How do you conditionally apply CSS classes to a React element? Provide an example using a state variable.",
+    tags: ["React", "CSS", "State"],
+    answer: `
+      <p>In React, CSS classes can be applied conditionally by changing the <code>className</code> value based on state or props. This is useful for active buttons, selected tabs, error messages, dark mode, and expanded sections.</p>
+      <p>A simple method is to use a ternary operator:</p>
+      <pre><code>import { useState } from "react";
+
+function ToggleButton() {
+  const [isActive, setIsActive] = useState(false);
+
+  return (
+    &lt;button
+      className={isActive ? "btn active" : "btn"}
+      onClick={() =&gt; setIsActive(!isActive)}
+    &gt;
+      {isActive ? "Active" : "Inactive"}
+    &lt;/button&gt;
+  );
+}</code></pre>
+      <p>When <code>isActive</code> is true, the button gets both <code>btn</code> and <code>active</code> classes. When it is false, it gets only <code>btn</code>.</p>
+      <p>Another common approach is string interpolation or array joining:</p>
+      <pre><code>className={"card " + (isActive ? "selected" : "")}</code></pre>
+      <p>The CSS can then style each state differently:</p>
+      <pre><code>.btn {
+  background: white;
+}
+
+.btn.active {
+  background: blue;
+  color: white;
+}</code></pre>
+      <p>Conditional classes keep styling connected to component state. This makes UI changes predictable and easy to manage.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Describe what cookies are and how they differ from local storage. Provide at least two scenarios where cookies are preferred over local storage in a web application.",
+    tags: ["Storage", "Cookies", "Local Storage"],
+    answer: `
+      <p>Cookies are small pieces of data stored by the browser. They are often created by the server and can be sent automatically with HTTP requests to the same domain. They are commonly used for sessions, authentication, user preferences, and tracking.</p>
+      <p>Local storage is also browser storage, but it is accessed through JavaScript and is not sent automatically with every request. It can store more data than cookies and has no default expiry.</p>
+      <h3>Differences</h3>
+      <ul>
+        <li><strong>Expiry:</strong> Cookies can expire at a set time; local storage remains until cleared.</li>
+        <li><strong>Size:</strong> Cookies are small; local storage can hold more data.</li>
+        <li><strong>Request behavior:</strong> Cookies can be sent automatically to the server; local storage cannot.</li>
+        <li><strong>Security:</strong> Cookies can use <code>HttpOnly</code>, <code>Secure</code>, and <code>SameSite</code> flags.</li>
+      </ul>
+      <p>Cookies are preferred for login sessions because the server can receive the session cookie automatically and verify the user. They are also preferred when the token should be protected from JavaScript using <code>HttpOnly</code>.</p>
+      <p>Another scenario is server-side personalization, where the server needs a small value like language or region before sending the page. Local storage is better for larger non-sensitive client-only data, but cookies are better when the server must receive the value securely.</p>
+    `,
+  },
+  {

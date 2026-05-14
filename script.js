@@ -718,3 +718,83 @@ navigate("/dashboard");</code></pre>
   },
   {
     subject: "web-dev",
+    title: "What is an uncontrolled input in React? How does it differ from a controlled input? Provide an example.",
+    tags: ["React", "Forms", "Uncontrolled Components"],
+    answer: `
+      <p>An uncontrolled input is an input where React does not store the current value in state. The browser keeps the value internally, and React reads it only when needed, usually through <code>useRef</code>.</p>
+      <pre><code>import { useRef } from "react";
+
+function SearchForm() {
+  const searchRef = useRef(null);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    alert(searchRef.current.value);
+  }
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input ref={searchRef} placeholder="Search" /&gt;
+      &lt;button type="submit"&gt;Search&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+      <p>A controlled input stores its value in React state:</p>
+      <pre><code>&lt;input
+  value={search}
+  onChange={event =&gt; setSearch(event.target.value)}
+/&gt;</code></pre>
+      <p>The controlled input updates React state whenever the user types. This is better for validation, live filtering, disabling buttons, and showing instant feedback.</p>
+      <p>The uncontrolled input is simpler when the value is needed only at submit time. It is also common for file inputs because browser file values are handled differently.</p>
+      <p>So, the main difference is control: controlled inputs are managed by React state, while uncontrolled inputs are managed by the DOM and accessed using refs.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Examine why syntax errors occur when exporting variables while defining them. Provide examples of incorrect and correct syntax with explanations.",
+    tags: ["JavaScript", "Exports", "Syntax"],
+    answer: `
+      <p>Syntax errors occur during exports when the export statement does not match JavaScript module rules. This often happens when developers mix default export syntax with variable declaration syntax incorrectly.</p>
+      <p>This is correct for a named export:</p>
+      <pre><code>export const API_URL = "https://api.example.com";</code></pre>
+      <p>Here, the variable is declared and exported in the same line.</p>
+      <p>This is incorrect:</p>
+      <pre><code>export default const API_URL = "https://api.example.com";</code></pre>
+      <p>A default export cannot be used directly before <code>const</code> like this. The correct approach is to define the variable first and export it later:</p>
+      <pre><code>const API_URL = "https://api.example.com";
+export default API_URL;</code></pre>
+      <p>For functions, inline default export is allowed:</p>
+      <pre><code>export default function Login() {
+  return &lt;h1&gt;Login&lt;/h1&gt;;
+}</code></pre>
+      <p>Another mistake is importing named exports as default exports or default exports as named exports. The import must match the export style.</p>
+      <p>These errors occur because JavaScript modules have fixed grammar rules. To avoid them, use <code>export const name = value</code> for named variables, and use <code>const name = value; export default name;</code> for default variable exports.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "What is batch updating in React? Analyze what happens when multiple setState calls are made in an event handler.",
+    tags: ["React", "State", "Batching"],
+    answer: `
+      <p>Batch updating means React groups multiple state updates together before updating the screen. Instead of re-rendering after every setter call, React waits until the event handler completes and then renders once with the final result.</p>
+      <p>Consider this example:</p>
+      <pre><code>function handleClick() {
+  setCount(count + 1);
+  setCount(count + 1);
+}</code></pre>
+      <p>If <code>count</code> is 0, both calls read the same value, 0. So both try to set the count to 1. The final count becomes 1, not 2. This happens because state values inside the same render do not immediately change after calling the setter.</p>
+      <p>When the new state depends on the old state, the correct approach is to use the functional updater:</p>
+      <pre><code>function handleClick() {
+  setCount(prevCount =&gt; prevCount + 1);
+  setCount(prevCount =&gt; prevCount + 1);
+}</code></pre>
+      <p>Now React applies the updates one after another, so the count increases by 2.</p>
+      <p>Batching is useful because it avoids unnecessary renders and improves performance. The exam point is that setters schedule updates; they do not instantly change the state variable in the current running function.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "How do you use useNavigate in React Router to redirect after a form submission? Provide an example.",
+    tags: ["React", "Router", "Forms"],
+    answer: `
+      <p><code>useNavigate</code> is a React Router hook used for programmatic navigation. It is useful when navigation should happen after an action, such as successful form submission, login, or saving data.</p>

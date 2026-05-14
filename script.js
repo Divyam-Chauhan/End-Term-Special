@@ -961,3 +961,65 @@ function ToggleButton() {
     `,
   },
   {
+    subject: "dbms",
+    title: "Create a database indexing strategy for a large e-commerce website to optimize search performance while maintaining transaction consistency.",
+    tags: ["Indexing", "Transactions", "Performance"],
+    answer: `
+      <p>For a large e-commerce website, indexing should improve read speed without weakening transaction consistency. The main tables usually include products, categories, orders, customers, payments, and inventory. Indexes should be planned according to the queries that run most often, not added randomly.</p>
+      <p>Product search should have indexes on columns used in filtering and sorting, such as <code>category_id</code>, <code>brand</code>, <code>price</code>, <code>rating</code>, and <code>availability</code>. A composite index such as <code>(category_id, price)</code> is useful when users filter by category and sort by price. Product names and descriptions may need a full-text index because normal indexes are not enough for keyword search.</p>
+      <p>Order and payment tables should have indexes on <code>customer_id</code>, <code>order_date</code>, and <code>status</code> because these are used in order history and admin reports. Foreign key columns should also be indexed so joins remain fast.</p>
+      <p>Consistency is maintained by using transactions for order placement, payment update, and stock reduction. Indexes do not replace ACID rules; they only speed up access. Extra indexes should be avoided on highly updated columns because every insert, update, or delete must also update the index.</p>
+      <p>A good strategy is to create indexes for high-use queries, monitor slow queries, remove unused indexes, and keep transactions short. This gives faster search while preserving correct order and inventory data.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Compare relational databases and NoSQL databases. Describe scenarios where each is more appropriate.",
+    tags: ["Relational DB", "NoSQL", "Database Design"],
+    answer: `
+      <p>Relational databases store data in tables with rows and columns. They use a fixed schema, primary keys, foreign keys, and SQL. They are strong when the data has clear relationships and correctness is very important.</p>
+      <p>NoSQL databases store data in flexible formats such as documents, key-value pairs, wide columns, or graphs. They are useful when data structure changes often, very large volumes of data are handled, or the application needs flexible storage.</p>
+      <h3>Relational databases are better when</h3>
+      <ul>
+        <li>Data is highly structured, such as banking, student records, payroll, and inventory.</li>
+        <li>Transactions must follow ACID properties.</li>
+        <li>Relationships between tables are important and joins are common.</li>
+        <li>Reports need accurate filtering, grouping, and aggregation using SQL.</li>
+      </ul>
+      <h3>NoSQL databases are better when</h3>
+      <ul>
+        <li>Data is semi-structured, such as user profiles, logs, messages, and product catalogs.</li>
+        <li>The schema may change frequently.</li>
+        <li>The system needs to scale across many servers.</li>
+        <li>Fast access to whole documents is more important than complex joins.</li>
+      </ul>
+      <p>For example, an online banking system should usually use a relational database because consistency is critical. A social media activity feed or product recommendation store may use NoSQL because the data is large and changes quickly. The correct choice depends on data structure, consistency needs, query pattern, and scale.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Design a transaction scenario for an online shopping platform that demonstrates the ACID properties, ensuring the transaction is both reliable and efficient.",
+    tags: ["Transactions", "ACID", "E-commerce"],
+    answer: `
+      <p>A good transaction scenario is order placement in an online shopping platform. When a customer buys a product, the system must create an order, reduce stock, record payment, and confirm the purchase. These steps should be treated as one transaction.</p>
+      <pre><code>BEGIN TRANSACTION;
+
+INSERT INTO orders(order_id, customer_id, order_date, status)
+VALUES (5001, 101, CURRENT_DATE, 'CONFIRMED');
+
+UPDATE inventory
+SET quantity = quantity - 1
+WHERE product_id = 25 AND quantity &gt; 0;
+
+INSERT INTO payments(order_id, amount, status)
+VALUES (5001, 1200, 'PAID');
+
+COMMIT;</code></pre>
+      <p><strong>Atomicity</strong> means all steps complete or none of them are saved. If payment fails, the order and stock change must be rolled back.</p>
+      <p><strong>Consistency</strong> means the database moves from one valid state to another. Stock should not become negative, and each payment should belong to a valid order.</p>
+      <p><strong>Isolation</strong> means two customers buying the same item at the same time should not create wrong stock values. Proper locks or isolation levels prevent both transactions from using the same last unit incorrectly.</p>
+      <p><strong>Durability</strong> means once the transaction is committed, the order remains saved even if the system crashes immediately after.</p>
+      <p>To keep it efficient, the transaction should be short and should update only required rows. Indexes on <code>product_id</code> and <code>customer_id</code> help locate records quickly. This scenario clearly shows how ACID makes online shopping reliable.</p>
+    `,
+  },
+  {

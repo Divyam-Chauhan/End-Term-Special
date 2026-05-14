@@ -638,3 +638,83 @@ function RandomJoke() {
       try {
         const response = await fetch("https://apis.ccbp.in/jokes/random");
         if (!response.ok) throw new Error("Failed to fetch joke");
+        const data = await response.json();
+        setJoke(data);
+      } catch (err) {
+        setError("Could not load joke");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    getJoke();
+  }, []);
+
+  if (isLoading) return &lt;p&gt;Loading joke...&lt;/p&gt;;
+  if (error) return &lt;p&gt;{error}&lt;/p&gt;;
+
+  return &lt;p&gt;{joke.value}&lt;/p&gt;;
+}</code></pre>
+      <p>The component first shows a loading message. If the request succeeds, it displays the joke value. If the request fails, it displays an error message. This is a complete exam-ready pattern for API fetching in React.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "What is prop drilling in React and how can it be solved? Explain with an example.",
+    tags: ["React", "Props", "Context"],
+    answer: `
+      <p>Prop drilling happens when data is passed through many components only because a deeply nested child needs it. Intermediate components receive and forward the prop even if they do not use it. This makes code harder to maintain.</p>
+      <p>Example:</p>
+      <pre><code>function App() {
+  const user = { name: "Divya" };
+  return &lt;Dashboard user={user} /&gt;;
+}
+
+function Dashboard({ user }) {
+  return &lt;Sidebar user={user} /&gt;;
+}
+
+function Sidebar({ user }) {
+  return &lt;Profile user={user} /&gt;;
+}</code></pre>
+      <p>Here, <code>Dashboard</code> and <code>Sidebar</code> may not need <code>user</code>, but they still pass it down. This is prop drilling.</p>
+      <p>One solution is the Context API:</p>
+      <pre><code>const UserContext = React.createContext();
+
+function App() {
+  const user = { name: "Divya" };
+  return (
+    &lt;UserContext.Provider value={user}&gt;
+      &lt;Dashboard /&gt;
+    &lt;/UserContext.Provider&gt;
+  );
+}
+
+function Profile() {
+  const user = useContext(UserContext);
+  return &lt;p&gt;{user.name}&lt;/p&gt;;
+}</code></pre>
+      <p>Context allows the deeply nested component to read shared data directly. Prop drilling can also be reduced by better component structure or state management libraries. The best solution depends on how widely the data is used.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Discuss the authentication flow in a React application. What steps should be taken after a successful login to manage access to protected routes?",
+    tags: ["React", "Authentication", "Router"],
+    answer: `
+      <p>Authentication flow in a React application starts when the user enters login details and submits the form. React sends those details to the server. If the details are correct, the server returns user information and usually a token such as a JWT.</p>
+      <p>After successful login, the app should store authentication information safely. Many applications store the token in a secure cookie. Some simple projects store it in local storage. The app should then update authentication state, such as <code>isLoggedIn</code> or current user data.</p>
+      <p>Next, the user should be redirected to a protected page such as dashboard:</p>
+      <pre><code>localStorage.setItem("jwt_token", token);
+setIsLoggedIn(true);
+navigate("/dashboard");</code></pre>
+      <p>Protected routes should check the authentication state or token before showing private pages. If the user is not logged in, the route should redirect to login.</p>
+      <p>For API requests after login, the token is sent with the request so the server can verify access:</p>
+      <pre><code>headers: {
+  Authorization: "Bearer " + token
+}</code></pre>
+      <p>The app should also support logout by removing the token and clearing user state. If the token expires, the app should redirect the user to login again. Client-side route protection improves user experience, but server-side token verification is still necessary for real security.</p>
+    `,
+  },
+  {
+    subject: "web-dev",

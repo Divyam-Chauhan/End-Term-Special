@@ -1023,3 +1023,65 @@ COMMIT;</code></pre>
     `,
   },
   {
+    subject: "dbms",
+    title: "Describe the two-phase locking (2PL) protocol and explain how it ensures serializability.",
+    tags: ["Concurrency", "2PL", "Serializability"],
+    answer: `
+      <p>Two-phase locking, or 2PL, is a concurrency control protocol used to manage transactions that access the same data at the same time. It uses locks so that conflicting operations do not produce incorrect results.</p>
+      <p>There are two main lock types. A shared lock is used for reading data, and many transactions can hold shared locks on the same item. An exclusive lock is used for writing data, and only one transaction can hold it on a data item at a time.</p>
+      <p>2PL has two phases. In the growing phase, a transaction can acquire new locks but cannot release any lock. In the shrinking phase, the transaction can release locks but cannot acquire new locks. Once a transaction releases its first lock, it cannot request more locks.</p>
+      <p>This rule ensures conflict serializability because it forces transactions to have a lock point, which is the moment when the transaction has acquired all the locks it needs. Transactions can then be ordered according to their lock points, producing a result equal to some serial execution.</p>
+      <p>Strict 2PL is a common version where exclusive locks are held until commit or rollback. This also prevents cascading rollback because other transactions cannot read uncommitted changes.</p>
+      <p>The main drawback is that 2PL can cause deadlocks if two transactions wait for each other. Still, it is important because it gives a clear way to protect correctness during concurrent database operations.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Compare writing SQL keywords in uppercase versus lowercase. Which approach should be preferred and justify your answer with examples.",
+    tags: ["SQL", "Code Style", "Readability"],
+    answer: `
+      <p>SQL keywords can usually be written in uppercase or lowercase because SQL is generally case-insensitive for keywords. For example, <code>SELECT</code> and <code>select</code> are treated the same by most database systems.</p>
+      <pre><code>SELECT name, salary
+FROM employees
+WHERE department = 'Sales';</code></pre>
+      <pre><code>select name, salary
+from employees
+where department = 'Sales';</code></pre>
+      <p>Both queries can return the same result. The difference is mainly readability and coding style. Uppercase keywords are often preferred in exam answers and professional SQL because they clearly separate SQL commands from table names, column names, and values. This makes longer queries easier to read.</p>
+      <p>Lowercase SQL is also valid and is common in some teams because it is faster to type and looks cleaner to them. However, mixing styles in the same project should be avoided because it reduces consistency.</p>
+      <p>The preferred approach for exams is to write SQL keywords in uppercase and identifiers in lowercase or meaningful names. For example, <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>GROUP BY</code>, and <code>ORDER BY</code> should stand out clearly.</p>
+      <p>So, uppercase keywords should be preferred for final exam answers because they improve clarity, make query structure visible, and match common SQL formatting standards. The most important rule is consistency across the query.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Describe the difference between optimistic and pessimistic concurrency control strategies.",
+    tags: ["Concurrency", "Transactions", "Locking"],
+    answer: `
+      <p>Concurrency control is used when many transactions access the same data at the same time. Its goal is to keep the database correct while allowing users to work in parallel.</p>
+      <p>Pessimistic concurrency control assumes that conflicts are likely to happen. So it locks data before reading or writing it. If one transaction is updating a row, another transaction may have to wait until the first one commits or rolls back. This prevents lost updates and dirty writes, but it can reduce speed when many users are waiting for locks.</p>
+      <p>Optimistic concurrency control assumes that conflicts are not very common. Transactions are allowed to work without locking data for a long time. Before committing, the system checks whether another transaction changed the same data. If there is no conflict, the transaction commits. If there is a conflict, the transaction may be rolled back and tried again.</p>
+      <h3>Key difference</h3>
+      <ul>
+        <li><strong>Pessimistic:</strong> Checks and blocks early using locks.</li>
+        <li><strong>Optimistic:</strong> Allows work first and checks before commit.</li>
+      </ul>
+      <p>Pessimistic control is better for systems with frequent conflicts, such as ticket booking or stock updates. Optimistic control is better where conflicts are rare, such as editing user profiles or reading reports. Both aim to protect data, but they make different choices between waiting and retrying.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Evaluate the advantages and disadvantages of using SELECT * compared to listing specific columns. Consider scenarios where each approach is appropriate and provide recommendations.",
+    tags: ["SQL", "Query Design", "Performance"],
+    answer: `
+      <p><code>SELECT *</code> means selecting all columns from a table. Listing specific columns means selecting only the required fields. Both are valid, but they should be used carefully.</p>
+      <p>The advantage of <code>SELECT *</code> is convenience. It is quick during learning, debugging, or checking table data. For example, <code>SELECT * FROM students;</code> is useful when the user wants to inspect the whole table.</p>
+      <p>The disadvantages are important. It may fetch unnecessary data, increase network transfer, expose sensitive columns, and make the application depend on table structure. If new columns are added later, the query output changes automatically, which can break reports or application code.</p>
+      <p>Listing columns is usually better in real applications:</p>
+      <pre><code>SELECT student_id, name, course
+FROM students
+WHERE course = 'BCA';</code></pre>
+      <p>This query is clearer, faster when fewer columns are needed, and safer because it returns only required data. It also makes the purpose of the query visible to the reader.</p>
+      <p><code>SELECT *</code> is acceptable for quick testing, small temporary queries, or admin inspection. For final code, reports, APIs, and exam answers, specific columns should be preferred. The recommendation is simple: use <code>SELECT *</code> only when all columns are truly needed; otherwise list the required columns clearly.</p>
+    `,
+  },

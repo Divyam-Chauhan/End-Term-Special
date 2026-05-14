@@ -318,3 +318,83 @@ function App() {
 }</code></pre>
       <p>A child component can read the value using <code>useContext</code>:</p>
       <pre><code>const user = useContext(AuthContext);</code></pre>
+      <p>Context should be used for data that is needed by many components at different levels. It should not be used for every small piece of state because unnecessary context updates can re-render many components.</p>
+      <p>In short, Context API is best for shared application-level data. It makes code cleaner when passing props through many layers becomes repetitive.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Write a React example to display a list of users using .map() and assign keys properly.",
+    tags: ["React", "Lists", "Keys"],
+    answer: `
+      <p>In React, lists are commonly displayed using the JavaScript <code>map()</code> method. It converts each item in an array into a JSX element. Each element in a list should have a unique <code>key</code> prop so React can track it correctly during updates.</p>
+      <pre><code>function UsersList() {
+  const users = [
+    { id: 1, name: "Asha", role: "Admin" },
+    { id: 2, name: "Ravi", role: "Editor" },
+    { id: 3, name: "Neha", role: "Viewer" }
+  ];
+
+  return (
+    &lt;ul&gt;
+      {users.map(user =&gt; (
+        &lt;li key={user.id}&gt;
+          {user.name} - {user.role}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</code></pre>
+      <p>Here, <code>users.map()</code> loops through the array and returns one <code>&lt;li&gt;</code> for each user. The <code>key</code> is set to <code>user.id</code>, which is stable and unique.</p>
+      <p>Using the array index as a key should be avoided when list order can change, because it may confuse React during insertions or deletions. A database ID or unique value is better.</p>
+      <p>Keys do not appear on the page. They are used internally by React to update lists correctly and efficiently.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Describe the lifecycle of a React functional component using hooks. Explain what happens at mount, update, and unmount phases.",
+    tags: ["React", "Hooks", "Lifecycle"],
+    answer: `
+      <p>A React functional component goes through three main lifecycle phases: mount, update, and unmount. Hooks, especially <code>useEffect</code>, are used to handle work during these phases.</p>
+      <p>The mount phase happens when the component appears on the screen for the first time. This is where initial API calls, timers, or subscriptions can be started.</p>
+      <pre><code>useEffect(() =&gt; {
+  fetchData();
+}, []);</code></pre>
+      <p>The empty dependency array means this effect runs once after the first render.</p>
+      <p>The update phase happens when props or state change and the component renders again. An effect with dependencies runs when those dependency values change.</p>
+      <pre><code>useEffect(() =&gt; {
+  document.title = "Count: " + count;
+}, [count]);</code></pre>
+      <p>This runs when <code>count</code> changes.</p>
+      <p>The unmount phase happens when the component is removed from the UI. Cleanup is done by returning a function from <code>useEffect</code>.</p>
+      <pre><code>useEffect(() =&gt; {
+  const id = setInterval(tick, 1000);
+  return () =&gt; clearInterval(id);
+}, []);</code></pre>
+      <p>So, hooks let functional components handle lifecycle behavior clearly: start work on mount, react to changes on update, and clean up on unmount.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Demonstrate how to handle both successful and error cases when using fetch() with promises.",
+    tags: ["React", "Fetch", "Promises"],
+    answer: `
+      <p>The <code>fetch()</code> function returns a promise. To handle success and error cases, we can use <code>.then()</code> for successful steps and <code>.catch()</code> for errors. It is also important to check <code>response.ok</code> because fetch does not automatically reject for HTTP error status codes like 404 or 500.</p>
+      <pre><code>fetch("https://api.example.com/users")
+  .then(response =&gt; {
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+    return response.json();
+  })
+  .then(data =&gt; {
+    console.log("Users:", data);
+  })
+  .catch(error =&gt; {
+    console.error("Error:", error.message);
+  });</code></pre>
+      <p>In this example, the first <code>.then()</code> receives the response. If the response is not okay, an error is thrown. If the response is valid, it is converted to JSON. The next <code>.then()</code> receives the final data.</p>
+      <p>The <code>.catch()</code> block handles network errors and any errors thrown in the previous promise chain. In a React component, success can update data state, while failure can update error state.</p>
+      <p>This structure gives clear handling for both cases: display data when the request succeeds and show an error message when the request fails.</p>
+    `,
+  },

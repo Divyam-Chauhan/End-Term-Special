@@ -478,3 +478,83 @@ import { formatDate, formatPrice } from "./formatters";</code></pre>
       <p>The key differences are naming, passing functions instead of strings, and handling events as part of component logic.</p>
     `,
   },
+  {
+    subject: "web-dev",
+    title: "Assess the impact of incorrect export syntax on your code. Explain common errors and how to fix them with examples.",
+    tags: ["JavaScript", "Exports", "Errors"],
+    answer: `
+      <p>Incorrect export syntax can stop a React or JavaScript application from compiling. It can also cause import errors where a value is undefined or not found. Since components and utility functions are often shared through modules, export mistakes can break many files.</p>
+      <p>One common error is mixing default and named import syntax.</p>
+      <pre><code>// Button.js
+export default function Button() {}
+
+// Correct
+import Button from "./Button";
+
+// Incorrect
+import { Button } from "./Button";</code></pre>
+      <p>Another common error is importing a named export without braces.</p>
+      <pre><code>// utils.js
+export function add(a, b) {
+  return a + b;
+}
+
+// Correct
+import { add } from "./utils";
+
+// Incorrect
+import add from "./utils";</code></pre>
+      <p>A third mistake is trying to export a variable incorrectly while declaring it. This is correct:</p>
+      <pre><code>export const API_URL = "https://api.example.com";</code></pre>
+      <p>Incorrect export syntax leads to build errors, broken imports, and wasted debugging time. The fix is to match export and import styles carefully: default exports use no braces during import, while named exports use braces.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Analyze the differences between exporting a function while defining it versus after defining it. Provide examples for both approaches and explain when each should be used.",
+    tags: ["JavaScript", "Exports", "Functions"],
+    answer: `
+      <p>A function can be exported while it is being defined, or it can be defined first and exported later. Both approaches are valid. The difference is mainly readability, organization, and how many exports the file contains.</p>
+      <p>Exporting while defining is direct and compact:</p>
+      <pre><code>export function calculateTotal(price, tax) {
+  return price + tax;
+}</code></pre>
+      <p>This is useful when the function is clearly meant to be used outside the file. It is common in utility files where many functions are exported.</p>
+      <p>Defining first and exporting later keeps all exports grouped at the bottom:</p>
+      <pre><code>function calculateTotal(price, tax) {
+  return price + tax;
+}
+
+function calculateDiscount(price) {
+  return price * 0.1;
+}
+
+export { calculateTotal, calculateDiscount };</code></pre>
+      <p>This approach is useful when the file has several functions and the developer wants a clear export list. It also allows some functions to remain private inside the file.</p>
+      <p>For default exports, both styles are also possible:</p>
+      <pre><code>export default function Login() {}</code></pre>
+      <p>or:</p>
+      <pre><code>function Login() {}
+export default Login;</code></pre>
+      <p>Use inline exports for small, clear modules. Use export-at-bottom when the file has several functions and you want better organization.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Compare async/await with .then()/.catch() promise chaining. When would you prefer one over the other?",
+    tags: ["JavaScript", "Promises", "Async"],
+    answer: `
+      <p><code>async/await</code> and <code>.then()/.catch()</code> are two ways to handle promises in JavaScript. Both can produce the same result, but they organize code differently.</p>
+      <p>Promise chaining uses <code>.then()</code> for success and <code>.catch()</code> for errors:</p>
+      <pre><code>fetch("/api/users")
+  .then(response =&gt; response.json())
+  .then(data =&gt; console.log(data))
+  .catch(error =&gt; console.error(error));</code></pre>
+      <p>This style is useful for short chains and simple operations. It clearly shows each promise step.</p>
+      <p><code>async/await</code> makes asynchronous code look closer to normal step-by-step code:</p>
+      <pre><code>async function loadUsers() {
+  try {
+    const response = await fetch("/api/users");
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {

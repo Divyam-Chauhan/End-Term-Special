@@ -1457,3 +1457,65 @@ WHERE player_id = 12;</code></pre>
       }
     }
   }
+]);</code></pre>
+      <p>Here, <code>totalSales</code> adds all amounts. <code>paidSales</code> adds the amount only when status is paid; otherwise it adds 0. <code>cancelledCount</code> adds 1 only for cancelled orders.</p>
+      <p>This is useful for reports where multiple totals are needed from the same data. Conditional aggregation avoids running separate queries for each condition and gives a clear result in one pipeline.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Explain how indexing improves query performance in databases. Describe the trade-offs involved.",
+    tags: ["Indexing", "Performance", "Trade-offs"],
+    answer: `
+      <p>Indexing improves query performance by helping the database find rows faster. Without an index, the database may scan the whole table to find matching records. With an index, it can locate the required rows more directly.</p>
+      <p>For example, if a <code>students</code> table has thousands of rows and we often search by roll number, an index on <code>roll_no</code> helps the database find that student quickly.</p>
+      <pre><code>CREATE INDEX idx_students_roll_no
+ON students(roll_no);</code></pre>
+      <p>Indexes are useful on columns used often in <code>WHERE</code>, <code>JOIN</code>, <code>ORDER BY</code>, and <code>GROUP BY</code> clauses. Composite indexes can help when queries use multiple columns together, such as <code>(course_id, marks)</code>.</p>
+      <p>The main benefit is faster read speed. Queries, joins, sorting, and searching can become much more efficient.</p>
+      <p>The trade-off is that indexes take extra storage. They also slow down write operations because every insert, update, or delete may require the index to be updated. Too many indexes can hurt performance instead of helping it.</p>
+      <p>Indexes should be created based on real query needs. Columns with many repeated values may not always benefit much from indexing. A good database design uses indexes for frequent and important queries, monitors performance, and removes unused indexes.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Discuss timestamp-based protocols in concurrency control. How do they function?",
+    tags: ["Concurrency", "Timestamps", "Transactions"],
+    answer: `
+      <p>Timestamp-based concurrency control is a method used to manage transactions without relying mainly on locks. Each transaction gets a unique timestamp when it starts. Older transactions have smaller timestamps, and newer transactions have larger timestamps.</p>
+      <p>The basic idea is that database operations should follow the timestamp order. This gives a serial order based on when transactions started.</p>
+      <p>For each data item, the system keeps two important values: <code>read_timestamp</code> and <code>write_timestamp</code>. The read timestamp records the largest timestamp of any transaction that successfully read the item. The write timestamp records the largest timestamp of any transaction that successfully wrote the item.</p>
+      <p>When a transaction tries to read or write, the system checks whether that operation would break timestamp order. If it is safe, the operation is allowed and timestamps are updated. If it is not safe, the transaction is rolled back and restarted with a new timestamp.</p>
+      <p>For example, if an older transaction tries to write a data item that has already been read or written by a newer transaction, allowing it may create an incorrect order. So the older transaction is rejected.</p>
+      <p>The advantage is that timestamp protocols avoid deadlocks because transactions do not wait for locks in the same way. The disadvantage is that rollbacks can increase if conflicts are frequent. This method is useful when the system wants a clear serial order for concurrent transactions.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Explain how the $lookup stage works in MongoDB and when you would use it.",
+    tags: ["MongoDB", "Aggregation", "Lookup"],
+    answer: `
+      <p>The <code>$lookup</code> stage in MongoDB is used in an aggregation pipeline to combine documents from two collections. It works like a left outer join in SQL. It adds matching documents from another collection into an array field in the result.</p>
+      <p>Suppose we have an <code>orders</code> collection with <code>customer_id</code>, and a <code>customers</code> collection with customer details. We can use <code>$lookup</code> to attach customer information to each order.</p>
+      <pre><code>db.orders.aggregate([
+  {
+    $lookup: {
+      from: "customers",
+      localField: "customer_id",
+      foreignField: "_id",
+      as: "customerDetails"
+    }
+  }
+]);</code></pre>
+      <p><code>from</code> is the collection to join with. <code>localField</code> is the field in the current collection. <code>foreignField</code> is the matching field in the other collection. <code>as</code> is the name of the array where matched documents will be stored.</p>
+      <p><code>$lookup</code> is useful when related data is stored in separate collections, such as orders and customers, students and courses, or products and reviews.</p>
+      <p>It should be used carefully because joining large collections can be costly. Proper indexes on matching fields help performance. If the data is always read together and rarely changes, embedding may sometimes be better. But when separate collections are needed, <code>$lookup</code> is the standard MongoDB aggregation stage for joining them.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Analyze how the placement and usage of ORDER BY, LIMIT, and OFFSET affect query execution in set operations, providing examples of correct and incorrect implementations.",
+    tags: ["SQL", "Set Operations", "Sorting"],
+    answer: `
+      <p>In SQL set operations such as <code>UNION</code>, <code>UNION ALL</code>, <code>INTERSECT</code>, and <code>EXCEPT</code>, the placement of <code>ORDER BY</code>, <code>LIMIT</code>, and <code>OFFSET</code> affects the final result. These clauses should usually be applied after the complete set operation, not inside each individual <code>SELECT</code>, unless subqueries are used.</p>
+      <p>Correct example:</p>

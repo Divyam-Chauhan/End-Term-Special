@@ -1333,3 +1333,65 @@ WHERE marks &gt;= 40;</code></pre>
     answer: `
       <p>The <code>WHERE</code> clause is extremely important in <code>UPDATE</code> operations because it decides which rows will be changed. If <code>WHERE</code> is missing, the update applies to every row in the table, which can damage the data.</p>
       <p>Example using a student table:</p>
+      <pre><code>UPDATE students
+SET grade = 'A'
+WHERE marks &gt;= 90;</code></pre>
+      <p>This correctly updates only students whose marks are 90 or above. Without <code>WHERE</code>, every student would get grade A, which is wrong.</p>
+      <p>Example using a player table:</p>
+      <pre><code>UPDATE players
+SET status = 'INJURED'
+WHERE player_id = 12;</code></pre>
+      <p>This updates only the player with ID 12. If the condition is removed, all players would be marked injured.</p>
+      <p>The <code>WHERE</code> clause is also useful when updating based on teams, scores, positions, dates, or status. It makes the update targeted and meaningful.</p>
+      <p>Before running an important update, it is good practice to test the condition with a <code>SELECT</code> query:</p>
+      <pre><code>SELECT *
+FROM players
+WHERE player_id = 12;</code></pre>
+      <p>This confirms which rows will be affected. In conclusion, <code>WHERE</code> protects data from accidental mass updates and should be used carefully in almost every real <code>UPDATE</code> operation.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Describe the aggregation pipeline in MongoDB and explain how stages like $match, $group, and $project work together.",
+    tags: ["MongoDB", "Aggregation", "Pipeline"],
+    answer: `
+      <p>The aggregation pipeline in MongoDB is used to process documents step by step and produce calculated results. Each stage takes input documents, performs an operation, and passes the output to the next stage.</p>
+      <p><code>$match</code> filters documents based on conditions. It is similar to <code>WHERE</code> in SQL. It should usually be placed early so later stages process fewer documents.</p>
+      <p><code>$group</code> groups documents by a field and calculates values such as total, average, count, minimum, or maximum.</p>
+      <p><code>$project</code> controls which fields appear in the final output. It can include fields, exclude fields, rename fields, or create calculated fields.</p>
+      <pre><code>db.orders.aggregate([
+  { $match: { status: "PAID" } },
+  {
+    $group: {
+      _id: "$customer_id",
+      totalAmount: { $sum: "$amount" },
+      orderCount: { $sum: 1 }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      customerId: "$_id",
+      totalAmount: 1,
+      orderCount: 1
+    }
+  }
+]);</code></pre>
+      <p>In this example, <code>$match</code> keeps only paid orders. <code>$group</code> summarizes them customer-wise. <code>$project</code> formats the output neatly. The pipeline is useful for reports, dashboards, summaries, and data transformation because it breaks complex processing into clear stages.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "List and explain the characteristics of denormalization with a focus on its impact on performance.",
+    tags: ["Normalization", "Denormalization", "Performance"],
+    answer: `
+      <p>Denormalization is the process of intentionally adding some duplicate or precomputed data to a database design. It is usually done after normalization when read performance becomes more important than avoiding every duplication.</p>
+      <p>One characteristic is controlled redundancy. Data that could be found through joins may be stored directly in another table. For example, an order table may store customer name along with customer ID to avoid joining the customer table for every report.</p>
+      <p>Another characteristic is faster read performance. Since fewer joins are required, queries can become simpler and quicker, especially in dashboards, reports, and high-traffic applications.</p>
+      <p>Denormalization can also store summary values, such as total order amount, number of comments, or average rating. This avoids recalculating the same values again and again.</p>
+      <p>The main disadvantage is update difficulty. If duplicated data changes, all copies must be updated correctly. Otherwise, the database may show inconsistent values. It can also increase storage requirement and make write operations slower.</p>
+      <p>Denormalization is useful when the system has many reads and fewer updates, or when reports must load quickly. It should not be done blindly. The database designer should first normalize the schema, identify slow queries, and then denormalize only where it gives a clear performance benefit.</p>
+    `,
+  },
+  {
+    subject: "dbms",

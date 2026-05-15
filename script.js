@@ -1395,3 +1395,65 @@ WHERE player_id = 12;</code></pre>
   },
   {
     subject: "dbms",
+    title: "Explain what functional dependency means in the context of database normalization and give an example.",
+    tags: ["Normalization", "Functional Dependency", "Database Design"],
+    answer: `
+      <p>Functional dependency is a relationship between attributes in a table. It means the value of one attribute determines the value of another attribute. It is written as <code>A -> B</code>, which means A determines B.</p>
+      <p>For example, in a student table:</p>
+      <pre><code>Student(student_id, student_name, course)</code></pre>
+      <p>If each <code>student_id</code> belongs to only one student, then:</p>
+      <pre><code>student_id -> student_name</code></pre>
+      <p>This means that if we know the student ID, we can find the student name. The same student ID should not give two different names.</p>
+      <p>Functional dependencies are important in normalization because they help identify redundancy and update problems. If a table stores data in a way where non-key attributes depend on only part of a key or on another non-key attribute, the table may need to be decomposed.</p>
+      <p>Example of a problematic table:</p>
+      <pre><code>Enrollment(student_id, course_id, student_name, course_name)</code></pre>
+      <p>Here, <code>student_id -> student_name</code> and <code>course_id -> course_name</code>. If the primary key is <code>(student_id, course_id)</code>, then student name and course name depend only on part of the key. This creates redundancy.</p>
+      <p>So, functional dependency is the basic idea used to check whether table design is logical, clean, and properly normalized.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Identify key situations where denormalization is advantageous over normalization.",
+    tags: ["Normalization", "Denormalization", "Database Design"],
+    answer: `
+      <p>Normalization reduces duplication and keeps data consistent. Denormalization intentionally adds some duplicate or derived data to improve read performance. Denormalization is advantageous only in selected situations where the benefit is clear.</p>
+      <p>It is useful in reporting systems where the same summaries are needed repeatedly. For example, storing monthly sales totals can be faster than calculating them from thousands of order rows every time.</p>
+      <p>It is also helpful in read-heavy applications. If a page is opened many times but updated rarely, storing commonly needed related data together can reduce joins and improve response time.</p>
+      <p>Denormalization is useful in dashboards because dashboards often need quick counts, totals, and recent activity. Precomputed values can make them load faster.</p>
+      <p>It can help in distributed systems where joining data across multiple servers is expensive. Storing a small copy of required data locally may improve speed.</p>
+      <p>Search pages and product catalogs may also benefit. For example, storing category name, brand name, and rating summary with product data can make filtering and display faster.</p>
+      <p>However, denormalization should not replace good design. It increases storage and can create inconsistency if updates are not handled carefully. It is best used after identifying slow read queries and only for data that does not change too frequently.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "How can aggregates be performed conditionally in MongoDB? Illustrate this with an example query.",
+    tags: ["MongoDB", "Aggregation", "Conditional Logic"],
+    answer: `
+      <p>Conditional aggregation in MongoDB means calculating totals, counts, or other values only when certain conditions are true. This is commonly done inside the aggregation pipeline using expressions such as <code>$cond</code>, along with stages like <code>$group</code> and <code>$project</code>.</p>
+      <p>Suppose an <code>orders</code> collection stores order amount and status. We want total sales, paid sales, and cancelled order count.</p>
+      <pre><code>db.orders.aggregate([
+  {
+    $group: {
+      _id: null,
+      totalSales: { $sum: "$amount" },
+      paidSales: {
+        $sum: {
+          $cond: [
+            { $eq: ["$status", "PAID"] },
+            "$amount",
+            0
+          ]
+        }
+      },
+      cancelledCount: {
+        $sum: {
+          $cond: [
+            { $eq: ["$status", "CANCELLED"] },
+            1,
+            0
+          ]
+        }
+      }
+    }
+  }

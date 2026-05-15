@@ -1147,3 +1147,65 @@ SELECT city FROM suppliers;</code></pre>
       <p>A regular view is a saved SQL query. It does not usually store the result separately. When a user queries the view, the database runs the underlying query and returns the latest data from the base tables.</p>
       <pre><code>CREATE VIEW active_students AS
 SELECT student_id, name
+FROM students
+WHERE status = 'ACTIVE';</code></pre>
+      <p>A materialized view stores the result of a query physically. Because the result is already stored, reading from a materialized view can be faster, especially for complex joins, aggregations, or reports.</p>
+      <p>The main difference is freshness and speed. A regular view always reflects current base table data because it is calculated when used. A materialized view may become outdated until it is refreshed. Some systems refresh it manually, on schedule, or automatically.</p>
+      <h3>Comparison</h3>
+      <ul>
+        <li><strong>Regular view:</strong> Stores query definition, not result; always current; may be slower for complex queries.</li>
+        <li><strong>Materialized view:</strong> Stores query result; faster reads; needs refresh to stay updated.</li>
+      </ul>
+      <p>Regular views are useful for simplifying queries and controlling access to columns. Materialized views are useful for dashboards, summaries, and repeated reports where read speed matters more than instant updates.</p>
+      <p>Thus, a regular view is mainly a logical layer, while a materialized view is a stored result used to improve performance.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "In which scenarios can subqueries be utilized within an SQL statement?",
+    tags: ["SQL", "Subqueries", "Query Design"],
+    answer: `
+      <p>A subquery is a query written inside another SQL query. It is used when one query needs a value, list, or table result produced by another query. Subqueries can appear in different parts of an SQL statement.</p>
+      <p>In a <code>WHERE</code> clause, a subquery can filter records based on another result:</p>
+      <pre><code>SELECT name
+FROM students
+WHERE course_id IN (
+  SELECT course_id
+  FROM courses
+  WHERE department = 'Computer Science'
+);</code></pre>
+      <p>In a <code>SELECT</code> clause, a subquery can calculate a value for each row, such as count or average. In a <code>FROM</code> clause, a subquery can act like a temporary table.</p>
+      <p>Subqueries are also useful with operators such as <code>IN</code>, <code>NOT IN</code>, <code>EXISTS</code>, <code>ANY</code>, and <code>ALL</code>. For example, <code>EXISTS</code> checks whether matching rows are present in another table.</p>
+      <p>Common scenarios include finding students above average marks, customers who placed orders, products costlier than category average, or employees earning more than their department average.</p>
+      <p>Subqueries make SQL more expressive because they allow step-by-step logic inside one statement. However, for very large datasets, joins may sometimes be easier to optimize. A good exam answer should mention that subqueries can be used for filtering, comparison, existence checks, derived tables, and calculated values.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "What is a subquery in SQL, and how is it typically used?",
+    tags: ["SQL", "Subqueries", "Filtering"],
+    answer: `
+      <p>A subquery is an SQL query placed inside another query. The inner query gives a result that the outer query uses for filtering, comparison, or calculation. It is also called a nested query.</p>
+      <p>A simple example is finding students who scored above the average marks:</p>
+      <pre><code>SELECT name, marks
+FROM students
+WHERE marks &gt; (
+  SELECT AVG(marks)
+  FROM students
+);</code></pre>
+      <p>Here, the inner query calculates the average marks. The outer query uses that value to find students whose marks are greater than the average.</p>
+      <p>Subqueries are typically used in <code>WHERE</code>, <code>HAVING</code>, <code>SELECT</code>, and <code>FROM</code> clauses. They may return a single value, a list of values, or a temporary result table. A single-value subquery can be used with comparison operators like <code>&gt;</code> or <code>=</code>. A list subquery is often used with <code>IN</code>. A table subquery can be used in the <code>FROM</code> clause.</p>
+      <p>Subqueries are useful when the condition depends on another query result. They improve readability when the logic naturally happens in steps. However, they should be written carefully because unnecessary subqueries can slow down performance.</p>
+      <p>In short, a subquery helps one SQL statement use the result of another SQL statement to produce a more meaningful final answer.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Describe the different types of joins in SQL and provide a use case for each.",
+    tags: ["SQL", "Joins", "Relationships"],
+    answer: `
+      <p>A join is used to combine rows from two or more tables based on a related column. Joins are important because relational databases store related data in separate tables to reduce duplication.</p>
+      <p><strong>INNER JOIN</strong> returns only matching rows from both tables. It is used when we need records that exist in both tables, such as students who have enrolled in courses.</p>
+      <pre><code>SELECT s.name, c.course_name
+FROM students s
+INNER JOIN courses c ON s.course_id = c.course_id;</code></pre>

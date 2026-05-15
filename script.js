@@ -1271,3 +1271,65 @@ COMMIT;</code></pre>
     answer: `
       <p>Chaining in MongoDB means applying multiple query operations one after another on the same result. It is commonly used with methods like <code>find()</code>, <code>sort()</code>, <code>limit()</code>, and <code>skip()</code>. Each method refines how the final result is returned.</p>
       <p>Example:</p>
+      <pre><code>db.students
+  .find({ course: "BCA", marks: { $gte: 60 } })
+  .sort({ marks: -1 })
+  .skip(5)
+  .limit(10);</code></pre>
+      <p>Here, <code>find()</code> filters students from the BCA course with marks greater than or equal to 60. <code>sort({ marks: -1 })</code> arranges the result in descending order of marks. <code>skip(5)</code> ignores the first five matching documents. <code>limit(10)</code> returns only ten documents.</p>
+      <p>Chaining is useful for pagination, search results, ranking lists, and dashboards. For example, a website can show the second page of high-scoring students by sorting, skipping earlier results, and limiting the page size.</p>
+      <p>The order of chained operations matters for readability, and sometimes for performance. Filtering should be done early so fewer documents need sorting or limiting. Indexes on filtered and sorted fields can improve speed.</p>
+      <p>In short, MongoDB chaining allows developers to filter, arrange, and control result size in a clean step-by-step query format.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Explain the concept of a deadlock in database systems and describe methods to prevent or resolve it.",
+    tags: ["Concurrency", "Deadlock", "Transactions"],
+    answer: `
+      <p>A deadlock happens when two or more transactions wait for each other in such a way that none of them can continue. Each transaction holds a lock needed by another transaction.</p>
+      <p>Example: Transaction T1 locks row A and waits for row B. Transaction T2 locks row B and waits for row A. Both keep waiting, so the database cannot move forward unless one transaction is stopped.</p>
+      <p>Deadlocks occur because databases use locks to protect data during concurrent transactions. Locks are useful, but if transactions acquire them in different orders, waiting cycles can form.</p>
+      <h3>Prevention methods</h3>
+      <ul>
+        <li>Access tables and rows in a fixed order in all transactions.</li>
+        <li>Keep transactions short so locks are held for less time.</li>
+        <li>Use proper indexes so the database locks fewer rows.</li>
+        <li>Use lock timeouts so a transaction does not wait forever.</li>
+      </ul>
+      <h3>Resolution methods</h3>
+      <ul>
+        <li>The database can detect a waiting cycle and choose one transaction as a victim.</li>
+        <li>The victim transaction is rolled back, releasing its locks.</li>
+        <li>The rolled-back transaction can be retried later.</li>
+      </ul>
+      <p>Deadlocks cannot always be completely avoided in busy systems, but good transaction design reduces them. The main idea is to hold fewer locks, hold them for less time, and handle rollback properly.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Assess the importance of the WHERE clause in database queries. Evaluate scenarios where using WHERE is essential versus when it can be omitted.",
+    tags: ["SQL", "WHERE", "Filtering"],
+    answer: `
+      <p>The <code>WHERE</code> clause is used to filter rows in SQL queries. It tells the database which rows should be selected, updated, or deleted. Without <code>WHERE</code>, the operation usually applies to the whole table.</p>
+      <p>In <code>SELECT</code> queries, <code>WHERE</code> is essential when only specific records are needed:</p>
+      <pre><code>SELECT name, marks
+FROM students
+WHERE marks &gt;= 60;</code></pre>
+      <p>This returns only students with marks greater than or equal to 60. Without the condition, all students would be returned.</p>
+      <p><code>WHERE</code> is very important in <code>UPDATE</code> and <code>DELETE</code> statements because missing it can change or remove every row:</p>
+      <pre><code>UPDATE students
+SET status = 'PASS'
+WHERE marks &gt;= 40;</code></pre>
+      <p>It is also useful in joins, reports, search filters, date ranges, and permission-based data access.</p>
+      <p>The <code>WHERE</code> clause can be omitted when the user intentionally wants all rows, such as showing a full product catalog, counting all records, or generating a complete table backup. For example, <code>SELECT COUNT(*) FROM students;</code> does not need a filter.</p>
+      <p>So, <code>WHERE</code> is essential whenever the operation should apply only to selected rows. It improves correctness, safety, and query usefulness.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Evaluate the importance of the WHERE clause in UPDATE operations using examples from both the student and player tables.",
+    tags: ["SQL", "UPDATE", "WHERE"],
+    answer: `
+      <p>The <code>WHERE</code> clause is extremely important in <code>UPDATE</code> operations because it decides which rows will be changed. If <code>WHERE</code> is missing, the update applies to every row in the table, which can damage the data.</p>
+      <p>Example using a student table:</p>

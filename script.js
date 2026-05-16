@@ -1743,3 +1743,53 @@ const dsaQuestions = [
     "The temporary variable preserves the first element until all other elements are shifted left."
   ]),
   makeDsaQuestion("Foundational", "What is a linked list?", ["Linked List", "Pointers"], [
+    "A linked list is a linear data structure made of nodes. Each node stores data and a pointer to the next node.",
+    "Unlike arrays, linked list nodes do not need contiguous memory. A singly linked list looks like <code>10 -&gt; 20 -&gt; 30 -&gt; NULL</code>.",
+    "It is useful for dynamic insertion and deletion, but direct indexing is not possible. Searching or accessing by position takes <code>O(n)</code> time."
+  ]),
+  makeDsaQuestion("Foundational", "If print(1, 4) is called for printing 1 to N, how many total recursive calls (including the initial call) are made before the base case is hit?", ["Recursion", "Tracing"], [
+    "If the base case is <code>i &gt; n</code>, then <code>print(1, 4)</code> makes calls for <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>, and then <code>5</code>.",
+    "<pre><code>print(1,4)\nprint(2,4)\nprint(3,4)\nprint(4,4)\nprint(5,4) // base case</code></pre>",
+    "Including the initial call and the base-case call, the total number of calls is <code>5</code>."
+  ]),
+  makeDsaQuestion("Foundational", "What is the time complexity of accessing an element in an array by index?", ["Arrays", "Complexity"], [
+    "Accessing an array element by index takes <code>O(1)</code> time.",
+    "Arrays are stored in contiguous memory, so the address can be calculated directly using <code>base + index * element_size</code>.",
+    "No traversal is needed. This is why indexed access in arrays is faster than linked list access by position."
+  ]),
+  makeDsaQuestion("Foundational", "NOT of 0001?", ["Bit Manipulation", "Binary"], [
+    "Bitwise NOT flips every bit. Each <code>0</code> becomes <code>1</code>, and each <code>1</code> becomes <code>0</code>.",
+    "<pre><code>0001\n1110</code></pre>",
+    "So, considering only the given four bits, NOT of <code>0001</code> is <code>1110</code>."
+  ]),
+  makeDsaQuestion("Foundational", "What is the base case in a recursive function?", ["Recursion", "Functions"], [
+    "The base case is the stopping condition in a recursive function. It prevents the function from calling itself forever.",
+    "<pre><code>void print(int i, int n) {\n  if (i &gt; n) return;\n  cout &lt;&lt; i;\n  print(i + 1, n);\n}</code></pre>",
+    "Here, <code>if (i &gt; n) return;</code> is the base case. Every recursive solution must move closer to its base case."
+  ]),
+  makeDsaQuestion("Foundational", "For arr = [30, 50, 40, 20, 10], what is the array after iteration 1 (inserting 50)?", ["Sorting", "Insertion Sort"], [
+    "In insertion sort, iteration 1 takes the element at index 1 as the key. Here, the key is <code>50</code>.",
+    "The sorted left part is <code>[30]</code>. Since <code>50</code> is already greater than <code>30</code>, no shifting is needed.",
+    "So the array remains <code>[30, 50, 40, 20, 10]</code> after iteration 1."
+  ]),
+  makeDsaQuestion("Foundational", "What is the difference between a stack and a queue?", ["Stack", "Queue"], [
+    "A stack follows LIFO: Last In, First Out. The last inserted element is removed first.",
+    "A queue follows FIFO: First In, First Out. The first inserted element is removed first.",
+    "Stacks are used in recursion, undo, expression evaluation, and DFS. Queues are used in scheduling, buffering, and BFS."
+  ]),
+  makeDsaQuestion("Foundational", "XOR 3 to 6?", ["Bit Manipulation", "XOR"], [
+    "Write the numbers in binary: <code>3 = 011</code> and <code>6 = 110</code>.",
+    "<pre><code>011\n110\n---\n101</code></pre>",
+    "The result <code>101</code> is decimal <code>5</code>. So <code>3 ^ 6 = 5</code>."
+  ]),
+  makeDsaQuestion("Applied", "State the time and space complexity of the canPartition algorithm and provide a detailed justification for each.", ["Complexity", "Strings"], [
+    "The usual <code>canPartition</code> algorithm counts character frequencies and then counts odd-frequency characters.",
+    "Scanning the string of length <code>n</code> takes <code>O(n)</code> time. Checking a fixed 26-size lowercase frequency array takes <code>O(26)</code>, which is constant. So total time is <code>O(n)</code>.",
+    "Space is <code>O(1)</code> for a fixed alphabet because the frequency array size does not grow with input. If a map is used for an unlimited character set, space can be <code>O(m)</code>, where <code>m</code> is distinct characters."
+  ]),
+  makeDsaQuestion("Applied", "Explain the concept of Big-O, Big-Omega, and Big-Theta notations with examples.", ["Complexity", "Analysis"], [
+    "Big-O gives an upper bound on growth. Example: linear search worst case is <code>O(n)</code> because it may check every element.",
+    "Big-Omega gives a lower bound. Linear search best case is <code>Omega(1)</code> if the target is found first.",
+    "Big-Theta gives a tight bound when upper and lower growth are the same. Accessing an array by index is <code>Theta(1)</code>. Merge Sort is <code>Theta(n log n)</code> because its best, average, and worst growth are all <code>n log n</code>."
+  ]),
+  makeDsaQuestion("Applied", "For s = \"aabbccd\" and k = 3, trace every step of the canPartition algorithm - including the full frequency array and oddCount - and state the final output with explanation.", ["Strings", "Hashing", "Tracing"], [

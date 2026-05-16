@@ -1519,3 +1519,65 @@ ON students(roll_no);</code></pre>
     answer: `
       <p>In SQL set operations such as <code>UNION</code>, <code>UNION ALL</code>, <code>INTERSECT</code>, and <code>EXCEPT</code>, the placement of <code>ORDER BY</code>, <code>LIMIT</code>, and <code>OFFSET</code> affects the final result. These clauses should usually be applied after the complete set operation, not inside each individual <code>SELECT</code>, unless subqueries are used.</p>
       <p>Correct example:</p>
+      <pre><code>SELECT actor_id FROM movie_cast WHERE movie_id = 6
+UNION
+SELECT actor_id FROM movie_cast WHERE movie_id = 15
+ORDER BY actor_id
+LIMIT 10 OFFSET 5;</code></pre>
+      <p>Here, both result sets are combined first. Then the final combined result is sorted, skipped, and limited. This gives predictable output.</p>
+      <p>An incorrect or unsafe style is placing <code>ORDER BY</code> before the set operation without wrapping the query:</p>
+      <pre><code>SELECT actor_id FROM movie_cast WHERE movie_id = 6 ORDER BY actor_id
+UNION
+SELECT actor_id FROM movie_cast WHERE movie_id = 15;</code></pre>
+      <p>Many databases reject this because <code>ORDER BY</code> belongs to the final result unless the individual query is placed inside a subquery.</p>
+      <p>If each part must be limited separately, use subqueries:</p>
+      <pre><code>SELECT actor_id FROM (
+  SELECT actor_id FROM movie_cast WHERE movie_id = 6 ORDER BY actor_id LIMIT 5
+) a
+UNION
+SELECT actor_id FROM (
+  SELECT actor_id FROM movie_cast WHERE movie_id = 15 ORDER BY actor_id LIMIT 5
+) b;</code></pre>
+      <p>In exams, the key point is that final sorting and limiting should normally come after the set operation.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Explain the concept of a self-join in SQL and describe a practical scenario where it is useful.",
+    tags: ["SQL", "Self Join", "Relationships"],
+    answer: `
+      <p>A self-join is a join where a table is joined with itself. It is used when rows in the same table are related to other rows in that same table. To make this possible, the table is given two different aliases.</p>
+      <p>A common example is an employee table where each employee may have a manager, and the manager is also stored as an employee in the same table.</p>
+      <pre><code>Employee(emp_id, emp_name, manager_id)</code></pre>
+      <p>To show each employee with the manager name:</p>
+      <pre><code>SELECT e.emp_name AS employee_name,
+       m.emp_name AS manager_name
+FROM employees e
+LEFT JOIN employees m
+  ON e.manager_id = m.emp_id;</code></pre>
+      <p>Here, <code>e</code> represents the employee row, and <code>m</code> represents the manager row. Both come from the same <code>employees</code> table, but aliases allow SQL to treat them as separate references.</p>
+      <p>A <code>LEFT JOIN</code> is used so that top-level employees without managers can still appear in the result.</p>
+      <p>Self-joins are useful for employee-manager structures, category-subcategory relationships, comparing rows in the same table, finding duplicate records, or matching students from the same city.</p>
+      <p>In short, a self-join is useful when a table contains a relationship within itself. It avoids creating a separate table when the same entity type relates to itself.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Design a SQL query that uses multiple set operations to find actors who appeared in movie 6, combine them with actors from movie 15, exclude actors from movie 20, and display the first 10 results in ascending order.",
+    tags: ["SQL", "Set Operations", "Query Design"],
+    answer: `
+      <p>Assume the table <code>movie_cast(movie_id, actor_id)</code> stores which actor appeared in which movie. The task has four parts: get actors from movie 6, combine them with actors from movie 15, remove actors from movie 20, and show the first 10 actor IDs in ascending order.</p>
+      <p>A clear SQL solution is:</p>
+      <pre><code>(
+  SELECT actor_id
+  FROM movie_cast
+  WHERE movie_id = 6
+  UNION
+  SELECT actor_id
+  FROM movie_cast
+  WHERE movie_id = 15
+)
+EXCEPT
+SELECT actor_id
+FROM movie_cast
+WHERE movie_id = 20

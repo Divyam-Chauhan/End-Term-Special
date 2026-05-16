@@ -1581,3 +1581,12 @@ EXCEPT
 SELECT actor_id
 FROM movie_cast
 WHERE movie_id = 20
+ORDER BY actor_id ASC
+LIMIT 10;</code></pre>
+      <p>The first <code>SELECT</code> gets actors from movie 6. The second <code>SELECT</code> gets actors from movie 15. <code>UNION</code> combines both results and removes duplicate actor IDs. This is useful because an actor may appear in both movies.</p>
+      <p><code>EXCEPT</code> removes actors who appeared in movie 20. After the set operation is complete, <code>ORDER BY actor_id ASC</code> sorts the final result in ascending order, and <code>LIMIT 10</code> returns only the first ten rows.</p>
+      <p>If the database does not support <code>EXCEPT</code>, the same idea can be written with <code>NOT IN</code>. But the set-operation version directly matches the requirement and clearly shows the logic.</p>
+    `,
+  },
+];
+

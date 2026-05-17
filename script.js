@@ -2103,3 +2103,43 @@ function renderDsaQuestionGroups(filteredQuestions) {
     label.className = "dsa-group-title";
     label.textContent = section;
 
+    const count = document.createElement("span");
+    count.className = "dsa-group-count";
+    count.textContent = `${sectionQuestions.length} questions`;
+
+    const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    icon.setAttribute("viewBox", "0 0 24 24");
+    icon.setAttribute("aria-hidden", "true");
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "m6 9 6 6 6-6");
+    icon.appendChild(path);
+
+    button.append(label, count, icon);
+
+    const body = document.createElement("div");
+    body.className = "dsa-group-body";
+
+    if (state.dsaOpenSections.has(section)) {
+      sectionQuestions.forEach((question, index) => {
+        body.appendChild(createQuestionCard(question, index, { openByDefault: false }));
+      });
+    }
+
+    button.addEventListener("click", () => {
+      if (state.dsaOpenSections.has(section)) {
+        state.dsaOpenSections.delete(section);
+      } else {
+        state.dsaOpenSections.add(section);
+      }
+      renderQuestions();
+    });
+
+    group.classList.toggle("is-open", state.dsaOpenSections.has(section));
+    group.append(button, body);
+    questionList.appendChild(group);
+  });
+}
+
+function render() {
+  renderSubjectMeta();
+  renderQuestions();

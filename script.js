@@ -2068,3 +2068,38 @@ function createQuestionCard(question, index, options = {}) {
   if (options.openByDefault) card.classList.add("is-open");
 
   number.textContent = String(index + 1).padStart(2, "0");
+  title.textContent = question.title;
+  answer.innerHTML = question.answer;
+
+  ["8 marks", ...(question.section ? [question.section] : []), ...question.tags].forEach((tag) => {
+    const chip = document.createElement("span");
+    chip.className = "meta-chip";
+    chip.textContent = tag;
+    metaRow.appendChild(chip);
+  });
+
+  head.addEventListener("click", () => {
+    card.classList.toggle("is-open");
+  });
+
+  return fragment;
+}
+
+function renderDsaQuestionGroups(filteredQuestions) {
+  const sections = ["Foundational", "Applied"];
+
+  sections.forEach((section) => {
+    const sectionQuestions = filteredQuestions.filter((question) => question.section === section);
+    const group = document.createElement("section");
+    group.className = "dsa-question-group";
+    group.dataset.section = section;
+
+    const button = document.createElement("button");
+    button.className = "dsa-group-head";
+    button.type = "button";
+    button.setAttribute("aria-expanded", state.dsaOpenSections.has(section).toString());
+
+    const label = document.createElement("span");
+    label.className = "dsa-group-title";
+    label.textContent = section;
+

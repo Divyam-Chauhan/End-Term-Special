@@ -1793,3 +1793,53 @@ const dsaQuestions = [
     "Big-Theta gives a tight bound when upper and lower growth are the same. Accessing an array by index is <code>Theta(1)</code>. Merge Sort is <code>Theta(n log n)</code> because its best, average, and worst growth are all <code>n log n</code>."
   ]),
   makeDsaQuestion("Applied", "For s = \"aabbccd\" and k = 3, trace every step of the canPartition algorithm - including the full frequency array and oddCount - and state the final output with explanation.", ["Strings", "Hashing", "Tracing"], [
+    "For <code>s = \"aabbccd\"</code>, the frequencies are <code>a=2</code>, <code>b=2</code>, <code>c=2</code>, <code>d=1</code>, and all other lowercase letters are <code>0</code>.",
+    "Only <code>d</code> has an odd frequency, so <code>oddCount = 1</code>.",
+    "Since <code>oddCount &lt;= k</code> gives <code>1 &lt;= 3</code>, and <code>k</code> is not greater than the string length, the function returns <code>true</code>. The odd character can fit into one of the palindrome groups."
+  ]),
+  makeDsaQuestion("Applied", "Write a C++ function to find all pairs in an array that sum to a given target using hashing, and state its time complexity.", ["Arrays", "Hashing", "C++"], [
+    "Use a hash set to store numbers already seen. For each number <code>x</code>, check whether <code>target - x</code> exists.",
+    "<pre><code>vector&lt;pair&lt;int,int&gt;&gt; findPairs(vector&lt;int&gt;&amp; arr, int target) {\n  unordered_set&lt;int&gt; seen;\n  vector&lt;pair&lt;int,int&gt;&gt; ans;\n  for (int x : arr) {\n    int need = target - x;\n    if (seen.count(need)) ans.push_back({need, x});\n    seen.insert(x);\n  }\n  return ans;\n}</code></pre>",
+    "Average time complexity is <code>O(n)</code>, and space complexity is <code>O(n)</code>. It is faster than the brute force <code>O(n^2)</code> pair check."
+  ]),
+  makeDsaQuestion("Applied", "Describe the step in the canPartition algorithm that counts odd-frequency characters. Explain how it works, what it produces, and why it is necessary.", ["Strings", "Hashing"], [
+    "After building the frequency array, the algorithm loops through every frequency and counts values that are odd.",
+    "<pre><code>int oddCount = 0;\nfor (int count : freq) {\n  if (count % 2 != 0) oddCount++;\n}</code></pre>",
+    "<code>oddCount</code> tells how many characters need a middle position in palindrome-like groups. Since each palindrome can handle at most one odd character, the check <code>oddCount &lt;= k</code> is necessary."
+  ]),
+  makeDsaQuestion("Applied", "Write a C++ function to check if a given number is a power of 2 using bit manipulation.", ["Bit Manipulation", "C++"], [
+    "A power of 2 has exactly one set bit in binary. The expression <code>n &amp; (n - 1)</code> removes the rightmost set bit.",
+    "<pre><code>bool isPowerOfTwo(int n) {\n  if (n &lt;= 0) return false;\n  return (n &amp; (n - 1)) == 0;\n}</code></pre>",
+    "For <code>8</code>, <code>1000 &amp; 0111 = 0000</code>, so it is a power of 2. Time and space complexity are both <code>O(1)</code>."
+  ]),
+  makeDsaQuestion("Applied", "State the time complexity of the linear search approach for finding a peak element and explain how the number of comparisons relates to the array size n.", ["Searching", "Arrays", "Complexity"], [
+    "The linear search approach for finding a peak element checks each array element one by one.",
+    "For each middle element, it may compare with the left and right neighbours. First and last elements need only one neighbour check.",
+    "Even though each element may need one or two comparisons, the total comparisons grow linearly with <code>n</code>. Therefore, time complexity is <code>O(n)</code>, and extra space is <code>O(1)</code>."
+  ]),
+  makeDsaQuestion("Applied", "Describe the sliding window technique and write C++ code to find the maximum sum subarray of size k.", ["Arrays", "Sliding Window", "C++"], [
+    "Sliding window is used for fixed-size or variable-size continuous subarray problems. For maximum sum of size <code>k</code>, calculate the first window sum, then slide by removing the left element and adding the next element.",
+    "<pre><code>int maxSum(vector&lt;int&gt;&amp; arr, int k) {\n  int sum = 0;\n  for (int i = 0; i &lt; k; i++) sum += arr[i];\n  int best = sum;\n  for (int i = k; i &lt; arr.size(); i++) {\n    sum += arr[i] - arr[i - k];\n    best = max(best, sum);\n  }\n  return best;\n}</code></pre>",
+    "The time complexity is <code>O(n)</code>, and the space complexity is <code>O(1)</code>."
+  ]),
+  makeDsaQuestion("Applied", "Write the complete C++ code for the binary search approach to find a peak element and trace it on the array [1, 2, 3, 4, 5, 6, 7, 8, 4, 2, 1].", ["Searching", "Binary Search", "Arrays"], [
+    "Use binary search by comparing <code>arr[mid]</code> with <code>arr[mid + 1]</code>. If the right side is increasing, move right; otherwise move left.",
+    "<pre><code>int findPeak(vector&lt;int&gt;&amp; arr) {\n  int low = 0, high = arr.size() - 1;\n  while (low &lt; high) {\n    int mid = low + (high - low) / 2;\n    if (arr[mid] &lt; arr[mid + 1]) low = mid + 1;\n    else high = mid;\n  }\n  return low;\n}</code></pre>",
+    "Trace: mid 5 gives 6 &lt; 7, move right. mid 8 gives 4 &gt; 2, move left. mid 7 gives 8 &gt; 4, move left. mid 6 gives 7 &lt; 8, move right. Final peak index is <code>7</code>, value <code>8</code>. Time is <code>O(log n)</code>."
+  ]),
+  makeDsaQuestion("Applied", "Explain the Dutch National Flag algorithm and write its C++ implementation.", ["Arrays", "Sorting", "Two Pointers"], [
+    "The Dutch National Flag algorithm sorts an array containing only <code>0</code>, <code>1</code>, and <code>2</code> using three pointers: <code>low</code>, <code>mid</code>, and <code>high</code>.",
+    "<pre><code>void sortColors(vector&lt;int&gt;&amp; a) {\n  int low = 0, mid = 0, high = a.size() - 1;\n  while (mid &lt;= high) {\n    if (a[mid] == 0) swap(a[low++], a[mid++]);\n    else if (a[mid] == 1) mid++;\n    else swap(a[mid], a[high--]);\n  }\n}</code></pre>",
+    "Zeros move left, twos move right, and ones stay in the middle. Time complexity is <code>O(n)</code>, and space complexity is <code>O(1)</code>."
+  ]),
+  makeDsaQuestion("Applied", "Explain properties of XOR operator and its applications with examples.", ["Bit Manipulation", "XOR"], [
+    "XOR returns <code>1</code> when two bits are different and <code>0</code> when they are the same.",
+    "Important properties: <code>x ^ x = 0</code>, <code>x ^ 0 = x</code>, <code>x ^ y = y ^ x</code>, and XOR grouping does not affect the result.",
+    "A common application is finding the unique element when every other element appears twice: initialize <code>ans = 0</code> and XOR every array element. Duplicates cancel out, leaving the unique value."
+  ]),
+  makeDsaQuestion("Applied", "Compare Quick Sort and Merge Sort in terms of time complexity, space complexity, and stability.", ["Sorting", "Quick Sort", "Merge Sort"], [
+    "Quick Sort has average time <code>O(n log n)</code>, but worst-case time <code>O(n^2)</code> if pivots are poor. Merge Sort has <code>O(n log n)</code> time in best, average, and worst cases.",
+    "Quick Sort usually uses <code>O(log n)</code> recursion space. Merge Sort usually uses <code>O(n)</code> extra space for merging.",
+    "Merge Sort is stable if implemented carefully. Quick Sort is usually unstable. Quick Sort is often fast in practice, while Merge Sort is preferred when stability and guaranteed time matter."
+  ]),
+  makeDsaQuestion("Applied", "Explain the approach to find minimum bit flips required to make (x OR y) equal to z.", ["Bit Manipulation", "OR"], [

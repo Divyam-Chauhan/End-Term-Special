@@ -2034,3 +2034,37 @@ function renderSubjectMeta() {
   subjectDescription.textContent = subject.description;
 }
 
+function renderQuestions() {
+  const filteredQuestions = getFilteredQuestions();
+  questionList.replaceChildren();
+  questionCount.textContent = filteredQuestions.length.toString();
+  emptyState.hidden = filteredQuestions.length > 0;
+  emptyState.textContent = state.query
+    ? "No matching question found. Try another keyword."
+    : `${subjects[state.activeSubject].label} questions have not been added yet.`;
+
+  if (filteredQuestions.length === 0) return;
+
+  if (state.activeSubject === "dsa-cpp") {
+    renderDsaQuestionGroups(filteredQuestions);
+    return;
+  }
+
+  filteredQuestions.forEach((question, index) => {
+    questionList.appendChild(createQuestionCard(question, index, { openByDefault: index === 0 }));
+  });
+}
+
+function createQuestionCard(question, index, options = {}) {
+  const fragment = template.content.cloneNode(true);
+  const card = fragment.querySelector(".question-card");
+  const head = fragment.querySelector(".question-head");
+  const number = fragment.querySelector(".question-number");
+  const title = fragment.querySelector(".question-title");
+  const metaRow = fragment.querySelector(".meta-row");
+  const answer = fragment.querySelector(".answer-content");
+
+  card.dataset.subject = question.subject;
+  if (options.openByDefault) card.classList.add("is-open");
+
+  number.textContent = String(index + 1).padStart(2, "0");

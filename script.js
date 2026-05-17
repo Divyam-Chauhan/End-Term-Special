@@ -1943,3 +1943,53 @@ const dsaQuestions = [
     "The first call moves <code>n-1</code> disks to helper, then the largest disk moves to destination, then <code>n-1</code> disks move onto it. Time is <code>O(2^n)</code>."
   ]),
   makeDsaQuestion("Applied", "Explain the algorithm and complexity of decimal to binary conversion using code.", ["Bit Manipulation", "C++"], [
+    "Repeatedly divide the decimal number by 2 and store the remainders. Read the remainders in reverse order to get binary.",
+    "<pre><code>string decimalToBinary(int n) {\n  if (n == 0) return \"0\";\n  string ans = \"\";\n  while (n &gt; 0) {\n    ans.push_back(char('0' + n % 2));\n    n /= 2;\n  }\n  reverse(ans.begin(), ans.end());\n  return ans;\n}</code></pre>",
+    "The loop runs <code>O(log n)</code> times because the number is divided by 2 each step. Space is <code>O(log n)</code> for the answer string."
+  ]),
+  makeDsaQuestion("Applied", "Write a C++ function to detect a cycle in a linked list using Floyd's cycle detection algorithm.", ["Linked List", "Pointers", "Cycle Detection"], [
+    "Floyd's algorithm uses two pointers. The slow pointer moves one step, and the fast pointer moves two steps. If they meet, a cycle exists.",
+    "<pre><code>bool hasCycle(Node* head) {\n  Node* slow = head;\n  Node* fast = head;\n  while (fast != NULL &amp;&amp; fast-&gt;next != NULL) {\n    slow = slow-&gt;next;\n    fast = fast-&gt;next-&gt;next;\n    if (slow == fast) return true;\n  }\n  return false;\n}</code></pre>",
+    "If there is no cycle, <code>fast</code> reaches <code>NULL</code>. Time is <code>O(n)</code>, and space is <code>O(1)</code>."
+  ]),
+  makeDsaQuestion("Applied", "List the steps of the binary search pseudo code for finding a peak element in the correct order.", ["Searching", "Binary Search", "Pseudocode"], [
+    "Set <code>low = 0</code> and <code>high = n - 1</code>. Repeat while <code>low &lt; high</code>.",
+    "Find <code>mid = low + (high - low) / 2</code>. If <code>arr[mid] &lt; arr[mid + 1]</code>, move right by setting <code>low = mid + 1</code>. Otherwise, set <code>high = mid</code>.",
+    "When the loop ends, <code>low</code> is the index of a peak element. The algorithm takes <code>O(log n)</code> time."
+  ]),
+  makeDsaQuestion("Applied", "Explain how to remove the rightmost set bit of a number and analyze its efficiency.", ["Bit Manipulation", "Complexity"], [
+    "The rightmost set bit can be removed using <code>n = n &amp; (n - 1)</code>.",
+    "Example: <code>12 = 1100</code> and <code>11 = 1011</code>. Then <code>12 &amp; 11 = 1000</code>, so the rightmost set bit is cleared.",
+    "This uses one subtraction and one AND operation, so time complexity is <code>O(1)</code> and space complexity is <code>O(1)</code>."
+  ]),
+  makeDsaQuestion("Applied", "Write the complete C++ code for the linear search approach to find a peak element and trace it on the array [2, 4, 3, 1, 5, 6].", ["Searching", "Arrays", "C++"], [
+    "Linear search checks each element and sees whether it is greater than or equal to its neighbours.",
+    "<pre><code>int findPeak(vector&lt;int&gt;&amp; a) {\n  int n = a.size();\n  for (int i = 0; i &lt; n; i++) {\n    bool leftOk = (i == 0 || a[i] &gt;= a[i - 1]);\n    bool rightOk = (i == n - 1 || a[i] &gt;= a[i + 1]);\n    if (leftOk &amp;&amp; rightOk) return i;\n  }\n  return -1;\n}</code></pre>",
+    "Trace for <code>[2,4,3,1,5,6]</code>: index 0 is not peak because <code>2 &lt; 4</code>. Index 1 has <code>4 &gt; 2</code> and <code>4 &gt; 3</code>, so it is a peak. Return index <code>1</code>. Time is <code>O(n)</code>."
+  ])
+];
+
+const firstDsaQuestionIndex = questions.findIndex((question) => question.subject === "dsa-cpp");
+if (firstDsaQuestionIndex !== -1) {
+  questions.splice(firstDsaQuestionIndex, questions.length - firstDsaQuestionIndex, ...dsaQuestions);
+} else {
+  questions.push(...dsaQuestions);
+}
+
+function makeDsaQuestion(section, title, tags, parts) {
+  return {
+    subject: "dsa-cpp",
+    section,
+    title,
+    tags,
+    answer: parts
+      .map((part) => part.trim().startsWith("<") ? part : `<p>${part}</p>`)
+      .join("\n"),
+  };
+}
+
+const state = {
+  activeSubject: "web-dev",
+  query: "",
+  dsaOpenSections: new Set(),
+};

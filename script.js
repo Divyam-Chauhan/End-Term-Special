@@ -1893,3 +1893,53 @@ const dsaQuestions = [
     "It also helps in exams because the student can explain the approach clearly even before giving final C++ code."
   ]),
   makeDsaQuestion("Applied", "Explain the concept of hashing and how an unordered_map works in C++.", ["Hashing", "unordered_map", "STL"], [
+    "Hashing converts a key into a bucket location using a hash function. It allows fast average search, insertion, and deletion.",
+    "In C++, <code>unordered_map</code> stores key-value pairs using hashing. It does not keep keys sorted.",
+    "Average operations are <code>O(1)</code>, but worst case can be slower if many keys collide. It is useful for frequency counting, duplicate checks, and fast lookup problems."
+  ]),
+  makeDsaQuestion("Applied", "What is the initial direction of traversal in a spiral matrix?", ["Arrays", "Matrix", "Traversal"], [
+    "The usual initial direction in spiral matrix traversal is left to right across the top row.",
+    "The common direction order is <code>Right - Down - Left - Up</code>.",
+    "This order can be managed using direction arrays. Starting right from the top-left cell gives the standard spiral order used in most DSA problems."
+  ]),
+  makeDsaQuestion("Applied", "Compare the use of pseudocode to writing a recipe before cooking. What are the similarities in their purposes?", ["Pseudocode", "Planning"], [
+    "Both pseudocode and a recipe are plans written before execution. Pseudocode plans a program, while a recipe plans a process.",
+    "The useful similarity is ordered steps. If steps are missing or in the wrong order, the final result may fail.",
+    "For coding, pseudocode helps check logic, edge cases, and sequence before writing C++. Its main purpose is clarity and fewer implementation mistakes."
+  ]),
+  makeDsaQuestion("Applied", "Explain the concept of counting sort and write a C++ implementation for an array of non-negative integers.", ["Sorting", "Counting Sort", "C++"], [
+    "Counting sort counts how many times each non-negative integer appears, then writes values back in sorted order.",
+    "<pre><code>void countingSort(vector&lt;int&gt;&amp; a) {\n  int mx = *max_element(a.begin(), a.end());\n  vector&lt;int&gt; count(mx + 1, 0);\n  for (int x : a) count[x]++;\n  int idx = 0;\n  for (int value = 0; value &lt;= mx; value++) {\n    while (count[value]--) a[idx++] = value;\n  }\n}</code></pre>",
+    "If <code>n</code> is array size and <code>k</code> is value range, time is <code>O(n + k)</code> and space is <code>O(k)</code>."
+  ]),
+  makeDsaQuestion("Applied", "Write a C++ function to reverse a singly linked list iteratively and state its time and space complexity.", ["Linked List", "Pointers", "C++"], [
+    "Use three pointers: <code>prev</code>, <code>curr</code>, and <code>nextNode</code>. Reverse each link one by one.",
+    "<pre><code>Node* reverseList(Node* head) {\n  Node* prev = NULL;\n  Node* curr = head;\n  while (curr != NULL) {\n    Node* nextNode = curr-&gt;next;\n    curr-&gt;next = prev;\n    prev = curr;\n    curr = nextNode;\n  }\n  return prev;\n}</code></pre>",
+    "Each node is visited once, so time complexity is <code>O(n)</code>. Only pointers are used, so space complexity is <code>O(1)</code>."
+  ]),
+  makeDsaQuestion("Applied", "Write a C++ function to merge two sorted arrays into a single sorted array without using extra space (in-place merge).", ["Arrays", "Sorting", "In-place"], [
+    "If the first array has enough empty space at the end, merge from the back to avoid overwriting useful values.",
+    "<pre><code>void merge(vector&lt;int&gt;&amp; a, int m, vector&lt;int&gt;&amp; b, int n) {\n  int i = m - 1, j = n - 1, k = m + n - 1;\n  while (i &gt;= 0 &amp;&amp; j &gt;= 0) {\n    if (a[i] &gt; b[j]) a[k--] = a[i--];\n    else a[k--] = b[j--];\n  }\n  while (j &gt;= 0) a[k--] = b[j--];\n}</code></pre>",
+    "Time complexity is <code>O(m + n)</code>, and extra space is <code>O(1)</code>."
+  ]),
+  makeDsaQuestion("Applied", "For s = \"aaabbb\" and k = 1, trace every step of the canPartition algorithm and explain why the function returns false.", ["Strings", "Hashing", "Tracing"], [
+    "For <code>s = \"aaabbb\"</code>, frequencies are <code>a = 3</code> and <code>b = 3</code>.",
+    "Both frequencies are odd, so <code>oddCount = 2</code>.",
+    "For <code>k = 1</code>, at most one odd-frequency character can be handled. Since <code>2 &lt;= 1</code> is false, the function returns <code>false</code>."
+  ]),
+  makeDsaQuestion("Applied", "Explain the concept of dynamic programming with a C++ example solving the 0/1 knapsack problem.", ["Dynamic Programming", "Knapsack", "C++"], [
+    "Dynamic programming stores answers to smaller overlapping subproblems so they are not recalculated.",
+    "<pre><code>int knapsack(vector&lt;int&gt;&amp; wt, vector&lt;int&gt;&amp; val, int W) {\n  int n = wt.size();\n  vector&lt;vector&lt;int&gt;&gt; dp(n + 1, vector&lt;int&gt;(W + 1, 0));\n  for (int i = 1; i &lt;= n; i++) {\n    for (int w = 0; w &lt;= W; w++) {\n      dp[i][w] = dp[i - 1][w];\n      if (wt[i - 1] &lt;= w)\n        dp[i][w] = max(dp[i][w], val[i - 1] + dp[i - 1][w - wt[i - 1]]);\n    }\n  }\n  return dp[n][W];\n}</code></pre>",
+    "Here <code>dp[i][w]</code> means best value using first <code>i</code> items and capacity <code>w</code>. Time and space are <code>O(nW)</code>."
+  ]),
+  makeDsaQuestion("Applied", "What role does the variable 'pos' play in the spiral traversal pseudo code?", ["Arrays", "Matrix", "Traversal"], [
+    "In spiral traversal pseudocode, <code>pos</code> usually stores the current direction index.",
+    "For direction order right, down, left, up, <code>pos = 0</code> means right, <code>1</code> means down, <code>2</code> means left, and <code>3</code> means up.",
+    "When movement is blocked, <code>pos = (pos + 1) % 4</code> changes to the next direction. This keeps the traversal in spiral order."
+  ]),
+  makeDsaQuestion("Applied", "Explain the concept of recursion with a C++ example solving the Tower of Hanoi problem.", ["Recursion", "C++"], [
+    "Recursion means a function calls itself to solve a smaller version of the same problem. It needs a base case and recursive calls.",
+    "<pre><code>void hanoi(int n, char src, char helper, char dest) {\n  if (n == 0) return;\n  hanoi(n - 1, src, dest, helper);\n  cout &lt;&lt; \"Move disk \" &lt;&lt; n &lt;&lt; \" from \" &lt;&lt; src &lt;&lt; \" to \" &lt;&lt; dest &lt;&lt; endl;\n  hanoi(n - 1, helper, src, dest);\n}</code></pre>",
+    "The first call moves <code>n-1</code> disks to helper, then the largest disk moves to destination, then <code>n-1</code> disks move onto it. Time is <code>O(2^n)</code>."
+  ]),
+  makeDsaQuestion("Applied", "Explain the algorithm and complexity of decimal to binary conversion using code.", ["Bit Manipulation", "C++"], [

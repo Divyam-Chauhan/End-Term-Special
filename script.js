@@ -1843,9 +1843,14 @@ for (int count : freq) {
     `The final decision also checks <code>k &lt;= s.length()</code>. Together, these conditions make sure there are enough parts for odd characters and enough characters for the requested number of parts.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to check if a given number is a power of 2 using bit manipulation.", ["Bit Manipulation", "C++"], [
-    "A power of 2 has exactly one set bit in binary. The expression <code>n &amp; (n - 1)</code> removes the rightmost set bit.",
-    "<pre><code>bool isPowerOfTwo(int n) {\n  if (n &lt;= 0) return false;\n  return (n &amp; (n - 1)) == 0;\n}</code></pre>",
-    "For <code>8</code>, <code>1000 &amp; 0111 = 0000</code>, so it is a power of 2. Time and space complexity are both <code>O(1)</code>."
+    `A number is a power of 2 if its binary form contains exactly one set bit. Examples are <code>1 = 1</code>, <code>2 = 10</code>, <code>4 = 100</code>, and <code>8 = 1000</code>. Numbers like <code>6 = 110</code> are not powers of 2 because they have more than one set bit.`,
+    `The expression <code>n &amp; (n - 1)</code> removes the rightmost set bit of <code>n</code>. If the number had only one set bit, the result becomes zero. This gives a direct bit-manipulation test.`,
+    `<pre><code>bool isPowerOfTwo(int n) {
+  if (n &lt;= 0) return false;
+  return (n &amp; (n - 1)) == 0;
+}</code></pre>`,
+    `For <code>8</code>, binary is <code>1000</code>. <code>7</code> is <code>0111</code>. So <code>1000 &amp; 0111 = 0000</code>, which means true. For <code>12</code>, <code>1100 &amp; 1011 = 1000</code>, which is not zero, so false.`,
+    `The time complexity is <code>O(1)</code> because only a constant number of operations are used. Space complexity is also <code>O(1)</code>. The check for <code>n &lt;= 0</code> is important because powers of 2 are positive in this context.`
   ]),
   makeDsaQuestion("Applied", "State the time complexity of the linear search approach for finding a peak element and explain how the number of comparisons relates to the array size n.", ["Searching", "Arrays", "Complexity"], [
     "The linear search approach for finding a peak element checks each array element one by one.",

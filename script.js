@@ -1799,9 +1799,14 @@ const dsaQuestions = [
     `The loop above runs <code>n</code> times, so its time is <code>Theta(n)</code>. In exams, Big-O is used most for worst-case analysis, but all three notations together give a clearer picture of algorithm behavior.`
   ]),
   makeDsaQuestion("Applied", "For s = \"aabbccd\" and k = 3, trace every step of the canPartition algorithm - including the full frequency array and oddCount - and state the final output with explanation.", ["Strings", "Hashing", "Tracing"], [
-    "For <code>s = \"aabbccd\"</code>, the frequencies are <code>a=2</code>, <code>b=2</code>, <code>c=2</code>, <code>d=1</code>, and all other lowercase letters are <code>0</code>.",
-    "Only <code>d</code> has an odd frequency, so <code>oddCount = 1</code>.",
-    "Since <code>oddCount &lt;= k</code> gives <code>1 &lt;= 3</code>, and <code>k</code> is not greater than the string length, the function returns <code>true</code>. The odd character can fit into one of the palindrome groups."
+    `The algorithm first checks basic validity. Here <code>s = "aabbccd"</code> has length <code>7</code> and <code>k = 3</code>. Since <code>k</code> is not greater than the string length, the algorithm continues.`,
+    `Next it builds a frequency array for all lowercase letters from <code>a</code> to <code>z</code>. For this string, the full frequency array is: <code>a=2, b=2, c=2, d=1, e=0, f=0, g=0, h=0, i=0, j=0, k=0, l=0, m=0, n=0, o=0, p=0, q=0, r=0, s=0, t=0, u=0, v=0, w=0, x=0, y=0, z=0</code>.`,
+    `Now the algorithm counts odd frequencies. <code>a</code>, <code>b</code>, and <code>c</code> have even frequency <code>2</code>. <code>d</code> has odd frequency <code>1</code>. All zero counts are even. Therefore, <code>oddCount = 1</code>.`,
+    `<pre><code>oddCount = 1
+k = 3
+oddCount &lt;= k  =&gt;  1 &lt;= 3  =&gt; true
+k &lt;= s.length() =&gt; 3 &lt;= 7 =&gt; true</code></pre>`,
+    `The function returns <code>true</code>. The reason is that only one character needs a middle position in a palindrome, and three parts are enough to handle it. The remaining even-count characters can be distributed in pairs.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to find all pairs in an array that sum to a given target using hashing, and state its time complexity.", ["Arrays", "Hashing", "C++"], [
     "Use a hash set to store numbers already seen. For each number <code>x</code>, check whether <code>target - x</code> exists.",

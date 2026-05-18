@@ -1783,9 +1783,10 @@ const dsaQuestions = [
     "The result <code>101</code> is decimal <code>5</code>. So <code>3 ^ 6 = 5</code>."
   ]),
   makeDsaQuestion("Applied", "State the time and space complexity of the canPartition algorithm and provide a detailed justification for each.", ["Complexity", "Strings"], [
-    "The usual <code>canPartition</code> algorithm counts character frequencies and then counts odd-frequency characters.",
-    "Scanning the string of length <code>n</code> takes <code>O(n)</code> time. Checking a fixed 26-size lowercase frequency array takes <code>O(26)</code>, which is constant. So total time is <code>O(n)</code>.",
-    "Space is <code>O(1)</code> for a fixed alphabet because the frequency array size does not grow with input. If a map is used for an unlimited character set, space can be <code>O(m)</code>, where <code>m</code> is distinct characters."
+    `The <code>canPartition</code> algorithm checks whether a string can be divided into <code>k</code> palindrome-forming parts. The usual method is to count the frequency of each lowercase character, count how many characters have odd frequency, and then check <code>oddCount &lt;= k</code> and <code>k &lt;= s.length()</code>.`,
+    `The time complexity is <code>O(n)</code>, where <code>n</code> is the length of the string. The algorithm scans the string once to build the frequency array. After that, it scans the fixed array of 26 lowercase letters. Since 26 does not grow with input size, that part is treated as constant time.`,
+    `The space complexity is <code>O(1)</code> for lowercase English letters because the frequency array always has 26 positions. If the problem allowed any character and used a map, then the space could become <code>O(m)</code>, where <code>m</code> is the number of distinct characters.`,
+    `The logic is correct because each palindrome can contain at most one odd-frequency character. Therefore, if odd characters are more than <code>k</code>, making <code>k</code> palindromic parts is impossible. If <code>k</code> is greater than the string length, there are not enough characters to form that many non-empty parts.`,
   ]),
   makeDsaQuestion("Applied", "Explain the concept of Big-O, Big-Omega, and Big-Theta notations with examples.", ["Complexity", "Analysis"], [
     "Big-O gives an upper bound on growth. Example: linear search worst case is <code>O(n)</code> because it may check every element.",

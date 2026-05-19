@@ -1934,9 +1934,11 @@ for (int count : freq) {
     `XOR is also used for toggling bits, checking bit differences, swapping numbers without a temporary variable, and solving missing-number problems. Its operations are constant time for fixed-size integers, so it is efficient in bit manipulation questions.`
   ]),
   makeDsaQuestion("Applied", "Compare Quick Sort and Merge Sort in terms of time complexity, space complexity, and stability.", ["Sorting", "Quick Sort", "Merge Sort"], [
-    "Quick Sort has average time <code>O(n log n)</code>, but worst-case time <code>O(n^2)</code> if pivots are poor. Merge Sort has <code>O(n log n)</code> time in best, average, and worst cases.",
-    "Quick Sort usually uses <code>O(log n)</code> recursion space. Merge Sort usually uses <code>O(n)</code> extra space for merging.",
-    "Merge Sort is stable if implemented carefully. Quick Sort is usually unstable. Quick Sort is often fast in practice, while Merge Sort is preferred when stability and guaranteed time matter."
+    `Quick Sort and Merge Sort are both divide-and-conquer sorting algorithms, but their behavior is different. Quick Sort chooses a pivot, partitions the array around it, and recursively sorts both sides. Merge Sort divides the array into halves, sorts them, and merges the sorted halves.`,
+    `<ul><li><strong>Time complexity:</strong> Quick Sort has average <code>O(n log n)</code> time, but worst-case <code>O(n^2)</code> if pivots are repeatedly poor. Merge Sort has <code>O(n log n)</code> time in best, average, and worst cases.</li><li><strong>Space complexity:</strong> Quick Sort usually uses <code>O(log n)</code> recursion space when balanced. Merge Sort generally uses <code>O(n)</code> extra space for merging arrays.</li><li><strong>Stability:</strong> Merge Sort is stable if implemented carefully. Standard Quick Sort is usually not stable because partitioning can change the relative order of equal elements.</li></ul>`,
+    `Quick Sort is often faster in practice for arrays because it works in-place and has good cache behavior. However, its worst case must be handled using good pivot selection, such as random pivot or median-based pivot.`,
+    `Merge Sort is preferred when stable sorting is required or when guaranteed <code>O(n log n)</code> time is important. It is also useful for linked lists because merging linked lists does not require large extra array shifting.`,
+    `So, Quick Sort is usually chosen for in-place average performance, while Merge Sort is chosen for stability and predictable time complexity.`
   ]),
   makeDsaQuestion("Applied", "Explain the approach to find minimum bit flips required to make (x OR y) equal to z.", ["Bit Manipulation", "OR"], [
     "Check every bit position of <code>x</code>, <code>y</code>, and <code>z</code>.",

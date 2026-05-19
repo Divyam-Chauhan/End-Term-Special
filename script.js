@@ -1923,9 +1923,15 @@ for (int count : freq) {
     `The time complexity is <code>O(n)</code> because each element is handled at most a small constant number of times. Space complexity is <code>O(1)</code> because sorting is done in-place.`
   ]),
   makeDsaQuestion("Applied", "Explain properties of XOR operator and its applications with examples.", ["Bit Manipulation", "XOR"], [
-    "XOR returns <code>1</code> when two bits are different and <code>0</code> when they are the same.",
-    "Important properties: <code>x ^ x = 0</code>, <code>x ^ 0 = x</code>, <code>x ^ y = y ^ x</code>, and XOR grouping does not affect the result.",
-    "A common application is finding the unique element when every other element appears twice: initialize <code>ans = 0</code> and XOR every array element. Duplicates cancel out, leaving the unique value."
+    `XOR is a bitwise operator that returns <code>1</code> when two compared bits are different and <code>0</code> when they are the same. For example, <code>1 ^ 0 = 1</code>, <code>0 ^ 1 = 1</code>, <code>1 ^ 1 = 0</code>, and <code>0 ^ 0 = 0</code>.`,
+    `Important properties are: <code>x ^ x = 0</code>, <code>x ^ 0 = x</code>, <code>x ^ y = y ^ x</code>, and <code>(x ^ y) ^ z = x ^ (y ^ z)</code>. These properties make XOR useful in cancellation-based problems.`,
+    `<pre><code>int singleNumber(vector&lt;int&gt;&amp; arr) {
+  int ans = 0;
+  for (int x : arr) ans ^= x;
+  return ans;
+}</code></pre>`,
+    `In the code above, if every element appears twice except one, duplicate values cancel because <code>x ^ x = 0</code>. The remaining value is the unique element. Example: <code>2 ^ 3 ^ 2 = 3</code>.`,
+    `XOR is also used for toggling bits, checking bit differences, swapping numbers without a temporary variable, and solving missing-number problems. Its operations are constant time for fixed-size integers, so it is efficient in bit manipulation questions.`
   ]),
   makeDsaQuestion("Applied", "Compare Quick Sort and Merge Sort in terms of time complexity, space complexity, and stability.", ["Sorting", "Quick Sort", "Merge Sort"], [
     "Quick Sort has average time <code>O(n log n)</code>, but worst-case time <code>O(n^2)</code> if pivots are poor. Merge Sort has <code>O(n log n)</code> time in best, average, and worst cases.",

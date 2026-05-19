@@ -1993,3 +1993,44 @@ const state = {
   query: "",
   dsaOpenSections: new Set(),
 };
+
+const tabButtons = document.querySelectorAll(".tab-button");
+const searchInput = document.querySelector("#searchInput");
+const questionList = document.querySelector("#questionList");
+const emptyState = document.querySelector("#emptyState");
+const subjectBadge = document.querySelector("#subjectBadge");
+const subjectTitle = document.querySelector("#subjectTitle");
+const subjectDescription = document.querySelector("#subjectDescription");
+const questionCount = document.querySelector("#questionCount");
+const template = document.querySelector("#questionTemplate");
+const printButton = document.querySelector("#printButton");
+
+function normalize(value) {
+  return value.toLowerCase().trim();
+}
+
+function getFilteredQuestions() {
+  const query = normalize(state.query);
+  return questions.filter((question) => {
+    if (question.subject !== state.activeSubject) return false;
+    if (!query) return true;
+
+    const searchableText = normalize([
+      question.title,
+      question.section || "",
+      question.tags.join(" "),
+      question.answer.replace(/<[^>]+>/g, " "),
+    ].join(" "));
+
+    return searchableText.includes(query);
+  });
+}
+
+function renderSubjectMeta() {
+  const subject = subjects[state.activeSubject];
+  subjectBadge.textContent = subject.badge;
+  subjectBadge.style.background = subject.accent;
+  subjectTitle.textContent = subject.label;
+  subjectDescription.textContent = subject.description;
+}
+

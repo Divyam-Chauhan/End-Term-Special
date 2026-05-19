@@ -2144,9 +2144,27 @@ int dir = 0; // 0 means right</code></pre>`,
     `Counting sort is efficient when <code>k</code> is not too large. It is not suitable when values are very large compared with <code>n</code>, because the count array would waste memory.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to reverse a singly linked list iteratively and state its time and space complexity.", ["Linked List", "Pointers", "C++"], [
-    "Use three pointers: <code>prev</code>, <code>curr</code>, and <code>nextNode</code>. Reverse each link one by one.",
-    "<pre><code>Node* reverseList(Node* head) {\n  Node* prev = NULL;\n  Node* curr = head;\n  while (curr != NULL) {\n    Node* nextNode = curr-&gt;next;\n    curr-&gt;next = prev;\n    prev = curr;\n    curr = nextNode;\n  }\n  return prev;\n}</code></pre>",
-    "Each node is visited once, so time complexity is <code>O(n)</code>. Only pointers are used, so space complexity is <code>O(1)</code>."
+    `To reverse a singly linked list iteratively, we change the direction of each <code>next</code> pointer. Since a singly linked list only points forward, we must store the next node before breaking the original link.`,
+    `Three pointers are used: <code>prev</code>, <code>curr</code>, and <code>nextNode</code>. <code>prev</code> stores the reversed part, <code>curr</code> is the node being processed, and <code>nextNode</code> saves the remaining list.`,
+    `<pre><code>struct Node {
+  int data;
+  Node* next;
+};
+
+Node* reverseList(Node* head) {
+  Node* prev = NULL;
+  Node* curr = head;
+
+  while (curr != NULL) {
+    Node* nextNode = curr-&gt;next;
+    curr-&gt;next = prev;
+    prev = curr;
+    curr = nextNode;
+  }
+  return prev;
+}</code></pre>`,
+    `At the end, <code>prev</code> points to the new head of the reversed list. The old head becomes the last node and points to <code>NULL</code>.`,
+    `Each node is visited once, so time complexity is <code>O(n)</code>. Only a constant number of pointers are used, so space complexity is <code>O(1)</code>. This is better than using extra storage to copy node values.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to merge two sorted arrays into a single sorted array without using extra space (in-place merge).", ["Arrays", "Sorting", "In-place"], [
     "If the first array has enough empty space at the end, merge from the back to avoid overwriting useful values.",

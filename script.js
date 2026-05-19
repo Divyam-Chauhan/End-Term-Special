@@ -1643,3 +1643,53 @@ const dsaQuestions = [
     "So the address of the third element is <code>108</code>."
   ]),
   makeDsaQuestion("Foundational", "What is the difference between a stable and an unstable sorting algorithm?", ["Sorting", "Stability"], [
+    "A stable sorting algorithm keeps the relative order of equal elements the same as in the original input. An unstable sorting algorithm may change that order.",
+    "Stability matters when records have multiple fields. If students are already sorted by name and then sorted by marks, a stable sort keeps equal-mark students in name order.",
+    "Merge Sort and Insertion Sort are stable when implemented normally. Quick Sort and Heap Sort are usually unstable."
+  ]),
+  makeDsaQuestion("Foundational", "What does space complexity of an algorithm measure?", ["Complexity", "Space Complexity"], [
+    "Space complexity measures how much memory an algorithm uses as input size grows.",
+    "It includes extra variables, arrays, hash maps, recursion stack, and other supporting data structures. The most important part is usually auxiliary space, which means extra memory apart from the input.",
+    "For example, using a few variables is <code>O(1)</code>, creating another array of size <code>n</code> is <code>O(n)</code>, and recursion depth of <code>n</code> also uses <code>O(n)</code> stack space."
+  ]),
+  makeDsaQuestion("Foundational", "What is the difference between BFS and DFS in graph traversal?", ["Graphs", "BFS", "DFS"], [
+    "BFS visits a graph level by level and uses a queue. DFS goes deep along one path before backtracking and uses recursion or a stack.",
+    "BFS is useful for shortest paths in unweighted graphs and level-order traversal. DFS is useful for cycle detection, connected components, topological sorting, and backtracking.",
+    "Both take <code>O(V + E)</code> time with an adjacency list, where <code>V</code> is vertices and <code>E</code> is edges."
+  ]),
+  makeDsaQuestion("Foundational", "For arr = [30, 50, 40, 20, 10], what is the array state after the first iteration of selection sort?", ["Sorting", "Selection Sort"], [
+    "Selection sort finds the smallest element from the unsorted part and places it at the beginning.",
+    "In <code>[30, 50, 40, 20, 10]</code>, the smallest element is <code>10</code>. In the first iteration, it is swapped with <code>30</code>.",
+    "The array after the first iteration is <code>[10, 50, 40, 20, 30]</code>."
+  ]),
+  makeDsaQuestion("Foundational", "What is a binary search tree (BST)?", ["Trees", "BST"], [
+    "A Binary Search Tree is a binary tree where each node follows an ordering rule: values in the left subtree are smaller, and values in the right subtree are larger.",
+    "This rule allows efficient search. At each node, we compare the target and move left or right.",
+    "In a balanced BST, search, insert, and delete take <code>O(log n)</code> time. In a skewed BST, they can become <code>O(n)</code>."
+  ]),
+  makeDsaQuestion("Foundational", "What is the value of F(6) in the Fibonacci sequence (starting F(0)=0, F(1)=1)?", ["Recursion", "Fibonacci"], [
+    "The Fibonacci rule is <code>F(n) = F(n - 1) + F(n - 2)</code>, with <code>F(0)=0</code> and <code>F(1)=1</code>.",
+    "<pre><code>F(0)=0\nF(1)=1\nF(2)=1\nF(3)=2\nF(4)=3\nF(5)=5\nF(6)=8</code></pre>",
+    "Therefore, <code>F(6) = 8</code>."
+  ]),
+  makeDsaQuestion("Foundational", "What is an adjacency matrix representation of a graph?", ["Graphs", "Matrix"], [
+    "An adjacency matrix represents a graph using a two-dimensional array of size <code>V x V</code>, where <code>V</code> is the number of vertices.",
+    "For an unweighted graph, <code>matrix[i][j] = 1</code> means there is an edge from vertex <code>i</code> to vertex <code>j</code>. If there is no edge, it is <code>0</code>.",
+    "Edge checking is <code>O(1)</code>, but space usage is <code>O(V^2)</code>, which can be high for sparse graphs."
+  ]),
+  makeDsaQuestion("Foundational", "What does a map in C++ STL store?", ["STL", "Map"], [
+    "A C++ STL <code>map</code> stores key-value pairs. Each key is unique and maps to one value.",
+    "<pre><code>map&lt;string, int&gt; marks;\nmarks[\"Asha\"] = 90;</code></pre>",
+    "By default, <code>map</code> stores keys in sorted order and is usually implemented using a balanced tree. Search, insert, and delete take <code>O(log n)</code> time."
+  ]),
+  makeDsaQuestion("Foundational", "What does the 'size()' function return for a vector in C++ STL?", ["STL", "Vector"], [
+    "<code>size()</code> returns the number of elements currently present in a vector.",
+    "<pre><code>vector&lt;int&gt; v = {10, 20, 30};\ncout &lt;&lt; v.size(); // 3</code></pre>",
+    "It does not return capacity. <code>capacity()</code> tells how much storage is allocated. <code>size()</code> runs in <code>O(1)</code> time."
+  ]),
+  makeDsaQuestion("Foundational", "Which algorithmic paradigm does Merge Sort follow?", ["Sorting", "Merge Sort"], [
+    "Merge Sort follows the divide and conquer paradigm.",
+    "It divides the array into two halves, recursively sorts both halves, and then merges the sorted halves.",
+    "Its time complexity is <code>O(n log n)</code> in best, average, and worst cases. Its extra space complexity is usually <code>O(n)</code>."
+  ]),
+  makeDsaQuestion("Foundational", "What is the purpose of a sentinel node in a linked list?", ["Linked List", "Pointers"], [

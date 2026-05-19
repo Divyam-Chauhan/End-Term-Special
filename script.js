@@ -398,3 +398,83 @@ function App() {
       <p>This structure gives clear handling for both cases: display data when the request succeeds and show an error message when the request fails.</p>
     `,
   },
+  {
+    subject: "web-dev",
+    title: "Explain how to implement a protected route in React Router that redirects unauthenticated users to the login page.",
+    tags: ["React", "Router", "Authentication"],
+    answer: `
+      <p>A protected route is a route that only authenticated users can access. In React Router, this is commonly done by checking whether the user has a valid login state or token. If the user is not authenticated, they are redirected to the login page.</p>
+      <pre><code>import { Navigate } from "react-router-dom";
+
+function ProtectedRoute({ isLoggedIn, children }) {
+  if (!isLoggedIn) {
+    return &lt;Navigate to="/login" replace /&gt;;
+  }
+  return children;
+}</code></pre>
+      <p>The protected route can be used while defining routes:</p>
+      <pre><code>&lt;Route
+  path="/dashboard"
+  element={
+    &lt;ProtectedRoute isLoggedIn={isLoggedIn}&gt;
+      &lt;Dashboard /&gt;
+    &lt;/ProtectedRoute&gt;
+  }
+/&gt;</code></pre>
+      <p>If <code>isLoggedIn</code> is false, the user is sent to <code>/login</code>. If it is true, the dashboard is shown. The <code>replace</code> prop prevents the protected page from staying in browser history before login.</p>
+      <p>In real applications, <code>isLoggedIn</code> may be based on a JWT token, cookie, or authentication context. The app should also handle token expiry and logout.</p>
+      <p>Protected routes improve security on the client side and improve user flow, but the server must still verify authentication before sending private data.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Evaluate the advantages and disadvantages of using default exports versus named exports. Provide examples and recommend when to use each approach.",
+    tags: ["JavaScript", "Exports", "Modules"],
+    answer: `
+      <p>JavaScript modules can export values using default exports or named exports. Both help split code into reusable files, but they differ in how values are imported.</p>
+      <p>A default export is the main export from a file. It can be imported with any name.</p>
+      <pre><code>export default function Button() {
+  return &lt;button&gt;Save&lt;/button&gt;;
+}
+
+import PrimaryButton from "./Button";</code></pre>
+      <p>The advantage is simplicity when a file mainly contains one component or function. The disadvantage is that different files may import it with different names, which can reduce consistency.</p>
+      <p>Named exports export values by their exact names.</p>
+      <pre><code>export function formatDate(date) {
+  return date.toDateString();
+}
+
+export function formatPrice(price) {
+  return "$" + price;
+}
+
+import { formatDate, formatPrice } from "./formatters";</code></pre>
+      <p>Named exports are clearer when a file contains multiple functions, constants, or components. They also make auto-import and refactoring easier because the imported name is fixed.</p>
+      <p>Use default exports for one main component per file. Use named exports for utility files or when exporting multiple values. The best recommendation is to be consistent within the project.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "How does React handle events differently from standard HTML events? Explain with an example.",
+    tags: ["React", "Events", "JSX"],
+    answer: `
+      <p>React handles events using JSX event props, which are written in camelCase. In normal HTML, event attributes are written in lowercase strings, such as <code>onclick</code>. In React, they are written as <code>onClick</code> and receive a function reference.</p>
+      <p>Standard HTML example:</p>
+      <pre><code>&lt;button onclick="saveData()"&gt;Save&lt;/button&gt;</code></pre>
+      <p>React example:</p>
+      <pre><code>function SaveButton() {
+  function handleClick() {
+    console.log("Saved");
+  }
+
+  return &lt;button onClick={handleClick}&gt;Save&lt;/button&gt;;
+}</code></pre>
+      <p>In React, we pass the function itself, not a string. This keeps event logic inside JavaScript and makes it easier to use state and props.</p>
+      <p>React also uses a cross-browser event system, so event behavior is more consistent across browsers. Event handler names follow JSX rules, such as <code>onChange</code>, <code>onSubmit</code>, and <code>onMouseEnter</code>.</p>
+      <p>For form submission, React commonly uses <code>event.preventDefault()</code> to stop the browser from reloading the page.</p>
+      <pre><code>function handleSubmit(event) {
+  event.preventDefault();
+}</code></pre>
+      <p>The key differences are naming, passing functions instead of strings, and handling events as part of component logic.</p>
+    `,
+  },

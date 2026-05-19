@@ -158,3 +158,83 @@ function Timer() {
   return &lt;p&gt;Timer: {seconds}&lt;/p&gt;;
 }</code></pre>
       <p>Here, <code>setInterval</code> starts a timer when the component mounts. The returned cleanup function calls <code>clearInterval</code> when the component unmounts. Without cleanup, the interval may keep running even after the component is gone.</p>
+      <p>So, cleanup keeps components safe and predictable by stopping side effects that are no longer needed.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "How do you pass data from a parent component to a child component in React? Explain with an example.",
+    tags: ["React", "Components", "Props"],
+    answer: `
+      <p>In React, data is passed from a parent component to a child component using props. Props are values given to a component, similar to arguments passed to a function. They help make components reusable and dynamic.</p>
+      <p>The parent component sends data by writing attributes on the child component. The child component receives those values through its props parameter.</p>
+      <pre><code>function Parent() {
+  const studentName = "Ananya";
+
+  return &lt;StudentCard name={studentName} course="BCA" /&gt;;
+}
+
+function StudentCard(props) {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;{props.name}&lt;/h2&gt;
+      &lt;p&gt;Course: {props.course}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      <p>In this example, <code>Parent</code> passes <code>name</code> and <code>course</code> to <code>StudentCard</code>. The child displays the received values.</p>
+      <p>Props are read-only. A child component should not directly change the props it receives. If the child needs to update parent data, the parent can pass a function as a prop, and the child can call that function.</p>
+      <p>This parent-to-child flow makes React applications easier to understand. Data is controlled by the parent, while the child focuses on displaying or using that data.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "What is batch updating in React? Analyze what happens when multiple setState calls are made in an event handler.",
+    tags: ["React", "State", "Batching"],
+    answer: `
+      <p>Batch updating in React means React groups multiple state updates together and performs one re-render instead of re-rendering after every single update. This improves performance and keeps the UI update process efficient.</p>
+      <p>When multiple <code>setState</code> or state setter calls are made inside the same event handler, React usually batches them. The component re-renders once after the event handler finishes.</p>
+      <pre><code>function Counter() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+    setCount(count + 1);
+    setCount(count + 1);
+  }
+
+  return &lt;button onClick={handleClick}&gt;{count}&lt;/button&gt;;
+}</code></pre>
+      <p>In this example, all three updates use the same old value of <code>count</code>. So the count may increase by only 1, not 3.</p>
+      <p>To correctly update based on the previous state, use the functional form:</p>
+      <pre><code>setCount(prev =&gt; prev + 1);
+setCount(prev =&gt; prev + 1);
+setCount(prev =&gt; prev + 1);</code></pre>
+      <p>Now React applies each update in order, so the count increases by 3. The key point is that batching reduces unnecessary renders, but previous-state updates should use the functional setter form.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "How do you handle form submission in React using controlled components? Provide a complete example.",
+    tags: ["React", "Forms", "Controlled Components"],
+    answer: `
+      <p>A controlled component is a form element whose value is controlled by React state. The input displays the state value, and every change updates the state using an <code>onChange</code> handler.</p>
+      <p>For form submission, React usually stores input values in state, prevents the browser's default submit reload, validates or uses the data, and then sends it to an API or displays it.</p>
+      <pre><code>import { useState } from "react";
+
+function LoginForm() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log({ username, password });
+  }
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input
+        type="text"
+        value={username}
+        onChange={event =&gt; setUsername(event.target.value)}
+        placeholder="Username"

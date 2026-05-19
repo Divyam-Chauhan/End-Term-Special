@@ -1864,9 +1864,24 @@ for (int count : freq) {
     `Therefore, time complexity is <code>O(n)</code> and extra space is <code>O(1)</code>. The comparison count is not exactly the same for every index, but it still increases linearly with the array size.`
   ]),
   makeDsaQuestion("Applied", "Describe the sliding window technique and write C++ code to find the maximum sum subarray of size k.", ["Arrays", "Sliding Window", "C++"], [
-    "Sliding window is used for fixed-size or variable-size continuous subarray problems. For maximum sum of size <code>k</code>, calculate the first window sum, then slide by removing the left element and adding the next element.",
-    "<pre><code>int maxSum(vector&lt;int&gt;&amp; arr, int k) {\n  int sum = 0;\n  for (int i = 0; i &lt; k; i++) sum += arr[i];\n  int best = sum;\n  for (int i = k; i &lt; arr.size(); i++) {\n    sum += arr[i] - arr[i - k];\n    best = max(best, sum);\n  }\n  return best;\n}</code></pre>",
-    "The time complexity is <code>O(n)</code>, and the space complexity is <code>O(1)</code>."
+    `The sliding window technique is used when the problem deals with a continuous part of an array or string. For a fixed window size <code>k</code>, instead of recalculating the sum of every subarray from scratch, we update the current sum by removing the element that leaves the window and adding the new element that enters.`,
+    `For maximum sum subarray of size <code>k</code>, first calculate the sum of the first <code>k</code> elements. Then slide the window one position at a time and keep the maximum sum seen so far.`,
+    `<pre><code>int maxSumSubarray(vector&lt;int&gt;&amp; arr, int k) {
+  int n = arr.size();
+  if (k &lt;= 0 || k &gt; n) return 0;
+
+  int windowSum = 0;
+  for (int i = 0; i &lt; k; i++) windowSum += arr[i];
+
+  int best = windowSum;
+  for (int i = k; i &lt; n; i++) {
+    windowSum += arr[i] - arr[i - k];
+    best = max(best, windowSum);
+  }
+  return best;
+}</code></pre>`,
+    `Each element enters and leaves the window at most once. Therefore, the time complexity is <code>O(n)</code>. Only a few variables are used, so the space complexity is <code>O(1)</code>.`,
+    `This method is preferred over the brute force approach, which would calculate each window separately and take <code>O(nk)</code> time.`
   ]),
   makeDsaQuestion("Applied", "Write the complete C++ code for the binary search approach to find a peak element and trace it on the array [1, 2, 3, 4, 5, 6, 7, 8, 4, 2, 1].", ["Searching", "Binary Search", "Arrays"], [
     "Use binary search by comparing <code>arr[mid]</code> with <code>arr[mid + 1]</code>. If the right side is increasing, move right; otherwise move left.",

@@ -1590,3 +1590,56 @@ LIMIT 10;</code></pre>
   },
 ];
 
+const dsaQuestions = [
+  makeDsaQuestion("Foundational", "What is the height of a balanced binary tree with n nodes?", ["Trees", "Complexity"], [
+    "The height of a balanced binary tree with <code>n</code> nodes is generally <code>O(log n)</code>. Height means the longest path from the root to a leaf.",
+    "In a balanced tree, nodes are spread almost equally between the left and right subtrees. Each level can hold about twice as many nodes as the previous level, so the number of levels grows logarithmically.",
+    "This is why search, insert, and delete in a balanced binary search tree can take <code>O(log n)</code> time. If the tree becomes skewed, height can become <code>O(n)</code>, which is slower."
+  ]),
+  makeDsaQuestion("Foundational", "What is the recursive call made after the swap in reverse(i, arr, n)?", ["Recursion", "Arrays"], [
+    "After swapping <code>arr[i]</code> with <code>arr[n - i - 1]</code>, the recursive call is <code>reverse(i + 1, arr, n)</code>.",
+    "<pre><code>if (i &gt;= n / 2) return;\nswap(arr[i], arr[n - i - 1]);\nreverse(i + 1, arr, n);</code></pre>",
+    "The index moves one step inward after every swap. The base case stops the function when the middle of the array is reached. This reverses the array in <code>O(n)</code> time."
+  ]),
+  makeDsaQuestion("Foundational", "What is a two-pointer technique?", ["Arrays", "Two Pointers"], [
+    "The two-pointer technique uses two indexes to process an array or string efficiently. The pointers may start from opposite ends or move together from left to right.",
+    "It is useful in problems like reversing an array, checking palindrome strings, pair sum in sorted arrays, removing duplicates, and moving zeros.",
+    "It often reduces nested-loop solutions from <code>O(n^2)</code> to <code>O(n)</code>, with <code>O(1)</code> extra space because only pointer variables are used."
+  ]),
+  makeDsaQuestion("Foundational", "For arr = [1, 2, 3, 4, 5] and n = 5, how many swaps are performed by the recursive reverse function?", ["Recursion", "Arrays", "Tracing"], [
+    "The recursive reverse function swaps opposite elements until it reaches the middle. For <code>n = 5</code>, swaps happen while <code>i &lt; n / 2</code>.",
+    "<pre><code>i = 0: swap arr[0] and arr[4]\ni = 1: swap arr[1] and arr[3]\ni = 2: stop</code></pre>",
+    "So the function performs <code>2</code> swaps. In general, array reversal performs <code>floor(n / 2)</code> swaps."
+  ]),
+  makeDsaQuestion("Foundational", "What is an in-place algorithm?", ["Algorithms", "Space Complexity"], [
+    "An in-place algorithm modifies the input data directly and uses only a small amount of extra memory. Usually, its auxiliary space is <code>O(1)</code>.",
+    "For example, reversing an array by swapping elements from both ends is in-place because no second array is created.",
+    "In-place algorithms are memory efficient, but they change the original data. If the original order is needed later, a copy must be made first."
+  ]),
+  makeDsaQuestion("Foundational", "Flips for 7 -> 5?", ["Bit Manipulation", "XOR"], [
+    "Write both numbers in binary: <code>7 = 111</code> and <code>5 = 101</code>.",
+    "Only the middle bit changes from <code>1</code> to <code>0</code>. So one bit flip is required.",
+    "Using XOR: <code>7 ^ 5 = 010</code>. The XOR result has one set bit, so the answer is <code>1</code>."
+  ]),
+  makeDsaQuestion("Foundational", "What does 'push_back' do in a C++ vector?", ["STL", "Vector"], [
+    "<code>push_back</code> adds a new element at the end of a C++ <code>vector</code>.",
+    "<pre><code>vector&lt;int&gt; v;\nv.push_back(10);\nv.push_back(20);</code></pre>",
+    "After this, the vector contains <code>[10, 20]</code>. Its average time complexity is <code>O(1)</code>, but a resize operation can occasionally take <code>O(n)</code>."
+  ]),
+  makeDsaQuestion("Foundational", "1's complement of 0110?", ["Bit Manipulation", "Binary"], [
+    "The 1's complement is found by flipping every bit. Each <code>0</code> becomes <code>1</code>, and each <code>1</code> becomes <code>0</code>.",
+    "<pre><code>0110\n1001</code></pre>",
+    "Therefore, the 1's complement of <code>0110</code> is <code>1001</code>. In fixed-bit exam questions, only the given bits are flipped."
+  ]),
+  makeDsaQuestion("Foundational", "What is the worst-case time complexity of Bubble Sort?", ["Sorting", "Complexity"], [
+    "The worst-case time complexity of Bubble Sort is <code>O(n^2)</code>. This happens when the array is in reverse order.",
+    "Bubble Sort repeatedly compares adjacent elements and swaps them if they are in the wrong order. For <code>n</code> elements, the number of comparisons is about <code>n(n - 1) / 2</code>.",
+    "That expression grows as <code>n^2</code>, so the worst case is written as <code>O(n^2)</code>."
+  ]),
+  makeDsaQuestion("Foundational", "For an integer array where each integer is 4 bytes, if the first element is at address 100, what is the address of the third element?", ["Arrays", "Memory"], [
+    "Arrays use contiguous memory. If the first element is at address <code>100</code>, then the third element is at index <code>2</code> because indexing starts from zero.",
+    "Address formula: <code>base + index * element_size</code>.",
+    "<pre><code>100 + 2 * 4 = 108</code></pre>",
+    "So the address of the third element is <code>108</code>."
+  ]),
+  makeDsaQuestion("Foundational", "What is the difference between a stable and an unstable sorting algorithm?", ["Sorting", "Stability"], [

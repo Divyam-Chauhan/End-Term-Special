@@ -1974,9 +1974,24 @@ if (nr &lt; 0 || nr &gt;= rows || nc &lt; 0 || nc &gt;= cols || visited[nr][nc])
     `The traversal stops after <code>rows * cols</code> cells are added. The direction-change condition is the main control that keeps the output in correct spiral order.`
   ]),
   makeDsaQuestion("Applied", "Explain binary search and write a C++ implementation that works on a sorted array.", ["Searching", "Binary Search", "C++"], [
-    "Binary search works only on sorted arrays. It checks the middle element and discards half of the search range each time.",
-    "<pre><code>int binarySearch(vector&lt;int&gt;&amp; a, int target) {\n  int low = 0, high = a.size() - 1;\n  while (low &lt;= high) {\n    int mid = low + (high - low) / 2;\n    if (a[mid] == target) return mid;\n    if (a[mid] &lt; target) low = mid + 1;\n    else high = mid - 1;\n  }\n  return -1;\n}</code></pre>",
-    "Time complexity is <code>O(log n)</code>, and the iterative version uses <code>O(1)</code> extra space."
+    `Binary search is an efficient searching algorithm for sorted arrays. It repeatedly checks the middle element of the current search range and removes the half that cannot contain the target.`,
+    `The array must be sorted in the same order used by the comparison. If the array is unsorted, binary search can discard the wrong half and return an incorrect result.`,
+    `<pre><code>int binarySearch(vector&lt;int&gt;&amp; arr, int target) {
+  int low = 0;
+  int high = arr.size() - 1;
+
+  while (low &lt;= high) {
+    int mid = low + (high - low) / 2;
+
+    if (arr[mid] == target) return mid;
+    else if (arr[mid] &lt; target) low = mid + 1;
+    else high = mid - 1;
+  }
+
+  return -1;
+}</code></pre>`,
+    `The expression <code>low + (high - low) / 2</code> is preferred over <code>(low + high) / 2</code> because it avoids overflow for very large indexes.`,
+    `The time complexity is <code>O(log n)</code> because the search range is halved every iteration. The iterative version uses <code>O(1)</code> extra space. Binary search is useful for direct search, lower bound, upper bound, and answer-space problems.`
   ]),
   makeDsaQuestion("Applied", "How is a previously visited cell marked in the spiral traversal pseudo code?", ["Arrays", "Matrix", "Traversal"], [
     "A visited cell is usually marked using a separate boolean matrix, such as <code>visited[row][col] = true</code>.",

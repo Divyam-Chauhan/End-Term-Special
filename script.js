@@ -798,3 +798,83 @@ export default API_URL;</code></pre>
     tags: ["React", "Router", "Forms"],
     answer: `
       <p><code>useNavigate</code> is a React Router hook used for programmatic navigation. It is useful when navigation should happen after an action, such as successful form submission, login, or saving data.</p>
+      <p>First, import <code>useNavigate</code> and call it inside the component. Then use the returned <code>navigate</code> function after the form work is completed.</p>
+      <pre><code>import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+function LoginForm() {
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (username.trim() !== "") {
+      navigate("/dashboard");
+    }
+  }
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input
+        value={username}
+        onChange={event =&gt; setUsername(event.target.value)}
+      /&gt;
+      &lt;button type="submit"&gt;Login&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+      <p>Here, <code>event.preventDefault()</code> stops the default form reload. After the condition is satisfied, <code>navigate("/dashboard")</code> redirects the user.</p>
+      <p>In real apps, navigation should happen after the server confirms login or data submission. This keeps the user flow correct and avoids sending users to protected pages before success.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "How can multiple useEffect hooks be used to separate concerns in a component? Give an example with one effect updating the document title and another updating localStorage.",
+    tags: ["React", "Hooks", "useEffect"],
+    answer: `
+      <p>Multiple <code>useEffect</code> hooks can be used in one component to separate different side effects. This keeps code easier to read because each effect handles one purpose.</p>
+      <p>For example, one effect can update the document title when count changes, and another effect can store the count in local storage.</p>
+      <pre><code>import { useEffect, useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() =&gt; {
+    document.title = "Count: " + count;
+  }, [count]);
+
+  useEffect(() =&gt; {
+    localStorage.setItem("count", String(count));
+  }, [count]);
+
+  return (
+    &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+      Count: {count}
+    &lt;/button&gt;
+  );
+}</code></pre>
+      <p>Both effects depend on <code>count</code>, so both run when <code>count</code> changes. Still, their responsibilities are separate. The first handles browser title updates. The second handles storage.</p>
+      <p>This is better than placing unrelated logic in one large effect. If one effect needs cleanup later, it can have its own cleanup function without affecting the other. Multiple effects make component side effects organized and easier to maintain.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Explain how you would implement a search filter feature in React that filters a list of items as the user types.",
+    tags: ["React", "Search", "Forms"],
+    answer: `
+      <p>A search filter in React can be implemented using state for the search text and array filtering for the displayed list. As the user types, the input state changes, and React recalculates which items match the search.</p>
+      <pre><code>import { useState } from "react";
+
+function ProductSearch() {
+  const products = ["Laptop", "Mobile", "Keyboard", "Mouse"];
+  const [search, setSearch] = useState("");
+
+  const filteredProducts = products.filter(product =&gt;
+    product.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    &lt;div&gt;
+      &lt;input
+        value={search}

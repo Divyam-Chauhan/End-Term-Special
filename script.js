@@ -2080,9 +2080,17 @@ print best</code></pre>`,
     `The time complexity is <code>O(n)</code> because each reversal is linear and the total work is proportional to the array size. Extra space is <code>O(1)</code> because the array is modified in-place.`
   ]),
   makeDsaQuestion("Applied", "Describe the benefit of pseudocode for beginners.", ["Pseudocode", "Problem Solving"], [
-    "Pseudocode helps beginners express logic in simple steps before writing actual code.",
-    "It separates problem solving from syntax. This is useful because beginners often struggle with both at the same time.",
-    "It also helps in exams because the student can explain the approach clearly even before giving final C++ code."
+    `Pseudocode is helpful for beginners because it lets them express program logic in simple English-like steps before writing real code. This reduces pressure because the student does not need to handle syntax and logic at the same time.`,
+    `For a beginner, many mistakes happen because the basic plan is unclear. Pseudocode makes the plan visible. It shows what input is needed, what variables are used, which loops run, and what output should be produced.`,
+    `It also improves exam answers. Even if the full C++ code is difficult, clear pseudocode can show that the student understands the algorithm. This can earn marks for approach, control flow, and edge-case thinking.`,
+    `<pre><code>start
+read n
+set sum = 0
+repeat from 1 to n:
+  add number to sum
+print sum
+end</code></pre>`,
+    `The benefit is that beginners build confidence step by step. Once the pseudocode is correct, converting it into C++ becomes a smaller task. It supports logical thinking, dry running, debugging, and better explanation.`
   ]),
   makeDsaQuestion("Applied", "Explain the concept of hashing and how an unordered_map works in C++.", ["Hashing", "unordered_map", "STL"], [
     "Hashing converts a key into a bucket location using a hash function. It allows fast average search, insertion, and deletion.",

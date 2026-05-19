@@ -2017,9 +2017,16 @@ priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minHeap;</code>
     `Priority queues are used in Dijkstra's algorithm, scheduling, top-K elements, median problems, and heap-based sorting logic. A complete answer should mention priority behavior, heap implementation, STL syntax, and operation complexities.`
   ]),
   makeDsaQuestion("Applied", "Analyze how pseudocode can lead to fewer bugs in the coding process.", ["Pseudocode", "Problem Solving"], [
-    "Pseudocode reduces bugs by making the logic clear before writing C++ syntax.",
-    "It helps identify steps, conditions, loops, edge cases, and return values. This makes mistakes easier to catch before implementation.",
-    "It also helps debugging because the final code can be compared with the planned steps. If they differ, the bug is easier to locate."
+    `Pseudocode reduces bugs because it forces the programmer to decide the logic before dealing with C++ syntax. Many coding errors happen because the programmer starts writing loops and conditions without a clear sequence of steps.`,
+    `A good pseudocode outline identifies the input, output, variables, loops, conditions, and stopping points. This makes missing cases easier to notice. For example, in binary search pseudocode, writing the update rules for <code>low</code> and <code>high</code> clearly helps avoid infinite loops.`,
+    `<pre><code>set low = 0, high = n - 1
+while low &lt;= high:
+  find mid
+  if middle is target, return mid
+  else move low or high
+return -1</code></pre>`,
+    `Pseudocode also helps with dry runs. A programmer can test the planned logic on small inputs before writing final code. If the dry run fails, the mistake is fixed at the logic level instead of debugging a full program.`,
+    `So pseudocode leads to fewer bugs by improving planning, exposing edge cases early, and giving a clear reference to compare against the final C++ implementation.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ program to count the frequency of each element in an array using an unordered_map and print elements with frequency greater than 1.", ["Hashing", "unordered_map", "C++"], [
     "Use <code>unordered_map</code> where the key is the element and the value is its count.",

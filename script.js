@@ -2197,9 +2197,23 @@ oddCount &lt;= k =&gt; 2 &lt;= 1 =&gt; false</code></pre>`,
     `The function returns <code>false</code> because one palindrome can have at most one odd-frequency character. Here two characters need a middle position, but only one palindrome group is allowed. Therefore, the partition is not possible.`
   ]),
   makeDsaQuestion("Applied", "Explain the concept of dynamic programming with a C++ example solving the 0/1 knapsack problem.", ["Dynamic Programming", "Knapsack", "C++"], [
-    "Dynamic programming stores answers to smaller overlapping subproblems so they are not recalculated.",
-    "<pre><code>int knapsack(vector&lt;int&gt;&amp; wt, vector&lt;int&gt;&amp; val, int W) {\n  int n = wt.size();\n  vector&lt;vector&lt;int&gt;&gt; dp(n + 1, vector&lt;int&gt;(W + 1, 0));\n  for (int i = 1; i &lt;= n; i++) {\n    for (int w = 0; w &lt;= W; w++) {\n      dp[i][w] = dp[i - 1][w];\n      if (wt[i - 1] &lt;= w)\n        dp[i][w] = max(dp[i][w], val[i - 1] + dp[i - 1][w - wt[i - 1]]);\n    }\n  }\n  return dp[n][W];\n}</code></pre>",
-    "Here <code>dp[i][w]</code> means best value using first <code>i</code> items and capacity <code>w</code>. Time and space are <code>O(nW)</code>."
+    `Dynamic programming is used when a problem has overlapping subproblems and optimal substructure. Instead of solving the same smaller problem again and again, DP stores results and reuses them.`,
+    `In the 0/1 knapsack problem, each item has a weight and value. We must choose items so that total weight does not exceed capacity <code>W</code>, and total value is maximum. Each item can be taken once or not taken.`,
+    `<pre><code>int knapsack(vector&lt;int&gt;&amp; wt, vector&lt;int&gt;&amp; val, int W) {
+  int n = wt.size();
+  vector&lt;vector&lt;int&gt;&gt; dp(n + 1, vector&lt;int&gt;(W + 1, 0));
+
+  for (int i = 1; i &lt;= n; i++) {
+    for (int w = 0; w &lt;= W; w++) {
+      dp[i][w] = dp[i - 1][w];
+      if (wt[i - 1] &lt;= w) {
+        dp[i][w] = max(dp[i][w], val[i - 1] + dp[i - 1][w - wt[i - 1]]);
+      }
+    }
+  }
+  return dp[n][W];
+}</code></pre>`,
+    `Here <code>dp[i][w]</code> means the best value possible using the first <code>i</code> items with capacity <code>w</code>. For each item, we compare two choices: skip it or take it.`,
   ]),
   makeDsaQuestion("Applied", "What role does the variable 'pos' play in the spiral traversal pseudo code?", ["Arrays", "Matrix", "Traversal"], [
     "In spiral traversal pseudocode, <code>pos</code> usually stores the current direction index.",

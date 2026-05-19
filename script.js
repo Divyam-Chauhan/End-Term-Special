@@ -2311,9 +2311,23 @@ return low</code></pre>`,
     `This operation is useful in counting set bits, checking powers of two, subset generation, and bitmask problems. It uses one subtraction and one AND operation, so time complexity is <code>O(1)</code> for fixed-size integers. Space complexity is also <code>O(1)</code>.`
   ]),
   makeDsaQuestion("Applied", "Write the complete C++ code for the linear search approach to find a peak element and trace it on the array [2, 4, 3, 1, 5, 6].", ["Searching", "Arrays", "C++"], [
-    "Linear search checks each element and sees whether it is greater than or equal to its neighbours.",
-    "<pre><code>int findPeak(vector&lt;int&gt;&amp; a) {\n  int n = a.size();\n  for (int i = 0; i &lt; n; i++) {\n    bool leftOk = (i == 0 || a[i] &gt;= a[i - 1]);\n    bool rightOk = (i == n - 1 || a[i] &gt;= a[i + 1]);\n    if (leftOk &amp;&amp; rightOk) return i;\n  }\n  return -1;\n}</code></pre>",
-    "Trace for <code>[2,4,3,1,5,6]</code>: index 0 is not peak because <code>2 &lt; 4</code>. Index 1 has <code>4 &gt; 2</code> and <code>4 &gt; 3</code>, so it is a peak. Return index <code>1</code>. Time is <code>O(n)</code>."
+    `The linear search approach checks every element and returns the first element that is greater than or equal to its neighbours. Boundary elements are handled carefully because the first element has no left neighbour and the last element has no right neighbour.`,
+    `<pre><code>int findPeakLinear(vector&lt;int&gt;&amp; arr) {
+  int n = arr.size();
+
+  for (int i = 0; i &lt; n; i++) {
+    bool leftOk = (i == 0 || arr[i] &gt;= arr[i - 1]);
+    bool rightOk = (i == n - 1 || arr[i] &gt;= arr[i + 1]);
+
+    if (leftOk &amp;&amp; rightOk) {
+      return i;
+    }
+  }
+  return -1;
+}</code></pre>`,
+    `Trace for <code>[2, 4, 3, 1, 5, 6]</code>: at index <code>0</code>, value <code>2</code> has no left neighbour, but <code>2 &gt;= 4</code> is false, so it is not a peak.`,
+    `At index <code>1</code>, value <code>4</code> is greater than left neighbour <code>2</code> and right neighbour <code>3</code>. Therefore, index <code>1</code> is a peak and the function returns <code>1</code>.`,
+    `The time complexity is <code>O(n)</code> in the worst case because the loop may scan the full array. Space complexity is <code>O(1)</code>. For this input, the function stops early after finding value <code>4</code>.`
   ])
 ];
 

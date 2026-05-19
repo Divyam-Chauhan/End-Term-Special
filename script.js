@@ -238,3 +238,83 @@ function LoginForm() {
         value={username}
         onChange={event =&gt; setUsername(event.target.value)}
         placeholder="Username"
+      /&gt;
+      &lt;input
+        type="password"
+        value={password}
+        onChange={event =&gt; setPassword(event.target.value)}
+        placeholder="Password"
+      /&gt;
+      &lt;button type="submit"&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+      <p>Here, the input values always come from React state. When the user types, the state changes and the UI updates. On submit, <code>event.preventDefault()</code> stops page refresh.</p>
+      <p>Controlled components are useful because validation, clearing fields, disabling buttons, and sending data become easier to manage from React state.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "What is an uncontrolled input in React? How does it differ from a controlled input? Provide an example.",
+    tags: ["React", "Forms", "Uncontrolled Components"],
+    answer: `
+      <p>An uncontrolled input is a form input whose value is managed by the browser DOM instead of React state. React does not update the value on every key press. When the value is needed, it is usually read using a ref.</p>
+      <p>A controlled input is different because its value is stored in React state and updated using <code>onChange</code>. This gives React full control over the input.</p>
+      <pre><code>import { useRef } from "react";
+
+function UncontrolledForm() {
+  const nameRef = useRef(null);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log(nameRef.current.value);
+  }
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input ref={nameRef} type="text" /&gt;
+      &lt;button type="submit"&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+      <p>In this example, React reads the input value only when the form is submitted. The browser handles the value while the user types.</p>
+      <p>Controlled inputs are better when validation, live search, conditional UI, or instant state updates are needed. Uncontrolled inputs are simpler for small forms, file inputs, or cases where the value is needed only at submit time.</p>
+      <p>So, controlled inputs use React state, while uncontrolled inputs depend mainly on the DOM and refs.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "What is Reconciliation in React? Why does React only update certain parts of the DOM instead of re-rendering the entire UI?",
+    tags: ["React", "Reconciliation", "DOM"],
+    answer: `
+      <p>Reconciliation is the process React uses to compare the previous UI with the new UI after state or props change. React creates a new virtual representation of the UI and compares it with the old one to find what actually changed.</p>
+      <p>React does not directly rebuild the whole browser DOM for every change because DOM operations can be expensive. Instead, it updates only the necessary parts. This keeps applications faster and smoother.</p>
+      <p>For example, if a counter value changes from 5 to 6, React does not recreate the entire page. It updates only the text where the counter is shown.</p>
+      <p>Keys are important during reconciliation when rendering lists. They help React identify which list items were added, removed, or changed.</p>
+      <pre><code>{users.map(user =&gt; (
+  &lt;li key={user.id}&gt;{user.name}&lt;/li&gt;
+))}</code></pre>
+      <p>Without proper keys, React may not track list items correctly, which can cause inefficient updates or UI mistakes.</p>
+      <p>Reconciliation is important because it balances correctness and performance. React still re-renders components logically, but it applies only the required changes to the actual DOM. This is one reason React works well for interactive user interfaces.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "What is the Context API in React and when should you use it?",
+    tags: ["React", "Context", "State"],
+    answer: `
+      <p>The Context API in React is used to share data with many components without passing props manually through every level. It is helpful when several components need the same value, such as logged-in user details, theme, language, or authentication status.</p>
+      <p>Normally, data flows from parent to child using props. But if a deeply nested component needs the data, props may have to pass through many intermediate components that do not use it. This problem is called prop drilling. Context helps reduce that.</p>
+      <pre><code>const AuthContext = React.createContext();
+
+function App() {
+  const user = { name: "Divya" };
+
+  return (
+    &lt;AuthContext.Provider value={user}&gt;
+      &lt;Dashboard /&gt;
+    &lt;/AuthContext.Provider&gt;
+  );
+}</code></pre>
+      <p>A child component can read the value using <code>useContext</code>:</p>
+      <pre><code>const user = useContext(AuthContext);</code></pre>

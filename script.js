@@ -1959,9 +1959,19 @@ for (int count : freq) {
     `For fixed-size integers, the loop runs a constant number of times, so time complexity is <code>O(1)</code>. Space complexity is also <code>O(1)</code>.`
   ]),
   makeDsaQuestion("Applied", "How do you determine when to change direction during a spiral traversal of a matrix?", ["Arrays", "Matrix", "Traversal"], [
-    "During spiral traversal, direction changes when the next cell is outside the matrix boundary or has already been visited.",
-    "The usual direction order is right, down, left, and up. A direction index can be updated as <code>dir = (dir + 1) % 4</code>.",
-    "This check prevents repeated cells and keeps traversal inside the matrix. The algorithm continues until all cells are visited."
+    `In spiral traversal, we move in one direction until the next move is invalid. A direction change is needed when the next cell goes outside the matrix boundary or when the next cell has already been visited.`,
+    `The common direction order is right, down, left, and up. This order can be stored using row and column changes. A variable such as <code>dir</code> or <code>pos</code> stores the current direction.`,
+    `<pre><code>int dr[4] = {0, 1, 0, -1};
+int dc[4] = {1, 0, -1, 0};
+
+int nr = row + dr[dir];
+int nc = col + dc[dir];
+
+if (nr &lt; 0 || nr &gt;= rows || nc &lt; 0 || nc &gt;= cols || visited[nr][nc]) {
+  dir = (dir + 1) % 4;
+}</code></pre>`,
+    `After changing direction, the algorithm calculates the next cell again using the new direction. This prevents crossing the boundary and prevents repeating a cell already included in the answer.`,
+    `The traversal stops after <code>rows * cols</code> cells are added. The direction-change condition is the main control that keeps the output in correct spiral order.`
   ]),
   makeDsaQuestion("Applied", "Explain binary search and write a C++ implementation that works on a sorted array.", ["Searching", "Binary Search", "C++"], [
     "Binary search works only on sorted arrays. It checks the middle element and discards half of the search range each time.",

@@ -1853,9 +1853,15 @@ for (int count : freq) {
     `The time complexity is <code>O(1)</code> because only a constant number of operations are used. Space complexity is also <code>O(1)</code>. The check for <code>n &lt;= 0</code> is important because powers of 2 are positive in this context.`
   ]),
   makeDsaQuestion("Applied", "State the time complexity of the linear search approach for finding a peak element and explain how the number of comparisons relates to the array size n.", ["Searching", "Arrays", "Complexity"], [
-    "The linear search approach for finding a peak element checks each array element one by one.",
-    "For each middle element, it may compare with the left and right neighbours. First and last elements need only one neighbour check.",
-    "Even though each element may need one or two comparisons, the total comparisons grow linearly with <code>n</code>. Therefore, time complexity is <code>O(n)</code>, and extra space is <code>O(1)</code>."
+    `A peak element is an element that is not smaller than its neighbours. In the linear search approach, the array is scanned from left to right and each element is checked against its nearby elements.`,
+    `For a middle index <code>i</code>, the algorithm checks whether <code>arr[i] &gt;= arr[i - 1]</code> and <code>arr[i] &gt;= arr[i + 1]</code>. For the first element, only the right neighbour exists. For the last element, only the left neighbour exists.`,
+    `<pre><code>for (int i = 0; i &lt; n; i++) {
+  bool leftOk = (i == 0 || arr[i] &gt;= arr[i - 1]);
+  bool rightOk = (i == n - 1 || arr[i] &gt;= arr[i + 1]);
+  if (leftOk &amp;&amp; rightOk) return i;
+}</code></pre>`,
+    `In the worst case, the peak may be near the end or the loop may need to check many elements before returning. Each index uses only constant comparisons, so the total work grows directly with <code>n</code>.`,
+    `Therefore, time complexity is <code>O(n)</code> and extra space is <code>O(1)</code>. The comparison count is not exactly the same for every index, but it still increases linearly with the array size.`
   ]),
   makeDsaQuestion("Applied", "Describe the sliding window technique and write C++ code to find the maximum sum subarray of size k.", ["Arrays", "Sliding Window", "C++"], [
     "Sliding window is used for fixed-size or variable-size continuous subarray problems. For maximum sum of size <code>k</code>, calculate the first window sum, then slide by removing the left element and adding the next element.",

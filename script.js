@@ -2093,9 +2093,17 @@ end</code></pre>`,
     `The benefit is that beginners build confidence step by step. Once the pseudocode is correct, converting it into C++ becomes a smaller task. It supports logical thinking, dry running, debugging, and better explanation.`
   ]),
   makeDsaQuestion("Applied", "Explain the concept of hashing and how an unordered_map works in C++.", ["Hashing", "unordered_map", "STL"], [
-    "Hashing converts a key into a bucket location using a hash function. It allows fast average search, insertion, and deletion.",
-    "In C++, <code>unordered_map</code> stores key-value pairs using hashing. It does not keep keys sorted.",
-    "Average operations are <code>O(1)</code>, but worst case can be slower if many keys collide. It is useful for frequency counting, duplicate checks, and fast lookup problems."
+    `Hashing is a technique used for fast storage and lookup. A hash function converts a key into a bucket index. The value is stored in that bucket, so searching can be done quickly without scanning every element.`,
+    `In C++, <code>unordered_map</code> stores key-value pairs using hashing. The key is passed through a hash function, and the result decides where the pair is stored internally. Unlike <code>map</code>, it does not keep keys in sorted order.`,
+    `<pre><code>unordered_map&lt;string, int&gt; marks;
+marks["Asha"] = 90;
+marks["Ravi"] = 85;
+
+if (marks.count("Asha")) {
+  cout &lt;&lt; marks["Asha"];
+}</code></pre>`,
+    `Average time complexity for insert, search, and delete is <code>O(1)</code>. In the worst case, if many keys fall into the same bucket, operations can become slower. Good hashing and rehashing reduce this problem in practice.`,
+    `<code>unordered_map</code> is useful for frequency counting, checking duplicates, storing indexes, two-sum problems, and memoization. A strong answer should mention key-value storage, hash function, average complexity, collision possibility, and unsorted order.`
   ]),
   makeDsaQuestion("Applied", "What is the initial direction of traversal in a spiral matrix?", ["Arrays", "Matrix", "Traversal"], [
     "The usual initial direction in spiral matrix traversal is left to right across the top row.",

@@ -78,3 +78,83 @@ function UsersList() {
   return &lt;ul&gt;{users.map(user =&gt; &lt;li key={user.id}&gt;{user.name}&lt;/li&gt;)}&lt;/ul&gt;;
 }</code></pre>
       <p>The empty dependency array makes the request run once when the component mounts. The loading state gives feedback while the request is in progress. The error state handles failure. The final UI displays the fetched data using <code>map()</code>.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Differentiate between the <Navigate> component and the navigate() function in React Router. Provide an example scenario for using each.",
+    tags: ["React", "Router", "Navigation"],
+    answer: `
+      <p><code>&lt;Navigate&gt;</code> and <code>navigate()</code> are both used for routing in React Router, but they are used in different situations.</p>
+      <p><code>&lt;Navigate&gt;</code> is a component. It is returned from JSX when navigation should happen during rendering. It is useful for protected routes where the UI decides whether to show a page or redirect the user.</p>
+      <pre><code>import { Navigate } from "react-router-dom";
+
+function ProtectedRoute({ isLoggedIn, children }) {
+  if (!isLoggedIn) {
+    return &lt;Navigate to="/login" replace /&gt;;
+  }
+  return children;
+}</code></pre>
+      <p><code>navigate()</code> is a function returned by the <code>useNavigate</code> hook. It is used inside event handlers or after some action, such as login, form submission, or button click.</p>
+      <pre><code>import { useNavigate } from "react-router-dom";
+
+function Login() {
+  const navigate = useNavigate();
+
+  function handleLogin() {
+    // after successful login
+    navigate("/dashboard");
+  }
+
+  return &lt;button onClick={handleLogin}&gt;Login&lt;/button&gt;;
+}</code></pre>
+      <p>Use <code>&lt;Navigate&gt;</code> when redirecting as part of rendering logic. Use <code>navigate()</code> when redirecting after an action. This distinction keeps route protection and user-triggered navigation clear.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Explain how the useEffect dependency array controls when an effect runs. Describe the behavior for an empty array, no array, and a specific dependency.",
+    tags: ["React", "Hooks", "useEffect"],
+    answer: `
+      <p><code>useEffect</code> is used to run side effects in a React functional component. Side effects include API calls, timers, subscriptions, updating the document title, or storing data in local storage. The dependency array controls when the effect runs.</p>
+      <p>If there is no dependency array, the effect runs after every render. This is useful only when the effect truly depends on every render, but it can easily cause repeated work.</p>
+      <pre><code>useEffect(() =&gt; {
+  console.log("Runs after every render");
+});</code></pre>
+      <p>If the dependency array is empty, the effect runs only once after the first render. This is commonly used for initial API calls.</p>
+      <pre><code>useEffect(() =&gt; {
+  fetchUsers();
+}, []);</code></pre>
+      <p>If the array contains a dependency, the effect runs after the first render and again whenever that dependency changes.</p>
+      <pre><code>useEffect(() =&gt; {
+  document.title = "Count: " + count;
+}, [count]);</code></pre>
+      <p>React uses the dependency array to avoid unnecessary effect execution. If a value used inside the effect can change, it should usually be added to the array. This keeps the effect correct and prevents stale values or repeated calls.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Explain the purpose of the cleanup function in useEffect. How would you use it to clear an interval when a component unmounts? Provide a code snippet.",
+    tags: ["React", "Hooks", "Cleanup"],
+    answer: `
+      <p>The cleanup function in <code>useEffect</code> is used to remove side effects that should not continue after a component updates or unmounts. It helps prevent memory leaks, repeated timers, duplicate event listeners, and unwanted background work.</p>
+      <p>In <code>useEffect</code>, the cleanup function is returned from the effect callback. React runs it before the effect runs again and when the component is removed from the screen.</p>
+      <p>A common use case is clearing an interval:</p>
+      <pre><code>import { useEffect, useState } from "react";
+
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() =&gt; {
+    const intervalId = setInterval(() =&gt; {
+      setSeconds(prevSeconds =&gt; prevSeconds + 1);
+    }, 1000);
+
+    return () =&gt; {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  return &lt;p&gt;Timer: {seconds}&lt;/p&gt;;
+}</code></pre>
+      <p>Here, <code>setInterval</code> starts a timer when the component mounts. The returned cleanup function calls <code>clearInterval</code> when the component unmounts. Without cleanup, the interval may keep running even after the component is gone.</p>

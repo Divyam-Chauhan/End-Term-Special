@@ -1900,6 +1900,7 @@ for (int count : freq) {
 }</code></pre>`,
     `Trace for <code>[1,2,3,4,5,6,7,8,4,2,1]</code>: start <code>low=0, high=10</code>. <code>mid=5</code>, value <code>6</code>, and <code>arr[6]=7</code>, so move right: <code>low=6</code>. Now <code>mid=8</code>, value <code>4</code>, and <code>arr[9]=2</code>, so move left: <code>high=8</code>.`,
     `Next <code>mid=7</code>, value <code>8</code>, and <code>arr[8]=4</code>, so <code>high=7</code>. Next <code>mid=6</code>, value <code>7</code>, and <code>arr[7]=8</code>, so <code>low=7</code>. Now <code>low=high=7</code>.`,
+    `The algorithm returns index <code>7</code>, value <code>8</code>, which is a peak. Time complexity is <code>O(log n)</code> because the search range is halved. Space complexity is <code>O(1)</code>.`
   ]),
   makeDsaQuestion("Applied", "Explain the Dutch National Flag algorithm and write its C++ implementation.", ["Arrays", "Sorting", "Two Pointers"], [
     `The Dutch National Flag algorithm sorts an array containing only <code>0</code>, <code>1</code>, and <code>2</code>. It is commonly used for the "sort colors" problem. The aim is to place all zeroes first, ones in the middle, and twos at the end in one scan.`,

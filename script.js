@@ -1809,9 +1809,26 @@ k &lt;= s.length() =&gt; 3 &lt;= 7 =&gt; true</code></pre>`,
     `The function returns <code>true</code>. The reason is that only one character needs a middle position in a palindrome, and three parts are enough to handle it. The remaining even-count characters can be distributed in pairs.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to find all pairs in an array that sum to a given target using hashing, and state its time complexity.", ["Arrays", "Hashing", "C++"], [
-    "Use a hash set to store numbers already seen. For each number <code>x</code>, check whether <code>target - x</code> exists.",
-    "<pre><code>vector&lt;pair&lt;int,int&gt;&gt; findPairs(vector&lt;int&gt;&amp; arr, int target) {\n  unordered_set&lt;int&gt; seen;\n  vector&lt;pair&lt;int,int&gt;&gt; ans;\n  for (int x : arr) {\n    int need = target - x;\n    if (seen.count(need)) ans.push_back({need, x});\n    seen.insert(x);\n  }\n  return ans;\n}</code></pre>",
-    "Average time complexity is <code>O(n)</code>, and space complexity is <code>O(n)</code>. It is faster than the brute force <code>O(n^2)</code> pair check."
+    `Using hashing avoids checking every pair with nested loops. The idea is to scan the array once and store numbers already seen. For every current value <code>x</code>, the required partner is <code>target - x</code>. If that partner already exists in the hash set, a valid pair is found.`,
+    `<pre><code>vector&lt;pair&lt;int, int&gt;&gt; findPairs(vector&lt;int&gt;&amp; arr, int target) {
+  unordered_set&lt;int&gt; seen;
+  set&lt;pair&lt;int, int&gt;&gt; uniquePairs;
+
+  for (int x : arr) {
+    int need = target - x;
+    if (seen.count(need)) {
+      int a = min(x, need);
+      int b = max(x, need);
+      uniquePairs.insert({a, b});
+    }
+    seen.insert(x);
+  }
+
+  return vector&lt;pair&lt;int, int&gt;&gt;(uniquePairs.begin(), uniquePairs.end());
+}</code></pre>`,
+    `The <code>seen</code> set gives average <code>O(1)</code> lookup. The extra <code>set</code> removes duplicate pairs and stores them in a consistent order. If duplicate removal is not required, a vector alone can be used for answers.`,
+    `Average time complexity is <code>O(n)</code> for scanning and hash lookup, plus output handling. With the ordered <code>set</code>, insertion can add <code>O(log p)</code> per pair, where <code>p</code> is the number of pairs. Space complexity is <code>O(n)</code>.`,
+    `This is better than brute force <code>O(n^2)</code> because each element is processed once instead of comparing it with every other element.`
   ]),
   makeDsaQuestion("Applied", "Describe the step in the canPartition algorithm that counts odd-frequency characters. Explain how it works, what it produces, and why it is necessary.", ["Strings", "Hashing"], [
     "After building the frequency array, the algorithm loops through every frequency and counts values that are odd.",

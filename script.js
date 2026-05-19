@@ -1941,9 +1941,22 @@ for (int count : freq) {
     `So, Quick Sort is usually chosen for in-place average performance, while Merge Sort is chosen for stability and predictable time complexity.`
   ]),
   makeDsaQuestion("Applied", "Explain the approach to find minimum bit flips required to make (x OR y) equal to z.", ["Bit Manipulation", "OR"], [
-    "Check every bit position of <code>x</code>, <code>y</code>, and <code>z</code>.",
-    "If the target bit in <code>z</code> is <code>1</code>, at least one of <code>x</code> or <code>y</code> must have <code>1</code>. If both are <code>0</code>, one flip is needed.",
-    "If the target bit in <code>z</code> is <code>0</code>, both bits in <code>x</code> and <code>y</code> must be <code>0</code>. Every <code>1</code> among them must be flipped. Since fixed integers have limited bits, time is <code>O(1)</code>."
+    `The problem asks for the minimum number of bit changes needed so that <code>(x OR y)</code> becomes equal to <code>z</code>. Since OR works independently on each bit position, we can check one bit at a time.`,
+    `For each bit, let <code>xb</code>, <code>yb</code>, and <code>zb</code> be the bits of <code>x</code>, <code>y</code>, and <code>z</code>. If <code>zb</code> is <code>1</code>, at least one of <code>xb</code> or <code>yb</code> must be <code>1</code>. If both are <code>0</code>, one flip is needed.`,
+    `If <code>zb</code> is <code>0</code>, both <code>xb</code> and <code>yb</code> must be <code>0</code>. So every <code>1</code> among them must be flipped to <code>0</code>. This may require zero, one, or two flips for that bit.`,
+    `<pre><code>int minFlips(int x, int y, int z) {
+  int flips = 0;
+  for (int i = 0; i &lt; 31; i++) {
+    int xb = (x &gt;&gt; i) &amp; 1;
+    int yb = (y &gt;&gt; i) &amp; 1;
+    int zb = (z &gt;&gt; i) &amp; 1;
+
+    if (zb == 1 &amp;&amp; xb == 0 &amp;&amp; yb == 0) flips++;
+    if (zb == 0) flips += xb + yb;
+  }
+  return flips;
+}</code></pre>`,
+    `For fixed-size integers, the loop runs a constant number of times, so time complexity is <code>O(1)</code>. Space complexity is also <code>O(1)</code>.`
   ]),
   makeDsaQuestion("Applied", "How do you determine when to change direction during a spiral traversal of a matrix?", ["Arrays", "Matrix", "Traversal"], [
     "During spiral traversal, direction changes when the next cell is outside the matrix boundary or has already been visited.",

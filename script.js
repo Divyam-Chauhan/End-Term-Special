@@ -1085,3 +1085,65 @@ WHERE course = 'BCA';</code></pre>
       <p><code>SELECT *</code> is acceptable for quick testing, small temporary queries, or admin inspection. For final code, reports, APIs, and exam answers, specific columns should be preferred. The recommendation is simple: use <code>SELECT *</code> only when all columns are truly needed; otherwise list the required columns clearly.</p>
     `,
   },
+  {
+    subject: "dbms",
+    title: "Create a comprehensive SQL solution to identify movies where three specific actors (ids 5, 10, and 15) all appeared together, showing the logic and query structure.",
+    tags: ["SQL", "Joins", "Set Logic"],
+    answer: `
+      <p>To find movies where actors 5, 10, and 15 all appeared together, assume a table named <code>movie_cast(movie_id, actor_id)</code>. Each row stores one actor appearing in one movie. The goal is to return only those movies that contain all three actor IDs.</p>
+      <p>A clean solution uses grouping and counting distinct actors:</p>
+      <pre><code>SELECT movie_id
+FROM movie_cast
+WHERE actor_id IN (5, 10, 15)
+GROUP BY movie_id
+HAVING COUNT(DISTINCT actor_id) = 3;</code></pre>
+      <p>The <code>WHERE</code> clause keeps only rows for the three required actors. Then <code>GROUP BY movie_id</code> groups those rows movie-wise. The <code>HAVING</code> condition checks that all three different actors are present in the same movie group.</p>
+      <p>If movie details are stored in a separate table, the query can join with it:</p>
+      <pre><code>SELECT m.movie_id, m.title
+FROM movies m
+JOIN movie_cast mc ON m.movie_id = mc.movie_id
+WHERE mc.actor_id IN (5, 10, 15)
+GROUP BY m.movie_id, m.title
+HAVING COUNT(DISTINCT mc.actor_id) = 3;</code></pre>
+      <p>This approach is better than writing three separate manual checks because it is clear and easy to extend. If five actors are required later, we can add their IDs and change the count. The main point is that filtering selects candidate rows, grouping collects actors by movie, and <code>HAVING</code> confirms that all required actors appeared together.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Explain BCNF (Boyce-Codd Normal Form) and describe how it differs from 3NF, with an example.",
+    tags: ["Normalization", "BCNF", "3NF"],
+    answer: `
+      <p>BCNF, or Boyce-Codd Normal Form, is a stricter form of database normalization. A table is in BCNF if, for every functional dependency <code>X -> Y</code>, X is a super key. This means the left side of every dependency must be able to uniquely identify a row.</p>
+      <p>3NF is slightly less strict. A table is in 3NF if, for every dependency <code>X -> Y</code>, either X is a super key, or Y is a prime attribute, meaning Y is part of some candidate key.</p>
+      <p>The difference is that 3NF may allow some dependencies where the determinant is not a super key, if the dependent attribute is prime. BCNF does not allow this exception.</p>
+      <p>Example: consider <code>Class(student, subject, teacher)</code>, where one teacher teaches only one subject, and a student can take a subject from a teacher. If <code>teacher -> subject</code>, then teacher decides subject. But teacher may not uniquely identify the whole row because many students can study from the same teacher.</p>
+      <p>This can create redundancy because the same teacher-subject pair may repeat for many students. In BCNF, we decompose it into <code>TeacherSubject(teacher, subject)</code> and <code>StudentTeacher(student, teacher)</code>.</p>
+      <p>Thus, 3NF removes many update problems, but BCNF removes stronger dependency-related redundancy. BCNF is preferred when lossless decomposition can be achieved without losing important dependencies.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Examine the performance implications and practical differences between using UNION versus UNION ALL when dealing with large datasets, including when each should be preferred.",
+    tags: ["SQL", "Set Operations", "Performance"],
+    answer: `
+      <p><code>UNION</code> and <code>UNION ALL</code> are SQL set operations used to combine results from two or more <code>SELECT</code> statements. The main difference is how they handle duplicate rows.</p>
+      <p><code>UNION</code> removes duplicate rows from the final result. To do this, the database usually has to sort or compare rows. On large datasets, this can take extra time and memory. It is useful when the final result must contain unique rows only.</p>
+      <pre><code>SELECT city FROM customers
+UNION
+SELECT city FROM suppliers;</code></pre>
+      <p><code>UNION ALL</code> keeps all rows, including duplicates. Since it does not need duplicate removal, it is usually faster and more efficient for large datasets.</p>
+      <pre><code>SELECT city FROM customers
+UNION ALL
+SELECT city FROM suppliers;</code></pre>
+      <p><code>UNION</code> should be preferred when duplicate rows would be logically wrong, such as creating a unique list of cities or user IDs. <code>UNION ALL</code> should be preferred when duplicates are meaningful or when the source data is already known to be distinct.</p>
+      <p>In reporting systems, logs, audit records, and large data processing, <code>UNION ALL</code> is often better because it avoids unnecessary work. The practical recommendation is to use <code>UNION ALL</code> by default for performance, and use <code>UNION</code> only when duplicate removal is actually required.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Explain what a materialized view is and how it differs from a regular view in SQL.",
+    tags: ["Views", "SQL", "Performance"],
+    answer: `
+      <p>A regular view is a saved SQL query. It does not usually store the result separately. When a user queries the view, the database runs the underlying query and returns the latest data from the base tables.</p>
+      <pre><code>CREATE VIEW active_students AS
+SELECT student_id, name

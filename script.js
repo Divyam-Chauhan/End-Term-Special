@@ -558,3 +558,83 @@ export default Login;</code></pre>
     const data = await response.json();
     console.log(data);
   } catch (error) {
+    console.error(error);
+  }
+}</code></pre>
+      <p>This style is usually easier to read when there are several dependent steps. Error handling is done with <code>try...catch</code>.</p>
+      <p>Prefer <code>async/await</code> for most React API calls because it is readable and easier to debug. Prefer <code>.then()</code> when the operation is very short or when chaining is already simple. The important point is to handle both success and failure clearly.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "What are React Components? Explain how components are reusable and composable.",
+    tags: ["React", "Components", "Reusability"],
+    answer: `
+      <p>React components are independent pieces of UI. A component can contain markup, logic, event handling, and styling related to one part of the interface. Examples include buttons, cards, forms, headers, and pages.</p>
+      <p>A component is reusable because the same component can be used in many places with different props.</p>
+      <pre><code>function Button({ label, onClick }) {
+  return &lt;button onClick={onClick}&gt;{label}&lt;/button&gt;;
+}</code></pre>
+      <p>The same <code>Button</code> component can be used for Save, Delete, Login, or Submit by passing different props.</p>
+      <pre><code>&lt;Button label="Save" onClick={saveData} /&gt;
+&lt;Button label="Delete" onClick={deleteData} /&gt;</code></pre>
+      <p>Components are composable because smaller components can be combined to build bigger interfaces. For example, a <code>ProfilePage</code> can contain <code>Avatar</code>, <code>UserInfo</code>, and <code>PostList</code> components.</p>
+      <p>This makes React applications easier to maintain. Each component can focus on one responsibility. If a design or logic change is needed, it can often be made in one component and reused everywhere.</p>
+      <p>In exam terms, React components improve structure, reduce repeated code, and allow complex UIs to be built from smaller understandable parts.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Implement a simple counter application in React using useState. Include increment, decrement, and reset buttons.",
+    tags: ["React", "Hooks", "useState"],
+    answer: `
+      <p>A counter application is a simple example of using React state. The <code>useState</code> hook stores the current count value, and button click handlers update that value.</p>
+      <pre><code>import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  function increment() {
+    setCount(prevCount =&gt; prevCount + 1);
+  }
+
+  function decrement() {
+    setCount(prevCount =&gt; prevCount - 1);
+  }
+
+  function reset() {
+    setCount(0);
+  }
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Count: {count}&lt;/h1&gt;
+      &lt;button onClick={increment}&gt;Increment&lt;/button&gt;
+      &lt;button onClick={decrement}&gt;Decrement&lt;/button&gt;
+      &lt;button onClick={reset}&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      <p>The initial value of <code>count</code> is 0. The increment function adds 1, the decrement function subtracts 1, and reset sets the value back to 0.</p>
+      <p>The functional form <code>setCount(prevCount =&gt; prevCount + 1)</code> is preferred when the new value depends on the previous value. It avoids mistakes when React batches state updates.</p>
+      <p>This example shows the basic React pattern: store UI data in state, update it through event handlers, and let React re-render the component.</p>
+    `,
+  },
+  {
+    subject: "web-dev",
+    title: "Write a complete fetch implementation to retrieve and display joke data from the URL https://apis.ccbp.in/jokes/random.",
+    tags: ["React", "Fetch", "API"],
+    answer: `
+      <p>To fetch joke data in React, we can use <code>useEffect</code> for the API request and <code>useState</code> to store loading, error, and joke data. The request should run once when the component mounts.</p>
+      <pre><code>import { useEffect, useState } from "react";
+
+function RandomJoke() {
+  const [joke, setJoke] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() =&gt; {
+    async function getJoke() {
+      try {
+        const response = await fetch("https://apis.ccbp.in/jokes/random");
+        if (!response.ok) throw new Error("Failed to fetch joke");

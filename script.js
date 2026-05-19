@@ -2053,9 +2053,16 @@ int main() {
     `The output order is not guaranteed because <code>unordered_map</code> does not store keys in sorted order. If sorted output is required, <code>map</code> can be used instead, with <code>O(log m)</code> operations.`
   ]),
   makeDsaQuestion("Applied", "How does pseudocode help in boosting problem-solving skills?", ["Pseudocode", "Problem Solving"], [
-    "Pseudocode improves problem-solving by making students think about logic before syntax.",
-    "It breaks a problem into input, output, loops, conditions, and steps. This builds a habit of planning before coding.",
-    "It also makes tracing easier. A student can test the idea on a small input before writing C++ code, which improves confidence and accuracy."
+    `Pseudocode improves problem-solving skills because it trains the student to think in steps. Instead of jumping directly to syntax, the student first decides what the program should do and in what order.`,
+    `It separates logic from language rules. This is useful in DSA because the main challenge is often choosing the correct approach, not writing semicolons or header files. A student can write the idea using simple statements, then convert it into C++ later.`,
+    `Pseudocode also supports dry runs. By testing the steps on a small input, the student can check whether the approach handles normal cases and edge cases. This builds accuracy and confidence.`,
+    `<pre><code>read array
+set best = first element
+for each element:
+  if element &gt; best:
+    update best
+print best</code></pre>`,
+    `The small example above clearly shows the logic for finding the maximum element. Once the logic is correct, writing the C++ version becomes easier. Therefore, pseudocode improves planning, tracing, debugging, and exam explanation skills.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to rotate an array to the right by k positions and analyze its time and space complexity.", ["Arrays", "Rotation", "C++"], [
     "Use the reversal method: reverse the whole array, reverse the first <code>k</code> elements, then reverse the remaining elements.",

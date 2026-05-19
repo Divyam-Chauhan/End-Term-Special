@@ -1884,9 +1884,21 @@ for (int count : freq) {
     `This method is preferred over the brute force approach, which would calculate each window separately and take <code>O(nk)</code> time.`
   ]),
   makeDsaQuestion("Applied", "Write the complete C++ code for the binary search approach to find a peak element and trace it on the array [1, 2, 3, 4, 5, 6, 7, 8, 4, 2, 1].", ["Searching", "Binary Search", "Arrays"], [
-    "Use binary search by comparing <code>arr[mid]</code> with <code>arr[mid + 1]</code>. If the right side is increasing, move right; otherwise move left.",
-    "<pre><code>int findPeak(vector&lt;int&gt;&amp; arr) {\n  int low = 0, high = arr.size() - 1;\n  while (low &lt; high) {\n    int mid = low + (high - low) / 2;\n    if (arr[mid] &lt; arr[mid + 1]) low = mid + 1;\n    else high = mid;\n  }\n  return low;\n}</code></pre>",
-    "Trace: mid 5 gives 6 &lt; 7, move right. mid 8 gives 4 &gt; 2, move left. mid 7 gives 8 &gt; 4, move left. mid 6 gives 7 &lt; 8, move right. Final peak index is <code>7</code>, value <code>8</code>. Time is <code>O(log n)</code>."
+    `Binary search for a peak element uses the slope of the array. If <code>arr[mid] &lt; arr[mid + 1]</code>, then a peak must exist on the right side because the array is rising. Otherwise, a peak exists at <code>mid</code> or on the left side.`,
+    `<pre><code>int findPeak(vector&lt;int&gt;&amp; arr) {
+  int low = 0, high = arr.size() - 1;
+  while (low &lt; high) {
+    int mid = low + (high - low) / 2;
+    if (arr[mid] &lt; arr[mid + 1]) {
+      low = mid + 1;
+    } else {
+      high = mid;
+    }
+  }
+  return low;
+}</code></pre>`,
+    `Trace for <code>[1,2,3,4,5,6,7,8,4,2,1]</code>: start <code>low=0, high=10</code>. <code>mid=5</code>, value <code>6</code>, and <code>arr[6]=7</code>, so move right: <code>low=6</code>. Now <code>mid=8</code>, value <code>4</code>, and <code>arr[9]=2</code>, so move left: <code>high=8</code>.`,
+    `Next <code>mid=7</code>, value <code>8</code>, and <code>arr[8]=4</code>, so <code>high=7</code>. Next <code>mid=6</code>, value <code>7</code>, and <code>arr[7]=8</code>, so <code>low=7</code>. Now <code>low=high=7</code>.`,
   ]),
   makeDsaQuestion("Applied", "Explain the Dutch National Flag algorithm and write its C++ implementation.", ["Arrays", "Sorting", "Two Pointers"], [
     "The Dutch National Flag algorithm sorts an array containing only <code>0</code>, <code>1</code>, and <code>2</code> using three pointers: <code>low</code>, <code>mid</code>, and <code>high</code>.",

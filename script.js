@@ -1831,9 +1831,16 @@ k &lt;= s.length() =&gt; 3 &lt;= 7 =&gt; true</code></pre>`,
     `This is better than brute force <code>O(n^2)</code> because each element is processed once instead of comparing it with every other element.`
   ]),
   makeDsaQuestion("Applied", "Describe the step in the canPartition algorithm that counts odd-frequency characters. Explain how it works, what it produces, and why it is necessary.", ["Strings", "Hashing"], [
-    "After building the frequency array, the algorithm loops through every frequency and counts values that are odd.",
-    "<pre><code>int oddCount = 0;\nfor (int count : freq) {\n  if (count % 2 != 0) oddCount++;\n}</code></pre>",
-    "<code>oddCount</code> tells how many characters need a middle position in palindrome-like groups. Since each palindrome can handle at most one odd character, the check <code>oddCount &lt;= k</code> is necessary."
+    `After the frequency array is built, the algorithm must know how many characters appear an odd number of times. This value is stored in <code>oddCount</code>.`,
+    `<pre><code>int oddCount = 0;
+for (int count : freq) {
+  if (count % 2 != 0) {
+    oddCount++;
+  }
+}</code></pre>`,
+    `The loop checks every frequency. If a count is not divisible by 2, that character has one unmatched occurrence after making pairs. Such a character needs a center position in a palindrome. For example, in <code>aaabb</code>, <code>a</code> has frequency <code>3</code>, so one <code>a</code> can stay in the middle.`,
+    `This step produces the number of odd-frequency characters, not the number of palindromes directly. It is necessary because each palindrome can contain at most one odd-frequency character. Therefore, to make <code>k</code> palindromic parts, the condition <code>oddCount &lt;= k</code> must hold.`,
+    `The final decision also checks <code>k &lt;= s.length()</code>. Together, these conditions make sure there are enough parts for odd characters and enough characters for the requested number of parts.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to check if a given number is a power of 2 using bit manipulation.", ["Bit Manipulation", "C++"], [
     "A power of 2 has exactly one set bit in binary. The expression <code>n &amp; (n - 1)</code> removes the rightmost set bit.",

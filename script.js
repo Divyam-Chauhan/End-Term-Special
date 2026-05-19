@@ -1901,9 +1901,26 @@ for (int count : freq) {
     `Next <code>mid=7</code>, value <code>8</code>, and <code>arr[8]=4</code>, so <code>high=7</code>. Next <code>mid=6</code>, value <code>7</code>, and <code>arr[7]=8</code>, so <code>low=7</code>. Now <code>low=high=7</code>.`,
   ]),
   makeDsaQuestion("Applied", "Explain the Dutch National Flag algorithm and write its C++ implementation.", ["Arrays", "Sorting", "Two Pointers"], [
-    "The Dutch National Flag algorithm sorts an array containing only <code>0</code>, <code>1</code>, and <code>2</code> using three pointers: <code>low</code>, <code>mid</code>, and <code>high</code>.",
-    "<pre><code>void sortColors(vector&lt;int&gt;&amp; a) {\n  int low = 0, mid = 0, high = a.size() - 1;\n  while (mid &lt;= high) {\n    if (a[mid] == 0) swap(a[low++], a[mid++]);\n    else if (a[mid] == 1) mid++;\n    else swap(a[mid], a[high--]);\n  }\n}</code></pre>",
-    "Zeros move left, twos move right, and ones stay in the middle. Time complexity is <code>O(n)</code>, and space complexity is <code>O(1)</code>."
+    `The Dutch National Flag algorithm sorts an array containing only <code>0</code>, <code>1</code>, and <code>2</code>. It is commonly used for the "sort colors" problem. The aim is to place all zeroes first, ones in the middle, and twos at the end in one scan.`,
+    `It uses three pointers: <code>low</code>, <code>mid</code>, and <code>high</code>. Elements before <code>low</code> are zeroes. Elements between <code>low</code> and <code>mid - 1</code> are ones. Elements after <code>high</code> are twos. <code>mid</code> scans the unknown part.`,
+    `<pre><code>void sortColors(vector&lt;int&gt;&amp; a) {
+  int low = 0, mid = 0, high = a.size() - 1;
+
+  while (mid &lt;= high) {
+    if (a[mid] == 0) {
+      swap(a[low], a[mid]);
+      low++;
+      mid++;
+    } else if (a[mid] == 1) {
+      mid++;
+    } else {
+      swap(a[mid], a[high]);
+      high--;
+    }
+  }
+}</code></pre>`,
+    `When <code>a[mid]</code> is <code>0</code>, it belongs to the left side. When it is <code>1</code>, it is already in the middle area. When it is <code>2</code>, it is swapped to the right side.`,
+    `The time complexity is <code>O(n)</code> because each element is handled at most a small constant number of times. Space complexity is <code>O(1)</code> because sorting is done in-place.`
   ]),
   makeDsaQuestion("Applied", "Explain properties of XOR operator and its applications with examples.", ["Bit Manipulation", "XOR"], [
     "XOR returns <code>1</code> when two bits are different and <code>0</code> when they are the same.",

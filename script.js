@@ -1994,9 +1994,14 @@ if (nr &lt; 0 || nr &gt;= rows || nc &lt; 0 || nc &gt;= cols || visited[nr][nc])
     `The time complexity is <code>O(log n)</code> because the search range is halved every iteration. The iterative version uses <code>O(1)</code> extra space. Binary search is useful for direct search, lower bound, upper bound, and answer-space problems.`
   ]),
   makeDsaQuestion("Applied", "How is a previously visited cell marked in the spiral traversal pseudo code?", ["Arrays", "Matrix", "Traversal"], [
-    "A visited cell is usually marked using a separate boolean matrix, such as <code>visited[row][col] = true</code>.",
-    "Before moving to the next cell, the algorithm checks whether that cell is already visited. If it is, the direction changes.",
-    "Some pseudocode marks the original matrix with a special value, but a separate visited matrix is safer because it does not change the original data."
+    `In spiral traversal pseudocode, a previously visited cell is commonly marked using a separate boolean matrix. When a cell is added to the answer, the algorithm sets its visited value to true.`,
+    `<pre><code>vector&lt;vector&lt;bool&gt;&gt; visited(rows, vector&lt;bool&gt;(cols, false));
+
+answer.push_back(matrix[row][col]);
+visited[row][col] = true;</code></pre>`,
+    `Before moving to the next cell, the algorithm checks whether the next position is inside the matrix and not visited. If the next cell is already visited, direction is changed.`,
+    `A separate visited matrix is clean because it does not modify the original matrix. This is important when the original values must remain unchanged or when the matrix can contain any integer value.`,
+    `Some pseudocode marks the matrix itself with a special value like <code>-1</code>. That is shorter, but it can be unsafe if <code>-1</code> is a valid matrix element. Therefore, a boolean visited matrix is usually the better exam answer.`
   ]),
   makeDsaQuestion("Applied", "Describe the concept of a priority queue in C++ STL and explain its internal implementation.", ["STL", "Priority Queue", "Heap"], [
     "A <code>priority_queue</code> stores elements so that the highest-priority element is available at the top. By default, C++ gives a max-heap.",

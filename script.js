@@ -1789,9 +1789,14 @@ const dsaQuestions = [
     `The logic is correct because each palindrome can contain at most one odd-frequency character. Therefore, if odd characters are more than <code>k</code>, making <code>k</code> palindromic parts is impossible. If <code>k</code> is greater than the string length, there are not enough characters to form that many non-empty parts.`,
   ]),
   makeDsaQuestion("Applied", "Explain the concept of Big-O, Big-Omega, and Big-Theta notations with examples.", ["Complexity", "Analysis"], [
-    "Big-O gives an upper bound on growth. Example: linear search worst case is <code>O(n)</code> because it may check every element.",
-    "Big-Omega gives a lower bound. Linear search best case is <code>Omega(1)</code> if the target is found first.",
-    "Big-Theta gives a tight bound when upper and lower growth are the same. Accessing an array by index is <code>Theta(1)</code>. Merge Sort is <code>Theta(n log n)</code> because its best, average, and worst growth are all <code>n log n</code>."
+    `Asymptotic notation describes how an algorithm grows when input size becomes large. It ignores machine speed and small constant differences, so it helps compare algorithms logically. The three common notations are Big-O, Big-Omega, and Big-Theta.`,
+    `Big-O gives an upper bound. It tells the maximum growth we normally care about. For example, linear search has worst-case <code>O(n)</code> time because the target may be at the last position or absent, so all elements may be checked.`,
+    `Big-Omega gives a lower bound. It tells the minimum growth in the best guaranteed case. For linear search, the best case is <code>Omega(1)</code> because the first element may be the target.`,
+    `Big-Theta gives a tight bound when the upper and lower growth are the same. Accessing an array element by index is <code>Theta(1)</code>. Merge Sort is <code>Theta(n log n)</code> because its best, average, and worst cases all follow the same main growth.`,
+    `<pre><code>for (int i = 0; i &lt; n; i++) {
+  cout &lt;&lt; arr[i];
+}</code></pre>`,
+    `The loop above runs <code>n</code> times, so its time is <code>Theta(n)</code>. In exams, Big-O is used most for worst-case analysis, but all three notations together give a clearer picture of algorithm behavior.`
   ]),
   makeDsaQuestion("Applied", "For s = \"aabbccd\" and k = 3, trace every step of the canPartition algorithm - including the full frequency array and oddCount - and state the final output with explanation.", ["Strings", "Hashing", "Tracing"], [
     "For <code>s = \"aabbccd\"</code>, the frequencies are <code>a=2</code>, <code>b=2</code>, <code>c=2</code>, <code>d=1</code>, and all other lowercase letters are <code>0</code>.",

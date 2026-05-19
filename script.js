@@ -1209,3 +1209,65 @@ WHERE marks &gt; (
       <pre><code>SELECT s.name, c.course_name
 FROM students s
 INNER JOIN courses c ON s.course_id = c.course_id;</code></pre>
+      <p><strong>LEFT JOIN</strong> returns all rows from the left table and matching rows from the right table. If no match exists, right-side columns are null. It is useful for listing all customers, including those who have not placed orders.</p>
+      <p><strong>RIGHT JOIN</strong> returns all rows from the right table and matching rows from the left table. It can be used to list all departments, including departments without employees.</p>
+      <p><strong>FULL OUTER JOIN</strong> returns rows when there is a match in either table. It is useful for comparing two datasets and finding both matched and unmatched records.</p>
+      <p><strong>CROSS JOIN</strong> returns all combinations of rows from both tables. It is used when every combination is needed, such as creating combinations of sizes and colors.</p>
+      <p><strong>SELF JOIN</strong> joins a table with itself, useful for employee-manager relationships. The correct join depends on whether we need only matches, all records from one side, or all combinations.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Illustrate how to make a query that combines both logical operators and conditional filters in MongoDB.",
+    tags: ["MongoDB", "Filters", "NoSQL"],
+    answer: `
+      <p>MongoDB queries use documents to describe conditions. Conditional filters compare field values, while logical operators combine multiple conditions. Common conditional operators include <code>$gt</code>, <code>$lt</code>, <code>$gte</code>, <code>$lte</code>, <code>$eq</code>, and <code>$ne</code>. Common logical operators include <code>$and</code>, <code>$or</code>, and <code>$not</code>.</p>
+      <p>Suppose we have a <code>products</code> collection. We want products from the electronics category, priced below 50000, and either in stock or highly rated.</p>
+      <pre><code>db.products.find({
+  $and: [
+    { category: "Electronics" },
+    { price: { $lt: 50000 } },
+    {
+      $or: [
+        { stock: { $gt: 0 } },
+        { rating: { $gte: 4.5 } }
+      ]
+    }
+  ]
+});</code></pre>
+      <p>The <code>$and</code> operator means all main conditions must be true. The category must be electronics, and the price must be less than 50000. Inside that, <code>$or</code> means at least one of the two conditions should be true: either stock is available or rating is high.</p>
+      <p>This style is useful when filters come from search pages, dashboards, or reports. The query is clear because each condition is written separately. In an exam answer, mention that logical operators control how conditions are combined, while conditional operators compare field values.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Explain the concept of transaction management in databases and describe how COMMIT and ROLLBACK are used.",
+    tags: ["Transactions", "Commit", "Rollback"],
+    answer: `
+      <p>Transaction management is the process of handling a group of database operations as one logical unit of work. It is important when one task needs multiple changes and all of them must remain correct together.</p>
+      <p>For example, in a bank transfer, money is deducted from one account and added to another account. If only one step is saved, the database becomes incorrect. So both updates should be part of one transaction.</p>
+      <pre><code>BEGIN TRANSACTION;
+
+UPDATE accounts
+SET balance = balance - 1000
+WHERE account_id = 1;
+
+UPDATE accounts
+SET balance = balance + 1000
+WHERE account_id = 2;
+
+COMMIT;</code></pre>
+      <p><code>COMMIT</code> is used to permanently save all changes made during the transaction. After commit, the changes become visible and durable.</p>
+      <p><code>ROLLBACK</code> is used to undo changes made during the transaction if an error occurs or a condition fails. For example, if the first account does not have enough balance, the transaction should be rolled back.</p>
+      <pre><code>ROLLBACK;</code></pre>
+      <p>Transaction management helps maintain ACID properties. It protects atomicity because all operations succeed or fail together. It protects consistency because invalid partial changes are not saved.</p>
+      <p>In short, <code>COMMIT</code> confirms a transaction, while <code>ROLLBACK</code> cancels it. Both are essential for reliable database operations.</p>
+    `,
+  },
+  {
+    subject: "dbms",
+    title: "Detail the process of chaining multiple query operations in MongoDB.",
+    tags: ["MongoDB", "Query Chaining", "NoSQL"],
+    answer: `
+      <p>Chaining in MongoDB means applying multiple query operations one after another on the same result. It is commonly used with methods like <code>find()</code>, <code>sort()</code>, <code>limit()</code>, and <code>skip()</code>. Each method refines how the final result is returned.</p>
+      <p>Example:</p>

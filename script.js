@@ -1843,3 +1843,53 @@ const dsaQuestions = [
     "Merge Sort is stable if implemented carefully. Quick Sort is usually unstable. Quick Sort is often fast in practice, while Merge Sort is preferred when stability and guaranteed time matter."
   ]),
   makeDsaQuestion("Applied", "Explain the approach to find minimum bit flips required to make (x OR y) equal to z.", ["Bit Manipulation", "OR"], [
+    "Check every bit position of <code>x</code>, <code>y</code>, and <code>z</code>.",
+    "If the target bit in <code>z</code> is <code>1</code>, at least one of <code>x</code> or <code>y</code> must have <code>1</code>. If both are <code>0</code>, one flip is needed.",
+    "If the target bit in <code>z</code> is <code>0</code>, both bits in <code>x</code> and <code>y</code> must be <code>0</code>. Every <code>1</code> among them must be flipped. Since fixed integers have limited bits, time is <code>O(1)</code>."
+  ]),
+  makeDsaQuestion("Applied", "How do you determine when to change direction during a spiral traversal of a matrix?", ["Arrays", "Matrix", "Traversal"], [
+    "During spiral traversal, direction changes when the next cell is outside the matrix boundary or has already been visited.",
+    "The usual direction order is right, down, left, and up. A direction index can be updated as <code>dir = (dir + 1) % 4</code>.",
+    "This check prevents repeated cells and keeps traversal inside the matrix. The algorithm continues until all cells are visited."
+  ]),
+  makeDsaQuestion("Applied", "Explain binary search and write a C++ implementation that works on a sorted array.", ["Searching", "Binary Search", "C++"], [
+    "Binary search works only on sorted arrays. It checks the middle element and discards half of the search range each time.",
+    "<pre><code>int binarySearch(vector&lt;int&gt;&amp; a, int target) {\n  int low = 0, high = a.size() - 1;\n  while (low &lt;= high) {\n    int mid = low + (high - low) / 2;\n    if (a[mid] == target) return mid;\n    if (a[mid] &lt; target) low = mid + 1;\n    else high = mid - 1;\n  }\n  return -1;\n}</code></pre>",
+    "Time complexity is <code>O(log n)</code>, and the iterative version uses <code>O(1)</code> extra space."
+  ]),
+  makeDsaQuestion("Applied", "How is a previously visited cell marked in the spiral traversal pseudo code?", ["Arrays", "Matrix", "Traversal"], [
+    "A visited cell is usually marked using a separate boolean matrix, such as <code>visited[row][col] = true</code>.",
+    "Before moving to the next cell, the algorithm checks whether that cell is already visited. If it is, the direction changes.",
+    "Some pseudocode marks the original matrix with a special value, but a separate visited matrix is safer because it does not change the original data."
+  ]),
+  makeDsaQuestion("Applied", "Describe the concept of a priority queue in C++ STL and explain its internal implementation.", ["STL", "Priority Queue", "Heap"], [
+    "A <code>priority_queue</code> stores elements so that the highest-priority element is available at the top. By default, C++ gives a max-heap.",
+    "Internally, it is usually implemented using a binary heap over a vector. <code>top()</code> is <code>O(1)</code>, while <code>push()</code> and <code>pop()</code> are <code>O(log n)</code>.",
+    "It is used in scheduling, heap problems, Dijkstra's algorithm, and top-K questions. A min-heap can be made using <code>greater&lt;int&gt;</code>."
+  ]),
+  makeDsaQuestion("Applied", "Analyze how pseudocode can lead to fewer bugs in the coding process.", ["Pseudocode", "Problem Solving"], [
+    "Pseudocode reduces bugs by making the logic clear before writing C++ syntax.",
+    "It helps identify steps, conditions, loops, edge cases, and return values. This makes mistakes easier to catch before implementation.",
+    "It also helps debugging because the final code can be compared with the planned steps. If they differ, the bug is easier to locate."
+  ]),
+  makeDsaQuestion("Applied", "Write a C++ program to count the frequency of each element in an array using an unordered_map and print elements with frequency greater than 1.", ["Hashing", "unordered_map", "C++"], [
+    "Use <code>unordered_map</code> where the key is the element and the value is its count.",
+    "<pre><code>vector&lt;int&gt; arr = {1, 2, 2, 3, 4, 4};\nunordered_map&lt;int, int&gt; freq;\n\nfor (int x : arr) freq[x]++;\n\nfor (auto p : freq) {\n  if (p.second &gt; 1) {\n    cout &lt;&lt; p.first &lt;&lt; \" \" &lt;&lt; p.second &lt;&lt; endl;\n  }\n}</code></pre>",
+    "Average time complexity is <code>O(n)</code>. Space complexity is <code>O(m)</code>, where <code>m</code> is the number of distinct elements."
+  ]),
+  makeDsaQuestion("Applied", "How does pseudocode help in boosting problem-solving skills?", ["Pseudocode", "Problem Solving"], [
+    "Pseudocode improves problem-solving by making students think about logic before syntax.",
+    "It breaks a problem into input, output, loops, conditions, and steps. This builds a habit of planning before coding.",
+    "It also makes tracing easier. A student can test the idea on a small input before writing C++ code, which improves confidence and accuracy."
+  ]),
+  makeDsaQuestion("Applied", "Write a C++ function to rotate an array to the right by k positions and analyze its time and space complexity.", ["Arrays", "Rotation", "C++"], [
+    "Use the reversal method: reverse the whole array, reverse the first <code>k</code> elements, then reverse the remaining elements.",
+    "<pre><code>void rotateRight(vector&lt;int&gt;&amp; a, int k) {\n  int n = a.size();\n  k %= n;\n  reverse(a.begin(), a.end());\n  reverse(a.begin(), a.begin() + k);\n  reverse(a.begin() + k, a.end());\n}</code></pre>",
+    "Time complexity is <code>O(n)</code>. Extra space is <code>O(1)</code>. This is better than rotating one step at a time."
+  ]),
+  makeDsaQuestion("Applied", "Describe the benefit of pseudocode for beginners.", ["Pseudocode", "Problem Solving"], [
+    "Pseudocode helps beginners express logic in simple steps before writing actual code.",
+    "It separates problem solving from syntax. This is useful because beginners often struggle with both at the same time.",
+    "It also helps in exams because the student can explain the approach clearly even before giving final C++ code."
+  ]),
+  makeDsaQuestion("Applied", "Explain the concept of hashing and how an unordered_map works in C++.", ["Hashing", "unordered_map", "STL"], [

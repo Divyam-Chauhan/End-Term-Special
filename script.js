@@ -1693,3 +1693,53 @@ const dsaQuestions = [
     "Its time complexity is <code>O(n log n)</code> in best, average, and worst cases. Its extra space complexity is usually <code>O(n)</code>."
   ]),
   makeDsaQuestion("Foundational", "What is the purpose of a sentinel node in a linked list?", ["Linked List", "Pointers"], [
+    "A sentinel node is a dummy node used to simplify linked list operations. It usually does not store meaningful user data.",
+    "It helps reduce special cases, such as insertion or deletion at the head. Instead of changing the head repeatedly, operations can work after the sentinel node.",
+    "The trade-off is one extra node of memory, but the code often becomes simpler and safer."
+  ]),
+  makeDsaQuestion("Foundational", "How do you access the third element of an array 'arr' in C++?", ["Arrays", "Indexing"], [
+    "C++ arrays use zero-based indexing. The first element is <code>arr[0]</code>, the second is <code>arr[1]</code>, and the third is <code>arr[2]</code>.",
+    "<pre><code>int arr[] = {10, 20, 30};\ncout &lt;&lt; arr[2]; // 30</code></pre>",
+    "So the third element is accessed using <code>arr[2]</code>. Accessing by index takes <code>O(1)</code> time."
+  ]),
+  makeDsaQuestion("Foundational", "What is the difference between a shallow copy and a deep copy in C++?", ["C++", "Pointers"], [
+    "A shallow copy copies member values directly. If the object has a pointer, only the address is copied, so two objects may point to the same memory.",
+    "A deep copy creates separate memory and copies the actual data. This makes the copied object independent.",
+    "Shallow copy is simple but risky with dynamic memory. Deep copy is safer but needs correct copy constructor or assignment logic."
+  ]),
+  makeDsaQuestion("Foundational", "What is the task in the 'Move Zeros to End' problem?", ["Arrays", "Two Pointers"], [
+    "The task is to move all zeros in an array to the end while keeping the order of non-zero elements unchanged.",
+    "Example: <code>[0, 1, 0, 3, 12]</code> becomes <code>[1, 3, 12, 0, 0]</code>.",
+    "An efficient solution uses a position pointer for the next non-zero element, runs in <code>O(n)</code> time, and can use <code>O(1)</code> extra space."
+  ]),
+  makeDsaQuestion("Foundational", "What is the difference between pre-order and in-order traversal of a binary tree?", ["Trees", "Traversal"], [
+    "Pre-order traversal visits nodes in the order <code>Root - Left - Right</code>. It processes the root before its subtrees.",
+    "In-order traversal visits nodes in the order <code>Left - Root - Right</code>. In a BST, in-order traversal gives sorted order.",
+    "Both visit every node once, so both take <code>O(n)</code> time."
+  ]),
+  makeDsaQuestion("Foundational", "In the brute force approach, what is the first step to find the second largest element?", ["Arrays", "Searching"], [
+    "In a simple brute force approach, the first step is usually to sort the array.",
+    "After sorting, the largest value is at the end. Then move backward to find the first value smaller than the largest; that value is the second largest distinct element.",
+    "This approach takes <code>O(n log n)</code> time due to sorting. A better one-pass approach can solve it in <code>O(n)</code>."
+  ]),
+  makeDsaQuestion("Foundational", "What is the significance of the 'NULL' pointer in a linked list?", ["Linked List", "Pointers"], [
+    "<code>NULL</code> shows that a pointer does not point to a valid node. In a linked list, the last node's <code>next</code> pointer is usually <code>NULL</code>.",
+    "It marks the end of the list and helps traversal stop safely.",
+    "An empty linked list also has <code>head = NULL</code>. In modern C++, <code>nullptr</code> is preferred, but the linked list idea is the same."
+  ]),
+  makeDsaQuestion("Foundational", "What does time complexity measure in the context of algorithms?", ["Complexity", "Algorithms"], [
+    "Time complexity measures how the running time of an algorithm grows as the input size grows.",
+    "It is usually written using Big-O notation, such as <code>O(1)</code>, <code>O(log n)</code>, <code>O(n)</code>, <code>O(n log n)</code>, and <code>O(n^2)</code>.",
+    "It helps compare algorithms without depending on machine speed. For large inputs, growth pattern matters more than exact seconds."
+  ]),
+  makeDsaQuestion("Foundational", "What is the difference between a singly linked list and a doubly linked list?", ["Linked List", "Pointers"], [
+    "A singly linked list node stores data and a pointer to the next node. It supports forward traversal.",
+    "A doubly linked list node stores data, a next pointer, and a previous pointer. It supports forward and backward traversal.",
+    "Doubly linked lists use more memory but make some deletion and backward traversal operations easier. Singly linked lists are simpler and use less memory."
+  ]),
+  makeDsaQuestion("Foundational", "In the left rotate by 1 algorithm, why is the first element stored in a temporary variable before the loop?", ["Arrays", "Rotation"], [
+    "In left rotate by 1, the first element must move to the last position. If shifting starts directly, the first element gets overwritten.",
+    "<pre><code>int temp = arr[0];\nfor (int i = 1; i &lt; n; i++) arr[i - 1] = arr[i];\narr[n - 1] = temp;</code></pre>",
+    "The temporary variable preserves the first element until all other elements are shifted left."
+  ]),
+  makeDsaQuestion("Foundational", "What is a linked list?", ["Linked List", "Pointers"], [

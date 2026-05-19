@@ -2004,9 +2004,17 @@ visited[row][col] = true;</code></pre>`,
     `Some pseudocode marks the matrix itself with a special value like <code>-1</code>. That is shorter, but it can be unsafe if <code>-1</code> is a valid matrix element. Therefore, a boolean visited matrix is usually the better exam answer.`
   ]),
   makeDsaQuestion("Applied", "Describe the concept of a priority queue in C++ STL and explain its internal implementation.", ["STL", "Priority Queue", "Heap"], [
-    "A <code>priority_queue</code> stores elements so that the highest-priority element is available at the top. By default, C++ gives a max-heap.",
-    "Internally, it is usually implemented using a binary heap over a vector. <code>top()</code> is <code>O(1)</code>, while <code>push()</code> and <code>pop()</code> are <code>O(log n)</code>.",
-    "It is used in scheduling, heap problems, Dijkstra's algorithm, and top-K questions. A min-heap can be made using <code>greater&lt;int&gt;</code>."
+    `A priority queue stores elements in such a way that the highest-priority element can be accessed first. In C++ STL, <code>priority_queue</code> is a container adapter. By default, it behaves as a max-heap, so the largest element is available through <code>top()</code>.`,
+    `Internally, it is usually implemented using a binary heap stored inside a vector. The heap property keeps the parent element greater than or equal to its children in a max-heap. The vector gives compact storage, while heap operations maintain order logically.`,
+    `<pre><code>priority_queue&lt;int&gt; maxHeap;
+maxHeap.push(10);
+maxHeap.push(30);
+maxHeap.push(20);
+cout &lt;&lt; maxHeap.top(); // 30
+
+priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minHeap;</code></pre>`,
+    `<code>top()</code> takes <code>O(1)</code> time because the highest-priority element is at the root. <code>push()</code> and <code>pop()</code> take <code>O(log n)</code> because the heap may need to move an element up or down the tree.`,
+    `Priority queues are used in Dijkstra's algorithm, scheduling, top-K elements, median problems, and heap-based sorting logic. A complete answer should mention priority behavior, heap implementation, STL syntax, and operation complexities.`
   ]),
   makeDsaQuestion("Applied", "Analyze how pseudocode can lead to fewer bugs in the coding process.", ["Pseudocode", "Problem Solving"], [
     "Pseudocode reduces bugs by making the logic clear before writing C++ syntax.",

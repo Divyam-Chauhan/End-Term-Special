@@ -498,3 +498,138 @@ h1 {
   background: transparent;
   color: inherit;
 }
+
+.empty-state {
+  margin: 24px 0 0;
+  padding: 22px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--muted);
+  text-align: center;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 820px) {
+  .topbar,
+  .study-toolbar,
+  .subject-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    align-items: stretch;
+  }
+
+  .subject-tabs {
+    min-width: 0;
+  }
+
+  .study-toolbar {
+    padding: 24px;
+  }
+
+  .subject-strip {
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+
+  .subject-badge {
+    width: 56px;
+    height: 56px;
+  }
+
+  .quick-stats {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+
+  .question-body {
+    padding-left: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-shell {
+    width: min(100% - 20px, 1160px);
+    padding-top: 10px;
+  }
+
+  .subject-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar-actions {
+    grid-template-columns: 1fr 48px;
+  }
+
+  .question-head {
+    grid-template-columns: 38px minmax(0, 1fr) 22px;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .dsa-group-head {
+    grid-template-columns: minmax(0, 1fr) 22px;
+  }
+
+  .dsa-group-head svg {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .dsa-group-count {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .question-number {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .topbar,
+  .toolbar-actions,
+  .subject-tabs {
+    display: none;
+  }
+
+  .app-shell {
+    width: 100%;
+    padding: 0;
+  }
+
+  .study-toolbar,
+  .subject-strip,
+  .question-card {
+    border-color: #999;
+    box-shadow: none;
+  }
+
+  .question-body {
+    display: block;
+  }
+}

@@ -2029,9 +2029,28 @@ return -1</code></pre>`,
     `So pseudocode leads to fewer bugs by improving planning, exposing edge cases early, and giving a clear reference to compare against the final C++ implementation.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ program to count the frequency of each element in an array using an unordered_map and print elements with frequency greater than 1.", ["Hashing", "unordered_map", "C++"], [
-    "Use <code>unordered_map</code> where the key is the element and the value is its count.",
-    "<pre><code>vector&lt;int&gt; arr = {1, 2, 2, 3, 4, 4};\nunordered_map&lt;int, int&gt; freq;\n\nfor (int x : arr) freq[x]++;\n\nfor (auto p : freq) {\n  if (p.second &gt; 1) {\n    cout &lt;&lt; p.first &lt;&lt; \" \" &lt;&lt; p.second &lt;&lt; endl;\n  }\n}</code></pre>",
-    "Average time complexity is <code>O(n)</code>. Space complexity is <code>O(m)</code>, where <code>m</code> is the number of distinct elements."
+    `An <code>unordered_map</code> can store each array element as a key and its frequency as the value. This avoids sorting and allows fast average lookup and update.`,
+    `The algorithm has two main steps. First, traverse the array and increase the count for every element. Second, traverse the map and print only those entries whose frequency is greater than <code>1</code>.`,
+    `<pre><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+  vector&lt;int&gt; arr = {1, 2, 2, 3, 4, 4, 4, 5};
+  unordered_map&lt;int, int&gt; freq;
+
+  for (int x : arr) {
+    freq[x]++;
+  }
+
+  for (auto entry : freq) {
+    if (entry.second &gt; 1) {
+      cout &lt;&lt; entry.first &lt;&lt; " appears " &lt;&lt; entry.second &lt;&lt; " times" &lt;&lt; endl;
+    }
+  }
+  return 0;
+}</code></pre>`,
+    `Average time complexity is <code>O(n)</code> because each insertion or update in <code>unordered_map</code> is average <code>O(1)</code>. Space complexity is <code>O(m)</code>, where <code>m</code> is the number of distinct elements.`,
+    `The output order is not guaranteed because <code>unordered_map</code> does not store keys in sorted order. If sorted output is required, <code>map</code> can be used instead, with <code>O(log m)</code> operations.`
   ]),
   makeDsaQuestion("Applied", "How does pseudocode help in boosting problem-solving skills?", ["Pseudocode", "Problem Solving"], [
     "Pseudocode improves problem-solving by making students think about logic before syntax.",

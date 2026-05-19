@@ -2143,3 +2143,28 @@ function renderDsaQuestionGroups(filteredQuestions) {
 function render() {
   renderSubjectMeta();
   renderQuestions();
+}
+
+tabButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const nextSubject = button.dataset.subject;
+    if (nextSubject === "dsa-cpp" && state.activeSubject !== nextSubject) {
+      state.dsaOpenSections.clear();
+    }
+    state.activeSubject = nextSubject;
+    tabButtons.forEach((tab) => tab.classList.toggle("is-active", tab === button));
+    render();
+  });
+});
+
+searchInput.addEventListener("input", (event) => {
+  state.query = event.target.value;
+  renderQuestions();
+});
+
+printButton.addEventListener("click", () => {
+  document.querySelectorAll(".question-card").forEach((card) => card.classList.add("is-open"));
+  window.print();
+});
+
+render();

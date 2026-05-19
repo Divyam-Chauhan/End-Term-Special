@@ -2065,9 +2065,19 @@ print best</code></pre>`,
     `The small example above clearly shows the logic for finding the maximum element. Once the logic is correct, writing the C++ version becomes easier. Therefore, pseudocode improves planning, tracing, debugging, and exam explanation skills.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to rotate an array to the right by k positions and analyze its time and space complexity.", ["Arrays", "Rotation", "C++"], [
-    "Use the reversal method: reverse the whole array, reverse the first <code>k</code> elements, then reverse the remaining elements.",
-    "<pre><code>void rotateRight(vector&lt;int&gt;&amp; a, int k) {\n  int n = a.size();\n  k %= n;\n  reverse(a.begin(), a.end());\n  reverse(a.begin(), a.begin() + k);\n  reverse(a.begin() + k, a.end());\n}</code></pre>",
-    "Time complexity is <code>O(n)</code>. Extra space is <code>O(1)</code>. This is better than rotating one step at a time."
+    `Right rotation by <code>k</code> positions means each element moves <code>k</code> steps to the right, and elements that cross the end come back to the beginning. For example, rotating <code>[1,2,3,4,5]</code> right by <code>2</code> gives <code>[4,5,1,2,3]</code>.`,
+    `The efficient in-place method uses reversal. First reduce <code>k</code> using <code>k %= n</code>. Then reverse the whole array, reverse the first <code>k</code> elements, and reverse the remaining <code>n-k</code> elements.`,
+    `<pre><code>void rotateRight(vector&lt;int&gt;&amp; a, int k) {
+  int n = a.size();
+  if (n == 0) return;
+  k %= n;
+
+  reverse(a.begin(), a.end());
+  reverse(a.begin(), a.begin() + k);
+  reverse(a.begin() + k, a.end());
+}</code></pre>`,
+    `Trace for <code>[1,2,3,4,5]</code>, <code>k=2</code>: reverse all gives <code>[5,4,3,2,1]</code>. Reverse first two gives <code>[4,5,3,2,1]</code>. Reverse the rest gives <code>[4,5,1,2,3]</code>.`,
+    `The time complexity is <code>O(n)</code> because each reversal is linear and the total work is proportional to the array size. Extra space is <code>O(1)</code> because the array is modified in-place.`
   ]),
   makeDsaQuestion("Applied", "Describe the benefit of pseudocode for beginners.", ["Pseudocode", "Problem Solving"], [
     "Pseudocode helps beginners express logic in simple steps before writing actual code.",

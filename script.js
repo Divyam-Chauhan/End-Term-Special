@@ -2242,9 +2242,23 @@ int dy[4] = {1, 0, -1, 0};
     `The base case is <code>n == 0</code>, where no disk needs to be moved. The number of moves is <code>2^n - 1</code>, so time complexity is <code>O(2^n)</code>. Recursion stack space is <code>O(n)</code>. This example clearly shows base case, recursive calls, and smaller subproblems.`
   ]),
   makeDsaQuestion("Applied", "Explain the algorithm and complexity of decimal to binary conversion using code.", ["Bit Manipulation", "C++"], [
-    "Repeatedly divide the decimal number by 2 and store the remainders. Read the remainders in reverse order to get binary.",
-    "<pre><code>string decimalToBinary(int n) {\n  if (n == 0) return \"0\";\n  string ans = \"\";\n  while (n &gt; 0) {\n    ans.push_back(char('0' + n % 2));\n    n /= 2;\n  }\n  reverse(ans.begin(), ans.end());\n  return ans;\n}</code></pre>",
-    "The loop runs <code>O(log n)</code> times because the number is divided by 2 each step. Space is <code>O(log n)</code> for the answer string."
+    `Decimal to binary conversion is based on repeated division by <code>2</code>. The remainder at each step becomes a binary digit. Since remainders are produced from right to left, they must be reversed at the end.`,
+    `For example, converting <code>13</code>: <code>13 % 2 = 1</code>, <code>6 % 2 = 0</code>, <code>3 % 2 = 1</code>, <code>1 % 2 = 1</code>. Reading remainders in reverse gives <code>1101</code>.`,
+    `<pre><code>string decimalToBinary(int n) {
+  if (n == 0) return "0";
+
+  string ans = "";
+  while (n &gt; 0) {
+    int rem = n % 2;
+    ans.push_back(char('0' + rem));
+    n /= 2;
+  }
+
+  reverse(ans.begin(), ans.end());
+  return ans;
+}</code></pre>`,
+    `The loop runs once for every binary digit. A number <code>n</code> has about <code>log2(n)</code> binary digits, so time complexity is <code>O(log n)</code>.`,
+    `Space complexity is <code>O(log n)</code> for the answer string. If only printing bits through recursion or stack-like logic, the same number of digits still exists in the output, so output space remains proportional to the binary length.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to detect a cycle in a linked list using Floyd's cycle detection algorithm.", ["Linked List", "Pointers", "Cycle Detection"], [
     "Floyd's algorithm uses two pointers. The slow pointer moves one step, and the fast pointer moves two steps. If they meet, a cycle exists.",

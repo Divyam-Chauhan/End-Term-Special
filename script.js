@@ -2122,9 +2122,26 @@ int dir = 0; // 0 means right</code></pre>`,
     `So, both are used to reduce confusion, follow a correct sequence, and make the final execution smoother. This comparison should stay limited to planning and step order, not replace the technical explanation of pseudocode.`
   ]),
   makeDsaQuestion("Applied", "Explain the concept of counting sort and write a C++ implementation for an array of non-negative integers.", ["Sorting", "Counting Sort", "C++"], [
-    "Counting sort counts how many times each non-negative integer appears, then writes values back in sorted order.",
-    "<pre><code>void countingSort(vector&lt;int&gt;&amp; a) {\n  int mx = *max_element(a.begin(), a.end());\n  vector&lt;int&gt; count(mx + 1, 0);\n  for (int x : a) count[x]++;\n  int idx = 0;\n  for (int value = 0; value &lt;= mx; value++) {\n    while (count[value]--) a[idx++] = value;\n  }\n}</code></pre>",
-    "If <code>n</code> is array size and <code>k</code> is value range, time is <code>O(n + k)</code> and space is <code>O(k)</code>."
+    `Counting sort is a non-comparison sorting algorithm. It works well when the input contains non-negative integers within a limited range. Instead of comparing elements, it counts how many times each value appears.`,
+    `The algorithm first finds the maximum value, creates a count array of size <code>max + 1</code>, stores frequencies, and then writes values back into the original array in sorted order.`,
+    `<pre><code>void countingSort(vector&lt;int&gt;&amp; arr) {
+  if (arr.empty()) return;
+
+  int maxVal = *max_element(arr.begin(), arr.end());
+  vector&lt;int&gt; count(maxVal + 1, 0);
+
+  for (int x : arr) count[x]++;
+
+  int index = 0;
+  for (int value = 0; value &lt;= maxVal; value++) {
+    while (count[value] &gt; 0) {
+      arr[index++] = value;
+      count[value]--;
+    }
+  }
+}</code></pre>`,
+    `If <code>n</code> is the number of elements and <code>k</code> is the maximum value range, time complexity is <code>O(n + k)</code>. Space complexity is <code>O(k)</code> for the count array.`,
+    `Counting sort is efficient when <code>k</code> is not too large. It is not suitable when values are very large compared with <code>n</code>, because the count array would waste memory.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to reverse a singly linked list iteratively and state its time and space complexity.", ["Linked List", "Pointers", "C++"], [
     "Use three pointers: <code>prev</code>, <code>curr</code>, and <code>nextNode</code>. Reverse each link one by one.",

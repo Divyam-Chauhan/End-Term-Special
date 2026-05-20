@@ -2106,9 +2106,13 @@ if (marks.count("Asha")) {
     `<code>unordered_map</code> is useful for frequency counting, checking duplicates, storing indexes, two-sum problems, and memoization. A strong answer should mention key-value storage, hash function, average complexity, collision possibility, and unsorted order.`
   ]),
   makeDsaQuestion("Applied", "What is the initial direction of traversal in a spiral matrix?", ["Arrays", "Matrix", "Traversal"], [
-    "The usual initial direction in spiral matrix traversal is left to right across the top row.",
-    "The common direction order is <code>Right - Down - Left - Up</code>.",
-    "This order can be managed using direction arrays. Starting right from the top-left cell gives the standard spiral order used in most DSA problems."
+    `In the standard spiral matrix traversal, the initial direction is from left to right across the top row. Traversal usually starts at the top-left cell, which is position <code>(0, 0)</code>.`,
+    `The common direction order is <code>Right - Down - Left - Up</code>. After moving right as far as possible, the traversal turns down, then left, then up, and repeats this pattern while shrinking the unvisited area or checking visited cells.`,
+    `<pre><code>int dr[4] = {0, 1, 0, -1};
+int dc[4] = {1, 0, -1, 0};
+int dir = 0; // 0 means right</code></pre>`,
+    `Starting right gives the output format expected in most DSA problems. For example, in a <code>3 x 3</code> matrix, the first row is printed first, then the right column, then the bottom row in reverse direction, and so on.`,
+    `Some variations may define a different starting point, but unless stated otherwise, the accepted initial direction is right from the top-left cell. The direction variable then changes using <code>dir = (dir + 1) % 4</code>.`
   ]),
   makeDsaQuestion("Applied", "Compare the use of pseudocode to writing a recipe before cooking. What are the similarities in their purposes?", ["Pseudocode", "Planning"], [
     "Both pseudocode and a recipe are plans written before execution. Pseudocode plans a program, while a recipe plans a process.",

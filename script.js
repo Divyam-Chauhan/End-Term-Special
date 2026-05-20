@@ -2229,9 +2229,17 @@ int dy[4] = {1, 0, -1, 0};
     `Without <code>pos</code>, the algorithm would need many separate conditions for each direction. With <code>pos</code>, direction control becomes clean and consistent. So <code>pos</code> is the variable that manages turning and keeps traversal in spiral order.`
   ]),
   makeDsaQuestion("Applied", "Explain the concept of recursion with a C++ example solving the Tower of Hanoi problem.", ["Recursion", "C++"], [
-    "Recursion means a function calls itself to solve a smaller version of the same problem. It needs a base case and recursive calls.",
-    "<pre><code>void hanoi(int n, char src, char helper, char dest) {\n  if (n == 0) return;\n  hanoi(n - 1, src, dest, helper);\n  cout &lt;&lt; \"Move disk \" &lt;&lt; n &lt;&lt; \" from \" &lt;&lt; src &lt;&lt; \" to \" &lt;&lt; dest &lt;&lt; endl;\n  hanoi(n - 1, helper, src, dest);\n}</code></pre>",
-    "The first call moves <code>n-1</code> disks to helper, then the largest disk moves to destination, then <code>n-1</code> disks move onto it. Time is <code>O(2^n)</code>."
+    `Recursion means a function solves a problem by calling itself for a smaller version of the same problem. Every recursive solution must have a base case, otherwise the calls will continue forever.`,
+    `Tower of Hanoi has three rods and <code>n</code> disks. The goal is to move all disks from source to destination using a helper rod. A larger disk cannot be placed on a smaller disk.`,
+    `The recursive idea is: move <code>n-1</code> disks from source to helper, move the largest disk from source to destination, then move <code>n-1</code> disks from helper to destination.`,
+    `<pre><code>void hanoi(int n, char src, char helper, char dest) {
+  if (n == 0) return;
+
+  hanoi(n - 1, src, dest, helper);
+  cout &lt;&lt; "Move disk " &lt;&lt; n &lt;&lt; " from " &lt;&lt; src &lt;&lt; " to " &lt;&lt; dest &lt;&lt; endl;
+  hanoi(n - 1, helper, src, dest);
+}</code></pre>`,
+    `The base case is <code>n == 0</code>, where no disk needs to be moved. The number of moves is <code>2^n - 1</code>, so time complexity is <code>O(2^n)</code>. Recursion stack space is <code>O(n)</code>. This example clearly shows base case, recursive calls, and smaller subproblems.`
   ]),
   makeDsaQuestion("Applied", "Explain the algorithm and complexity of decimal to binary conversion using code.", ["Bit Manipulation", "C++"], [
     "Repeatedly divide the decimal number by 2 and store the remainders. Read the remainders in reverse order to get binary.",

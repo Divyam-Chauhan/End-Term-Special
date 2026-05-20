@@ -2216,9 +2216,17 @@ oddCount &lt;= k =&gt; 2 &lt;= 1 =&gt; false</code></pre>`,
     `Here <code>dp[i][w]</code> means the best value possible using the first <code>i</code> items with capacity <code>w</code>. For each item, we compare two choices: skip it or take it.`,
   ]),
   makeDsaQuestion("Applied", "What role does the variable 'pos' play in the spiral traversal pseudo code?", ["Arrays", "Matrix", "Traversal"], [
-    "In spiral traversal pseudocode, <code>pos</code> usually stores the current direction index.",
-    "For direction order right, down, left, up, <code>pos = 0</code> means right, <code>1</code> means down, <code>2</code> means left, and <code>3</code> means up.",
-    "When movement is blocked, <code>pos = (pos + 1) % 4</code> changes to the next direction. This keeps the traversal in spiral order."
+    `In spiral traversal pseudocode, <code>pos</code> usually stores the current direction index. It tells the algorithm whether it is currently moving right, down, left, or up.`,
+    `A common direction setup uses two arrays. The value of <code>pos</code> selects which movement pair should be used.`,
+    `<pre><code>int dx[4] = {0, 1, 0, -1};
+int dy[4] = {1, 0, -1, 0};
+
+// pos = 0 means right
+// pos = 1 means down
+// pos = 2 means left
+// pos = 3 means up</code></pre>`,
+    `When the next cell is outside the matrix or already visited, the algorithm updates <code>pos</code> as <code>pos = (pos + 1) % 4</code>. This changes the direction in cyclic order.`,
+    `Without <code>pos</code>, the algorithm would need many separate conditions for each direction. With <code>pos</code>, direction control becomes clean and consistent. So <code>pos</code> is the variable that manages turning and keeps traversal in spiral order.`
   ]),
   makeDsaQuestion("Applied", "Explain the concept of recursion with a C++ example solving the Tower of Hanoi problem.", ["Recursion", "C++"], [
     "Recursion means a function calls itself to solve a smaller version of the same problem. It needs a base case and recursive calls.",

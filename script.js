@@ -2368,7 +2368,6 @@ const subjectTitle = document.querySelector("#subjectTitle");
 const subjectDescription = document.querySelector("#subjectDescription");
 const questionCount = document.querySelector("#questionCount");
 const template = document.querySelector("#questionTemplate");
-const printButton = document.querySelector("#printButton");
 
 function normalize(value) {
   return value.toLowerCase().trim();
@@ -2525,11 +2524,6 @@ tabButtons.forEach((button) => {
 searchInput.addEventListener("input", (event) => {
   state.query = event.target.value;
   renderQuestions();
-});
-
-printButton.addEventListener("click", () => {
-  document.querySelectorAll(".question-card").forEach((card) => card.classList.add("is-open"));
-  window.print();
 });
 
 render();

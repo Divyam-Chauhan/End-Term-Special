@@ -2167,9 +2167,24 @@ Node* reverseList(Node* head) {
     `Each node is visited once, so time complexity is <code>O(n)</code>. Only a constant number of pointers are used, so space complexity is <code>O(1)</code>. This is better than using extra storage to copy node values.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to merge two sorted arrays into a single sorted array without using extra space (in-place merge).", ["Arrays", "Sorting", "In-place"], [
-    "If the first array has enough empty space at the end, merge from the back to avoid overwriting useful values.",
-    "<pre><code>void merge(vector&lt;int&gt;&amp; a, int m, vector&lt;int&gt;&amp; b, int n) {\n  int i = m - 1, j = n - 1, k = m + n - 1;\n  while (i &gt;= 0 &amp;&amp; j &gt;= 0) {\n    if (a[i] &gt; b[j]) a[k--] = a[i--];\n    else a[k--] = b[j--];\n  }\n  while (j &gt;= 0) a[k--] = b[j--];\n}</code></pre>",
-    "Time complexity is <code>O(m + n)</code>, and extra space is <code>O(1)</code>."
+    `If the first array has enough empty positions at the end, two sorted arrays can be merged in-place by filling from the back. This avoids overwriting useful elements in the first array.`,
+    `Let <code>m</code> be the number of valid elements in <code>a</code> and <code>n</code> be the number of elements in <code>b</code>. The total size of <code>a</code> is <code>m + n</code>. Use three pointers: <code>i</code> at the last valid element of <code>a</code>, <code>j</code> at the last element of <code>b</code>, and <code>k</code> at the last position of <code>a</code>.`,
+    `<pre><code>void mergeArrays(vector&lt;int&gt;&amp; a, int m, vector&lt;int&gt;&amp; b, int n) {
+  int i = m - 1;
+  int j = n - 1;
+  int k = m + n - 1;
+
+  while (i &gt;= 0 &amp;&amp; j &gt;= 0) {
+    if (a[i] &gt; b[j]) a[k--] = a[i--];
+    else a[k--] = b[j--];
+  }
+
+  while (j &gt;= 0) {
+    a[k--] = b[j--];
+  }
+}</code></pre>`,
+    `If elements remain in <code>a</code>, they are already in correct position. If elements remain in <code>b</code>, they must be copied.`,
+    `Time complexity is <code>O(m + n)</code>, and extra space is <code>O(1)</code>. This method is in-place under the condition that the first array already has enough capacity.`
   ]),
   makeDsaQuestion("Applied", "For s = \"aaabbb\" and k = 1, trace every step of the canPartition algorithm and explain why the function returns false.", ["Strings", "Hashing", "Tracing"], [
     "For <code>s = \"aaabbb\"</code>, frequencies are <code>a = 3</code> and <code>b = 3</code>.",

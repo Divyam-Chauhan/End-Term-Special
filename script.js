@@ -2187,9 +2187,14 @@ Node* reverseList(Node* head) {
     `Time complexity is <code>O(m + n)</code>, and extra space is <code>O(1)</code>. This method is in-place under the condition that the first array already has enough capacity.`
   ]),
   makeDsaQuestion("Applied", "For s = \"aaabbb\" and k = 1, trace every step of the canPartition algorithm and explain why the function returns false.", ["Strings", "Hashing", "Tracing"], [
-    "For <code>s = \"aaabbb\"</code>, frequencies are <code>a = 3</code> and <code>b = 3</code>.",
-    "Both frequencies are odd, so <code>oddCount = 2</code>.",
-    "For <code>k = 1</code>, at most one odd-frequency character can be handled. Since <code>2 &lt;= 1</code> is false, the function returns <code>false</code>."
+    `For <code>s = "aaabbb"</code> and <code>k = 1</code>, the algorithm first checks length. The string length is <code>6</code>, so <code>k &lt;= s.length()</code> is true because <code>1 &lt;= 6</code>.`,
+    `Next, it builds the frequency array. The character <code>a</code> appears <code>3</code> times and <code>b</code> appears <code>3</code> times. All other lowercase letters have frequency <code>0</code>.`,
+    `<pre><code>a = 3, b = 3, c = 0, d = 0, ..., z = 0</code></pre>`,
+    `Now the algorithm counts odd frequencies. <code>a=3</code> is odd, so <code>oddCount</code> becomes <code>1</code>. <code>b=3</code> is also odd, so <code>oddCount</code> becomes <code>2</code>. Zero frequencies are even and do not increase the count.`,
+    `<pre><code>oddCount = 2
+k = 1
+oddCount &lt;= k =&gt; 2 &lt;= 1 =&gt; false</code></pre>`,
+    `The function returns <code>false</code> because one palindrome can have at most one odd-frequency character. Here two characters need a middle position, but only one palindrome group is allowed. Therefore, the partition is not possible.`
   ]),
   makeDsaQuestion("Applied", "Explain the concept of dynamic programming with a C++ example solving the 0/1 knapsack problem.", ["Dynamic Programming", "Knapsack", "C++"], [
     "Dynamic programming stores answers to smaller overlapping subproblems so they are not recalculated.",

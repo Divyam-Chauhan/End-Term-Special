@@ -2115,9 +2115,11 @@ int dir = 0; // 0 means right</code></pre>`,
     `Some variations may define a different starting point, but unless stated otherwise, the accepted initial direction is right from the top-left cell. The direction variable then changes using <code>dir = (dir + 1) % 4</code>.`
   ]),
   makeDsaQuestion("Applied", "Compare the use of pseudocode to writing a recipe before cooking. What are the similarities in their purposes?", ["Pseudocode", "Planning"], [
-    "Both pseudocode and a recipe are plans written before execution. Pseudocode plans a program, while a recipe plans a process.",
-    "The useful similarity is ordered steps. If steps are missing or in the wrong order, the final result may fail.",
-    "For coding, pseudocode helps check logic, edge cases, and sequence before writing C++. Its main purpose is clarity and fewer implementation mistakes."
+    `Pseudocode and a recipe are similar because both describe ordered steps before actual execution. Pseudocode plans a program, while a recipe plans a cooking process. In both cases, the purpose is to make the work clearer before starting.`,
+    `A recipe lists ingredients, sequence, conditions, and expected result. Pseudocode lists inputs, variables, decisions, loops, and output. If the order is wrong in either case, the final result may fail.`,
+    `For example, pseudocode may say: read input, initialize answer, loop through data, update answer, print result. This is similar to a recipe giving preparation steps before the final action.`,
+    `The important point is planning. Pseudocode helps a programmer check logic and missing cases before writing C++ code. A recipe helps check ingredients and steps before cooking.`,
+    `So, both are used to reduce confusion, follow a correct sequence, and make the final execution smoother. This comparison should stay limited to planning and step order, not replace the technical explanation of pseudocode.`
   ]),
   makeDsaQuestion("Applied", "Explain the concept of counting sort and write a C++ implementation for an array of non-negative integers.", ["Sorting", "Counting Sort", "C++"], [
     "Counting sort counts how many times each non-negative integer appears, then writes values back in sorted order.",

@@ -2261,9 +2261,27 @@ int dy[4] = {1, 0, -1, 0};
     `Space complexity is <code>O(log n)</code> for the answer string. If only printing bits through recursion or stack-like logic, the same number of digits still exists in the output, so output space remains proportional to the binary length.`
   ]),
   makeDsaQuestion("Applied", "Write a C++ function to detect a cycle in a linked list using Floyd's cycle detection algorithm.", ["Linked List", "Pointers", "Cycle Detection"], [
-    "Floyd's algorithm uses two pointers. The slow pointer moves one step, and the fast pointer moves two steps. If they meet, a cycle exists.",
-    "<pre><code>bool hasCycle(Node* head) {\n  Node* slow = head;\n  Node* fast = head;\n  while (fast != NULL &amp;&amp; fast-&gt;next != NULL) {\n    slow = slow-&gt;next;\n    fast = fast-&gt;next-&gt;next;\n    if (slow == fast) return true;\n  }\n  return false;\n}</code></pre>",
-    "If there is no cycle, <code>fast</code> reaches <code>NULL</code>. Time is <code>O(n)</code>, and space is <code>O(1)</code>."
+    `Floyd's cycle detection algorithm uses two pointers moving at different speeds. The slow pointer moves one node at a time, while the fast pointer moves two nodes at a time.`,
+    `If the linked list has no cycle, the fast pointer will eventually reach <code>NULL</code>. If there is a cycle, the fast pointer will eventually meet the slow pointer inside the cycle.`,
+    `<pre><code>struct Node {
+  int data;
+  Node* next;
+};
+
+bool hasCycle(Node* head) {
+  Node* slow = head;
+  Node* fast = head;
+
+  while (fast != NULL &amp;&amp; fast-&gt;next != NULL) {
+    slow = slow-&gt;next;
+    fast = fast-&gt;next-&gt;next;
+
+    if (slow == fast) return true;
+  }
+  return false;
+}</code></pre>`,
+    `The reason this works is that inside a cycle, the faster pointer keeps reducing the gap with the slower pointer. Eventually both point to the same node.`,
+    `The time complexity is <code>O(n)</code> because the pointers visit a limited number of nodes before meeting or ending. Space complexity is <code>O(1)</code> because no extra set or array is used. This is better than storing all visited nodes in a hash set.`
   ]),
   makeDsaQuestion("Applied", "List the steps of the binary search pseudo code for finding a peak element in the correct order.", ["Searching", "Binary Search", "Pseudocode"], [
     "Set <code>low = 0</code> and <code>high = n - 1</code>. Repeat while <code>low &lt; high</code>.",

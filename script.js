@@ -2216,6 +2216,7 @@ oddCount &lt;= k =&gt; 2 &lt;= 1 =&gt; false</code></pre>`,
   return dp[n][W];
 }</code></pre>`,
     `Here <code>dp[i][w]</code> means the best value possible using the first <code>i</code> items with capacity <code>w</code>. For each item, we compare two choices: skip it or take it.`,
+    `The time complexity is <code>O(nW)</code> and space complexity is <code>O(nW)</code>. DP is useful here because many item-capacity combinations repeat in a recursive solution.`
   ]),
   makeDsaQuestion("Applied", "What role does the variable 'pos' play in the spiral traversal pseudo code?", ["Arrays", "Matrix", "Traversal"], [
     `In spiral traversal pseudocode, <code>pos</code> usually stores the current direction index. It tells the algorithm whether it is currently moving right, down, left, or up.`,

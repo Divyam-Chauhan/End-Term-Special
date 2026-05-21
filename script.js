@@ -2284,9 +2284,22 @@ bool hasCycle(Node* head) {
     `The time complexity is <code>O(n)</code> because the pointers visit a limited number of nodes before meeting or ending. Space complexity is <code>O(1)</code> because no extra set or array is used. This is better than storing all visited nodes in a hash set.`
   ]),
   makeDsaQuestion("Applied", "List the steps of the binary search pseudo code for finding a peak element in the correct order.", ["Searching", "Binary Search", "Pseudocode"], [
-    "Set <code>low = 0</code> and <code>high = n - 1</code>. Repeat while <code>low &lt; high</code>.",
-    "Find <code>mid = low + (high - low) / 2</code>. If <code>arr[mid] &lt; arr[mid + 1]</code>, move right by setting <code>low = mid + 1</code>. Otherwise, set <code>high = mid</code>.",
-    "When the loop ends, <code>low</code> is the index of a peak element. The algorithm takes <code>O(log n)</code> time."
+    `The binary search method for finding a peak element uses the idea that if the array is rising at <code>mid</code>, a peak exists on the right side; otherwise, a peak exists on the left side including <code>mid</code>.`,
+    `<pre><code>set low = 0
+set high = n - 1
+
+while low &lt; high:
+  mid = low + (high - low) / 2
+
+  if arr[mid] &lt; arr[mid + 1]:
+    low = mid + 1
+  else:
+    high = mid
+
+return low</code></pre>`,
+    `The loop condition is <code>low &lt; high</code>, not <code>low &lt;= high</code>, because the algorithm compares <code>arr[mid]</code> with <code>arr[mid + 1]</code>. This keeps <code>mid + 1</code> valid.`,
+    `If <code>arr[mid] &lt; arr[mid + 1]</code>, the slope goes upward, so moving right is safe. Otherwise, the left side including <code>mid</code> contains a peak.`,
+    `When the loop ends, <code>low</code> and <code>high</code> are equal, and that index is returned as a peak. Time complexity is <code>O(log n)</code> and space complexity is <code>O(1)</code>.`
   ]),
   makeDsaQuestion("Applied", "Explain how to remove the rightmost set bit of a number and analyze its efficiency.", ["Bit Manipulation", "Complexity"], [
     "The rightmost set bit can be removed using <code>n = n &amp; (n - 1)</code>.",

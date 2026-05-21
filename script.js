@@ -1787,6 +1787,7 @@ const dsaQuestions = [
     `The time complexity is <code>O(n)</code>, where <code>n</code> is the length of the string. The algorithm scans the string once to build the frequency array. After that, it scans the fixed array of 26 lowercase letters. Since 26 does not grow with input size, that part is treated as constant time.`,
     `The space complexity is <code>O(1)</code> for lowercase English letters because the frequency array always has 26 positions. If the problem allowed any character and used a map, then the space could become <code>O(m)</code>, where <code>m</code> is the number of distinct characters.`,
     `The logic is correct because each palindrome can contain at most one odd-frequency character. Therefore, if odd characters are more than <code>k</code>, making <code>k</code> palindromic parts is impossible. If <code>k</code> is greater than the string length, there are not enough characters to form that many non-empty parts.`,
+    `So the final complexity is <code>O(n)</code> time and <code>O(1)</code> space for the fixed lowercase version, with correctness based on the odd-frequency count.`
   ]),
   makeDsaQuestion("Applied", "Explain the concept of Big-O, Big-Omega, and Big-Theta notations with examples.", ["Complexity", "Analysis"], [
     `Asymptotic notation describes how an algorithm grows when input size becomes large. It ignores machine speed and small constant differences, so it helps compare algorithms logically. The three common notations are Big-O, Big-Omega, and Big-Theta.`,

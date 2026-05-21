@@ -2302,9 +2302,13 @@ return low</code></pre>`,
     `When the loop ends, <code>low</code> and <code>high</code> are equal, and that index is returned as a peak. Time complexity is <code>O(log n)</code> and space complexity is <code>O(1)</code>.`
   ]),
   makeDsaQuestion("Applied", "Explain how to remove the rightmost set bit of a number and analyze its efficiency.", ["Bit Manipulation", "Complexity"], [
-    "The rightmost set bit can be removed using <code>n = n &amp; (n - 1)</code>.",
-    "Example: <code>12 = 1100</code> and <code>11 = 1011</code>. Then <code>12 &amp; 11 = 1000</code>, so the rightmost set bit is cleared.",
-    "This uses one subtraction and one AND operation, so time complexity is <code>O(1)</code> and space complexity is <code>O(1)</code>."
+    `The rightmost set bit of a number can be removed using the expression <code>n = n &amp; (n - 1)</code>. A set bit means a bit whose value is <code>1</code>.`,
+    `When <code>1</code> is subtracted from a number, all bits after the rightmost set bit are flipped, and that rightmost set bit becomes <code>0</code>. Performing AND with the original number clears only that rightmost set bit and keeps the higher bits unchanged.`,
+    `<pre><code>int removeRightmostSetBit(int n) {
+  return n &amp; (n - 1);
+}</code></pre>`,
+    `Example: <code>12</code> in binary is <code>1100</code>. <code>11</code> is <code>1011</code>. Now <code>1100 &amp; 1011 = 1000</code>. So the rightmost set bit in <code>1100</code> is removed.`,
+    `This operation is useful in counting set bits, checking powers of two, subset generation, and bitmask problems. It uses one subtraction and one AND operation, so time complexity is <code>O(1)</code> for fixed-size integers. Space complexity is also <code>O(1)</code>.`
   ]),
   makeDsaQuestion("Applied", "Write the complete C++ code for the linear search approach to find a peak element and trace it on the array [2, 4, 3, 1, 5, 6].", ["Searching", "Arrays", "C++"], [
     "Linear search checks each element and sees whether it is greater than or equal to its neighbours.",

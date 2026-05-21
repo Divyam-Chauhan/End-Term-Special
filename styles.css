@@ -132,7 +132,6 @@ svg {
 }
 
 .tab-button:focus-visible,
-.icon-button:focus-visible,
 .question-head:focus-visible,
 .dsa-group-head:focus-visible,
 .search-box:focus-within {
@@ -183,7 +182,7 @@ h1 {
 
 .toolbar-actions {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 48px;
+  grid-template-columns: minmax(0, 1fr);
   gap: 10px;
 }
 
@@ -212,28 +211,6 @@ h1 {
   background: transparent;
   color: var(--ink);
   font-size: 1rem;
-}
-
-.icon-button {
-  display: grid;
-  width: 48px;
-  height: 48px;
-  place-items: center;
-  border: 1px solid var(--ink);
-  border-radius: var(--radius);
-  background: var(--gold);
-  color: var(--ink);
-  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
-}
-
-.icon-button:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--ink);
-}
-
-.icon-button svg {
-  width: 22px;
-  height: 22px;
 }
 
 .subject-strip {
@@ -567,7 +544,7 @@ h1 {
   }
 
   .toolbar-actions {
-    grid-template-columns: 1fr 48px;
+    grid-template-columns: 1fr;
   }
 
   .question-head {
